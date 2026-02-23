@@ -1,0 +1,121 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const allPosts = await Astro.glob('./blog/*.md');
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+
+// 월별 그룹화 (예: "2026-02")
+const postsByMonth = {};
+sortedPosts.forEach(post => {
+  const date = new Date(post.frontmatter.date);
+  const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`; // "2026-02"
+  if (!postsByMonth[monthKey]) {
+    postsByMonth[monthKey] = [];
+  }
+  postsByMonth[monthKey].push(post);
+});
+
+// 최신 월 구하기
+const months = Object.keys(postsByMonth).sort().reverse();
+const currentMonth = months[0];
+---
+
+<BaseLayout title="Archives">
+  <div class="archive-container">
+    
+    <aside class="sidebar">
+      <h3>📅 Timeline</h3>
+      <ul class="month-list">
+        <li class="all-link active" onclick="filterPosts('all')">All Posts</li>
+        {months.map(month => (
+          <li onclick={`filterPosts('${month}')`}>
+            {month} <span class="count">({postsByMonth[month].length})</span>
+          </li>
+        ))}
+      </ul>
+    </aside>
+
+    <main class="content">
+      <h3>🗂️ Logs</h3>
+      <div id="posts-container">
+        {sortedPosts.map((post) => {
+          const date = new Date(post.frontmatter.date);
+          const monthKey = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}`;
+          return (
+            <div class="post-item" data-month={monthKey}>
+              <a href={post.url} class="post-link">
+                <div class="post-meta">
+                  <span class="date">{post.frontmatter.date}</span>
+                  <span class="author-badge">{post.frontmatter.author}</span>
+                </div>
+                <h4 class="title">{post.frontmatter.title}</h4>
+              </a>
+            </div>
+          );
+        })}
+      </div>
+    </main>
+
+  </div>
+</BaseLayout>
+
+<script is:inline>
+  function filterPosts(month) {
+    const posts = document.querySelectorAll('.post-item');
+    const links = document.querySelectorAll('.month-list li');
+    
+    // 메뉴 활성화 스타일 처리
+    links.forEach(link => link.classList.remove('active'));
+    event.target.closest('li').classList.add('active');
+
+    // 필터링 로직
+    posts.forEach(post => {
+      if (month === 'all' || post.getAttribute('data-month') === month) {
+        post.style.display = 'block';
+      } else {
+        post.style.display = 'none';
+      }
+    });
+  }
+</script>
+
+<style>
+  .archive-container { display: flex; gap: 2rem; margin-top: 2rem; }
+  
+  /* 사이드바 스타일 */
+  .sidebar { width: 200px; flex-shrink: 0; }
+  .sidebar h3 { font-size: 1.1rem; color: #7f8c8d; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 2px solid #eee; }
+  .month-list { list-style: none; padding: 0; }
+  .month-list li { 
+    padding: 0.5rem 0.8rem; cursor: pointer; border-radius: 6px; color: #555; font-size: 0.95rem; margin-bottom: 4px; transition: 0.2s;
+    display: flex; justify-content: space-between;
+  }
+  .month-list li:hover { background: #f5f6fa; }
+  .month-list li.active { background: #3498db; color: white; font-weight: bold; }
+  .month-list li.active .count { color: rgba(255,255,255,0.8); }
+  .count { font-size: 0.8em; color: #999; }
+
+  /* 메인 컨텐츠 스타일 */
+  .content { flex-grow: 1; }
+  .content h3 { font-size: 1.1rem; color: #2c3e50; margin-bottom: 1rem; border-bottom: 2px solid #eee; padding-bottom: 0.5rem; }
+  
+  .post-item { margin-bottom: 1rem; }
+  .post-link { 
+    display: block; background: white; padding: 1.2rem; border-radius: 8px; text-decoration: none; 
+    border: 1px solid #eee; transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .post-link:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.08); border-color: #3498db; }
+  
+  .post-meta { display: flex; gap: 10px; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; }
+  .date { color: #95a5a6; }
+  .author-badge { background: #ecf0f1; color: #2c3e50; padding: 2px 8px; border-radius: 12px; font-weight: 600; font-size: 0.75rem; }
+  
+  .title { margin: 0; color: #2c3e50; font-size: 1.1rem; }
+
+  /* 모바일 대응 */
+  @media (max-width: 768px) {
+    .archive-container { flex-direction: column; }
+    .sidebar { width: 100%; }
+    .month-list { display: flex; overflow-x: auto; gap: 5px; padding-bottom: 10px; }
+    .month-list li { white-space: nowrap; flex-shrink: 0; }
+  }
+</style>
