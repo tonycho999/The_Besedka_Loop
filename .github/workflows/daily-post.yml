@@ -1,9 +1,9 @@
 name: Daily Besedka Bot
 
 on:
-#  schedule:
+  schedule:
     # 매시간 7분에 실행 (예: 1:07, 2:07 ...)
-#   - cron: '7 * * * *'
+   - cron: '7 * * * *'
   workflow_dispatch:
 
 jobs:
