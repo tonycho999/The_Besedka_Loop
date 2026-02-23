@@ -1,16 +1,16 @@
 name: Daily Besedka Bot
 
 on:
-#  schedule:
-    # 매일 UTC 00:00 (한국 시간 오전 9시)에 실행
-#    - cron: '0 0 * * *'
-  workflow_dispatch: # 수동으로 버튼 눌러서 실행 가능
+  schedule:
+    # 매시간 7분에 실행 (예: 1:07, 2:07 ...)
+    - cron: '7 * * * *'
+  workflow_dispatch:
 
 jobs:
   write-post:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # 봇이 저장소에 글을 쓸 권한 부여
+      contents: write
       
     steps:
       - name: Checkout repository
