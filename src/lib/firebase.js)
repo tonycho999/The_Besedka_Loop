@@ -1,0 +1,19 @@
+// Import the functions you need from the SDKs you need
+import { initializeApp } from "firebase/app";
+import { getFirestore } from "firebase/firestore";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAs0haGNTLr4pFsMt8ogdPoY6KDEFuRwL0",
+  authDomain: "the-besedka-loop.firebaseapp.com",
+  projectId: "the-besedka-loop",
+  storageBucket: "the-besedka-loop.firebasestorage.app",
+  messagingSenderId: "464046867014",
+  appId: "1:464046867014:web:e37d3039b144f5d3710047",
+  measurementId: "G-HL8JJ5WYVK"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+// DB(Firestore)를 쓰기 위해 export 해줍니다.
+export const db = getFirestore(app);
