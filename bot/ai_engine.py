@@ -1,17 +1,17 @@
-import model_selector  # 위에서 만든 모듈 사용
+import model_selector  # 아까 분리한 모델 선택기
 
 def generate_content(persona, type="post", context=""):
     try:
-        # 1. 클라이언트와 모델 ID를 동적으로 받아옴
+        # 1. 모델과 클라이언트를 동적으로 가져옴
         client = model_selector.get_client()
         model_id = model_selector.get_dynamic_model(client)
         
-        print(f"🤖 Connected to Model: {model_id}")
+        print(f"🤖 Selected Model: {model_id}") # 로그 확인용
 
         prompt = ""
         
-        # 프롬프트 설정 (이전과 동일)
         if type == "post":
+            # [규칙] 날씨 금지, 개발자 일상
             prompt = f"""
             You are {persona['name']}, a developer from {persona['country']}.
             Write a short blog post diary (Daily Log).
@@ -33,7 +33,7 @@ def generate_content(persona, type="post", context=""):
             Casual tone, no weather talk.
             """
 
-        # 2. 받아온 model_id로 요청 전송
+        # [수정됨] 여기가 핵심! Gemini 방식(model.generate...)을 버리고 Groq 방식 사용
         chat_completion = client.chat.completions.create(
             messages=[
                 {
@@ -41,11 +41,11 @@ def generate_content(persona, type="post", context=""):
                     "content": prompt,
                 }
             ],
-            model=model_id, # 여기에 'llama...' 같은 문자열 없음. 변수만 있음.
+            model=model_id, # 동적으로 받아온 모델 ID
             temperature=0.7,
         )
 
-        # 3. 결과 반환
+        # 응답 데이터 추출 (Groq 구조에 맞춤)
         full_text = chat_completion.choices[0].message.content.strip()
 
         if type == "post":
@@ -56,5 +56,6 @@ def generate_content(persona, type="post", context=""):
         return full_text, ""
 
     except Exception as e:
-        print(f"❌ AI Generation Error: {e}")
-        return "System Error: AI needs sleep.", "Error"
+        # 여기가 실행되면 로그에 정확한 이유가 찍힘
+        print(f"❌ AI Logic Error: {e}")
+        return "System Error", "Error"
