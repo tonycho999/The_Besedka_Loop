@@ -7,28 +7,40 @@ const { title } = Astro.props;
     <meta name="viewport" content="width=device-width" />
     <title>{title} | The Besedka Loop</title>
     <style>
-      body { font-family: system-ui, sans-serif; margin: 0; background: #f8f9fa; color: #333; }
-      header { background: #2c3e50; color: white; padding: 1rem; text-align: center; }
-      header h1 { margin: 0; font-size: 1.5rem; }
+      /* Global Styles */
+      body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; background: #f8f9fa; color: #333; line-height: 1.6; }
+      
+      header { background: #2c3e50; color: white; padding: 1rem; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+      header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
+      header h1 a { color: white; text-decoration: none; }
+      
       nav { margin-top: 10px; }
-      nav a { color: #ddd; margin: 0 10px; text-decoration: none; }
-      main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
-      footer { text-align: center; padding: 2rem; color: #666; font-size: 0.8rem; margin-top: 3rem; border-top: 1px solid #eee; }
+      nav a { color: #bdc3c7; margin: 0 10px; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+      nav a:hover { color: white; }
+      
+      main { max-width: 850px; margin: 2rem auto; padding: 0 1.5rem; }
+      
+      footer { text-align: center; padding: 3rem 1rem; color: #7f8c8d; font-size: 0.85rem; border-top: 1px solid #e0e0e0; margin-top: 4rem; }
+      footer b { color: #2c3e50; }
     </style>
   </head>
   <body>
     <header>
-      <h1>⛺ The Besedka Loop</h1>
+      <h1><a href="/">⛺ The Besedka Loop</a></h1>
       <nav>
         <a href="/">Home</a>
-        <a href="#">About 10</a>
+        <a href="#">The 10 Alumni</a>
+        <a href="#">About</a>
       </nav>
     </header>
     <main>
       <slot />
     </main>
     <footer>
-      <p>© 2026 The Besedka Loop. 10 Friends, 7 Countries, 1 Story.</p>
+      <p>
+        <b>The Besedka Loop</b> &copy; 2026<br>
+        10 Friends, 7 Countries, One Shared Story.
+      </p>
     </footer>
   </body>
 </html>
