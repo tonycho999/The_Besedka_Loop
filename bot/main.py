@@ -2,7 +2,7 @@ import os
 import random
 import time
 import datetime
-from github import Github
+from github import Github, Auth
 from groq import Groq
 
 # --- 설정 ---
@@ -16,7 +16,7 @@ API_KEYS = [
     os.environ.get("GROQ_API_KEY_3"),
     os.environ.get("GROQ_API_KEY_4")
 ]
-VALID_KEYS = [k for k in API_KEYS if k is not None]  # None(등록 안 된 키)은 제외
+VALID_KEYS = [k for k in API_KEYS if k is not None]
 
 if not VALID_KEYS:
     print("Error: No Groq API keys found!")
@@ -45,12 +45,56 @@ TOPICS = [
 def get_groq_client():
     """4개의 키 중 하나를 랜덤으로 뽑아 클라이언트 생성"""
     selected_key = random.choice(VALID_KEYS)
-    # 보안을 위해 키의 일부만 출력 (로그 확인용)
     print(f"Using API Key ending in ...{selected_key[-4:]}")
     return Groq(api_key=selected_key)
 
+def get_best_available_model(client):
+    """
+    [핵심 기능]
+    Groq API에 '지금 사용 가능한 모델 목록'을 요청한 뒤,
+    텍스트 생성에 가장 적합한 모델을 자동으로 선택합니다.
+    특정 모델명을 하드코딩하지 않으므로 단종 이슈에서 안전합니다.
+    """
+    try:
+        models = client.models.list()
+        # 사용 가능한 모델 ID 목록 추출
+        available_models = [m.id for m in models.data]
+        
+        # 음성 인식 모델(whisper) 등 텍스트 생성이 아닌 모델 제외
+        text_models = [m for m in available_models if 'whisper' not in m and 'vision' not in m]
+        
+        if not text_models:
+            print("No text models found via API.")
+            return None
+
+        # 우선순위 로직: 성능 좋은(70b) -> 최신(llama-3) 순으로 검색
+        # 1순위: '70b'가 포함된 모델 (고성능)
+        for m in text_models:
+            if '70b' in m:
+                print(f"Auto-selected High Performance Model: {m}")
+                return m
+        
+        # 2순위: 'llama-3'가 포함된 모델 (최신)
+        for m in text_models:
+            if 'llama-3' in m:
+                print(f"Auto-selected Llama-3 Model: {m}")
+                return m
+
+        # 3순위: 아무거나 첫 번째 텍스트 모델
+        selected = text_models[0]
+        print(f"Auto-selected Fallback Model: {selected}")
+        return selected
+
+    except Exception as e:
+        print(f"Failed to fetch model list: {e}")
+        # API 호출 실패 시 비상용 하드코딩 (이 경우는 어쩔 수 없음)
+        return "llama-3.3-70b-versatile"
+
 def generate_text(persona, prompt_type="post", context=""):
     client = get_groq_client()
+    
+    # [변경] 모델명을 직접 쓰지 않고 함수를 통해 받아옴
+    current_model = get_best_available_model(client)
     
     if prompt_type == "post":
         topic = random.choice(TOPICS)
@@ -62,7 +106,7 @@ def generate_text(persona, prompt_type="post", context=""):
         Format: First line is Title, then blank line, then Body.
         NO introductory text.
         """
-        return client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model="llama3-70b-8192").choices[0].message.content.strip(), topic
+        return client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model=current_model).choices[0].message.content.strip(), topic
 
     elif prompt_type == "comment":
         sys_prompt = f"""
@@ -71,7 +115,7 @@ def generate_text(persona, prompt_type="post", context=""):
         Style: {persona['style']}.
         Language: English or {persona['lang']}.
         """
-        return client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model="llama3-70b-8192").choices[0].message.content.strip(), ""
+        return client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model=current_model).choices[0].message.content.strip(), ""
 
 def update_last_post_with_comments(repo):
     """가장 최근 글(아직 댓글 없는)을 찾아 댓글 달기"""
@@ -134,10 +178,10 @@ def update_last_post_with_comments(repo):
 def main():
     print("--- Bot Started ---")
 
-    # 1. [확률] 58% 확률로 실행
-    if random.random() > 0.58:
-        print("Skipping execution (Random probability check).")
-        return
+    # [테스트용] 확률 체크 해제 상태 (배포 시 필요하면 주석 해제하세요)
+    # if random.random() > 0.58:
+    #     print("Skipping execution (Random probability check).")
+    #     return
 
     # 2. [대기] 0.1초 단위 정밀 랜덤 대기 (0~30분)
     delay_units = random.randint(0, 18000)
@@ -147,7 +191,8 @@ def main():
     time.sleep(delay_seconds)
 
     # 3. GitHub 연결
-    g = Github(GITHUB_TOKEN)
+    auth = Auth.Token(GITHUB_TOKEN)
+    g = Github(auth=auth)
     repo = g.get_repo(REPO_NAME)
 
     # 4. 이전 글 댓글 달기
