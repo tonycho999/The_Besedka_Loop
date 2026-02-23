@@ -1,36 +1,88 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import authors from '../data/authors.json';
+// 나중에 실제 블로그 글이 생기면 이 부분이 작동합니다. 지금은 빈 배열로 둡니다.
+const allPosts = await Astro.glob('./blog/*.md');
+const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
 ---
 
 <BaseLayout title="Home">
-  <div class="intro">
-    <h2>Welcome to Global Besedka</h2>
-    <p>7개국 10명의 동료들이 보내오는 일상 신호 📡</p>
-  </div>
+  <section class="hero">
+    <h2>Welcome to the Global Besedka</h2>
+    <p class="subtitle">
+      Signals of life from 10 former colleagues scattered across 7 countries. 📡
+    </p>
+    <p class="description">
+      We may work in different time zones, but we gather here—at our digital <b>Besedka (Gazebo)</b>—to share our daily lives, code, and inspiration.
+    </p>
+  </section>
 
-  <h3>Meet The Alumni</h3>
-  <div class="grid">
-    {authors.map((author) => (
-      <div class="card">
-        <img src={author.image} alt={author.name} />
-        <div class="info">
-          <strong>{author.name}</strong>
-          <span>{author.country}</span>
-          <small>{author.role}</small>
+  <section class="alumni-section">
+    <h3>Meet The Alumni</h3>
+    <div class="grid">
+      {authors.map((author) => (
+        <div class="card">
+          <div class="avatar-wrapper">
+            <img src={author.image} alt={author.name} />
+            <span class="flag" title={author.country}>{author.country.split(' ')[0]}</span>
+          </div>
+          <div class="info">
+            <strong>{author.name}</strong>
+            <span class="role">{author.role}</span>
+          </div>
         </div>
-      </div>
-    ))}
-  </div>
+      ))}
+    </div>
+  </section>
 
-  <style>
-    .intro { text-align: center; margin-bottom: 3rem; }
-    .intro h2 { color: #2c3e50; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
-    .card { background: white; padding: 1rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-    .card img { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px; }
-    .info strong { display: block; }
-    .info span { display: block; font-size: 0.8rem; color: #666; }
-    .info small { display: block; font-size: 0.7rem; color: #888; margin-top: 5px; }
-  </style>
+  <section class="posts-section">
+    <h3>Latest Signals</h3>
+    {sortedPosts.length === 0 ? (
+      <div class="empty-state">
+        <p>📡 Waiting for the first signal...</p>
+        <small>(The bot is preparing the first post)</small>
+      </div>
+    ) : (
+      <ul class="post-list">
+        {sortedPosts.map((post) => (
+          <li>
+            <a href={post.url}>
+              <span class="post-date">{post.frontmatter.date}</span>
+              <span class="post-title">{post.frontmatter.title}</span>
+              <span class="post-author">by {post.frontmatter.author}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
 </BaseLayout>
+
+<style>
+  .hero { text-align: center; padding: 3rem 1rem; background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); margin-bottom: 3rem; }
+  .hero h2 { color: #2c3e50; font-size: 2rem; margin-bottom: 0.5rem; }
+  .subtitle { font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; font-weight: 500; }
+  .description { color: #7f8c8d; max-width: 600px; margin: 0 auto; font-size: 0.95rem; line-height: 1.6; }
+
+  h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; color: #34495e; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
+  .card { background: white; padding: 1rem 0.5rem; border-radius: 8px; text-align: center; transition: transform 0.2s; border: 1px solid #eee; }
+  .card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
+  
+  .avatar-wrapper { position: relative; width: 60px; height: 60px; margin: 0 auto 10px; }
+  .avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #ecf0f1; }
+  .flag { position: absolute; bottom: 0; right: -5px; font-size: 1.2rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
+  
+  .info strong { display: block; font-size: 0.9rem; color: #2c3e50; }
+  .info .role { display: block; font-size: 0.75rem; color: #95a5a6; margin-top: 2px; }
+
+  .empty-state { text-align: center; padding: 2rem; background: #fff; border-radius: 8px; color: #95a5a6; border: 1px dashed #ccc; }
+  
+  .post-list { list-style: none; padding: 0; }
+  .post-list li { margin-bottom: 10px; background: white; padding: 1rem; border-radius: 8px; border-left: 4px solid #3498db; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+  .post-list a { text-decoration: none; display: flex; justify-content: space-between; align-items: center; color: #333; flex-wrap: wrap; gap: 10px; }
+  .post-title { font-weight: bold; flex-grow: 1; }
+  .post-date { font-size: 0.8rem; color: #999; min-width: 80px; }
+  .post-author { font-size: 0.8rem; background: #ecf0f1; padding: 2px 8px; border-radius: 12px; color: #555; }
+</style>
