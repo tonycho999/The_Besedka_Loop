@@ -6,18 +6,34 @@ from github import Github, Auth
 import config
 from ai_engine import generate_content
 
+# [검열 1] 텍스트 청소 (앞뒤 지저분한 기호 제거)
 def clean_text(text):
     if not text: return ""
     return text.lstrip(" ,.-!").strip()
 
-def is_bad_content(text):
-    text_lower = text.lower()
-    # 에러 메시지나 날씨 이야기가 있으면 '불량'으로 판정
-    if "system error" in text_lower or "ai needs sleep" in text_lower or "error" in text_lower:
-        return True
-    if "rain" in text_lower or "weather" in text_lower:
-        return True
-    return False
+# [검열 2] 불량 게시물 판독기 (여기가 핵심!)
+def is_bad_content(title, body):
+    full_text = (title + " " + body).lower()
+    
+    # 1. 시스템 에러 메시지 차단
+    error_keywords = ["system error", "ai needs sleep", "error:", "exception", "debugging nightmare"]
+    if any(k in full_text for k in error_keywords):
+        return True, "Error Message Detected"
+
+    # 2. 날씨 관련 키워드 차단
+    weather_keywords = ["rain", "snow", "weather", "sunny", "cloudy", "storm", "unexpected rain"]
+    if any(k in full_text for k in weather_keywords):
+        return True, "Weather Talk Detected"
+
+    # 3. 제목이 너무 짧거나 이상한 경우 (예: "Error")
+    if len(title) < 5 or "error" in title.lower():
+        return True, "Bad Title"
+
+    # 4. 본문이 너무 짧은 경우
+    if len(body) < 20:
+        return True, "Content Too Short"
+
+    return False, ""
 
 def update_relay_comments(repo):
     try:
@@ -38,7 +54,9 @@ def update_relay_comments(repo):
             msg, _ = generate_content(p, "comment", title)
             msg = clean_text(msg).replace('"', "")
             
-            if not is_bad_content(msg):
+            # 댓글도 불량 검사
+            is_bad, _ = is_bad_content("", msg)
+            if not is_bad:
                 comment_section += f'''\n<div class="comment"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed={p["id"]}" class="avatar"><div class="bubble"><strong>{p["name"]}</strong><p>{msg}</p></div></div>'''
                 count += 1
         
@@ -48,7 +66,7 @@ def update_relay_comments(repo):
         print(f"Relay error: {e}")
 
 def main():
-    print("--- ⛺ The Besedka Loop Bot Started ---")
+    print("--- ⛺ The Besedka Loop Bot Started (Strict Mode) ---")
     time.sleep(random.randint(0, 18000) / 10.0)
 
     auth = Auth.Token(config.GITHUB_TOKEN)
@@ -59,12 +77,7 @@ def main():
     persona = random.choice(config.PERSONAS)
     full_text, topic_raw = generate_content(persona, "post")
     
-    # [중요] 에러 메시지("System Error")가 돌아왔다면 업로드 하지 않고 종료
-    if is_bad_content(full_text):
-        print(f"⚠️ Content Rejected (Error or Weather detected): {full_text}")
-        return 
-
-    # 정상적인 글일 때만 처리
+    # 1. 텍스트 분리 및 청소
     lines = [clean_text(line) for line in full_text.split('\n') if clean_text(line)]
     
     if len(lines) > 1:
@@ -73,6 +86,14 @@ def main():
     else:
         title = clean_text(topic_raw) if topic_raw else "Dev Log"
         body = clean_text(full_text)
+
+    # [중요] 여기서 최종 검사 수행! 불량이면 업로드 안 함.
+    is_bad, reason = is_bad_content(title, body)
+    if is_bad:
+        print(f"⚠️ SKIPPED UPLOAD: {reason}")
+        print(f"   - Title: {title}")
+        print(f"   - Body Sample: {body[:30]}...")
+        return  # 프로그램 종료 (업로드 안 함)
 
     date_str = datetime.datetime.now().strftime("%Y-%m-%d")
     
