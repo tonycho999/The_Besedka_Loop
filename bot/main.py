@@ -2,16 +2,27 @@ import os
 import random
 import time
 import datetime
-import base64
 from github import Github
 from groq import Groq
 
 # --- 설정 ---
-REPO_NAME = "tonycho999/The_Besedka_Loop"  # 본인 저장소 이름 확인!
-GROQ_API_KEY = os.environ.get("GROQ_API_KEY")
+REPO_NAME = "tonycho999/The_Besedka_Loop"  # 본인 저장소 이름
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
-# 페르소나 데이터 (기존과 동일)
+# [핵심] 4개의 키 중 유효한 것만 리스트에 담기
+API_KEYS = [
+    os.environ.get("GROQ_API_KEY_1"),
+    os.environ.get("GROQ_API_KEY_2"),
+    os.environ.get("GROQ_API_KEY_3"),
+    os.environ.get("GROQ_API_KEY_4")
+]
+VALID_KEYS = [k for k in API_KEYS if k is not None]  # None(등록 안 된 키)은 제외
+
+if not VALID_KEYS:
+    print("Error: No Groq API keys found!")
+    exit(1)
+
+# 페르소나 데이터
 PERSONAS = [
     {"id": "jinwoo", "name": "Jin-woo", "country": "Korea", "role": "DevOps", "style": "cynical but warm, loves soju", "lang": "Korean"},
     {"id": "kenji", "name": "Kenji", "country": "Japan", "role": "Frontend", "style": "polite, nostalgic", "lang": "Japanese"},
@@ -31,8 +42,15 @@ TOPICS = [
     "laptop died", "coding trick", "late night inspiration", "server crash"
 ]
 
+def get_groq_client():
+    """4개의 키 중 하나를 랜덤으로 뽑아 클라이언트 생성"""
+    selected_key = random.choice(VALID_KEYS)
+    # 보안을 위해 키의 일부만 출력 (로그 확인용)
+    print(f"Using API Key ending in ...{selected_key[-4:]}")
+    return Groq(api_key=selected_key)
+
 def generate_text(persona, prompt_type="post", context=""):
-    client = Groq(api_key=GROQ_API_KEY)
+    client = get_groq_client()
     
     if prompt_type == "post":
         topic = random.choice(TOPICS)
@@ -56,41 +74,42 @@ def generate_text(persona, prompt_type="post", context=""):
         return client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model="llama3-70b-8192").choices[0].message.content.strip(), ""
 
 def update_last_post_with_comments(repo):
-    """가장 최근 글을 찾아 댓글을 달아주는 함수"""
+    """가장 최근 글(아직 댓글 없는)을 찾아 댓글 달기"""
     try:
-        # 1. 블로그 폴더의 파일 목록 가져오기
         contents = repo.get_contents("src/pages/blog")
         md_files = [c for c in contents if c.name.endswith('.md')]
         
         if not md_files:
             return
 
-        # 2. 이름순 정렬 (YYYY-MM-DD 포맷이라 이름순=최신순)
+        # 최신순 정렬
         last_file = sorted(md_files, key=lambda x: x.name)[-1]
         
-        # 3. 파일 내용 읽기
         file_content = last_file.decoded_content.decode("utf-8")
         
-        # 이미 댓글이 있으면 패스
+        # 이미 댓글 있으면 패스
         if "class=\"comment-box\"" in file_content:
             print(f"Skipping comments: {last_file.name} already has them.")
             return
 
-        # 4. 작성자 찾기 (본인이 본인 글에 댓글 달면 안 되니까)
+        # 작성자 확인
         current_author_line = [line for line in file_content.split('\n') if "author:" in line]
         current_author_name = "Unknown"
         if current_author_line:
             current_author_name = current_author_line[0].split('"')[1]
 
-        # 5. 댓글 작성자 2명 선정 (작성자 제외)
+        # 댓글 멤버 선정
         candidates = [p for p in PERSONAS if p['name'] != current_author_name]
         commenters = random.sample(candidates, 2)
         
-        # 6. 댓글 생성 및 HTML 조립
         comments_html = '\n\n<div class="comment-box"><h3>💬 Alumni Comments</h3>'
         
-        # 포스트 주제 추측 (제목 라인)
-        post_title = file_content.split('\n')[2].replace('title:', '').strip()
+        # 주제 파악
+        post_title = "Daily Life"
+        for line in file_content.split('\n'):
+            if line.startswith("title:"):
+                post_title = line.replace('title:', '').replace('"', '').strip()
+                break
 
         for c in commenters:
             msg, _ = generate_text(c, "comment", post_title)
@@ -105,7 +124,6 @@ def update_last_post_with_comments(repo):
 """
         comments_html += '</div>'
         
-        # 7. 파일 업데이트 (기존 내용 + 댓글)
         new_content = file_content + comments_html
         repo.update_file(last_file.path, f"Add comments to {last_file.name}", new_content, last_file.sha, branch="main")
         print(f"Updated comments for: {last_file.name}")
@@ -116,15 +134,14 @@ def update_last_post_with_comments(repo):
 def main():
     print("--- Bot Started ---")
 
-    # 1. [확률] 하루 14회 목표 (58% 실행)
+    # 1. [확률] 58% 확률로 실행
     if random.random() > 0.58:
         print("Skipping execution (Random probability check).")
         return
 
-    # 2. [대기] 0~30분 사이 100ms 단위 랜덤 대기
-    # 30분 = 1800초 = 18000 * 100ms
+    # 2. [대기] 0.1초 단위 정밀 랜덤 대기 (0~30분)
     delay_units = random.randint(0, 18000)
-    delay_seconds = delay_units / 10.0  # 예: 1234.5초
+    delay_seconds = delay_units / 10.0
     
     print(f"Sleeping for {delay_seconds} seconds...")
     time.sleep(delay_seconds)
@@ -133,22 +150,20 @@ def main():
     g = Github(GITHUB_TOKEN)
     repo = g.get_repo(REPO_NAME)
 
-    # 4. [선행 작업] 이전 글에 댓글 달기
+    # 4. 이전 글 댓글 달기
     update_last_post_with_comments(repo)
 
-    # 5. [메인 작업] 새 글 작성 (댓글 없이)
+    # 5. 새 글 작성
     persona = random.choice(PERSONAS)
     print(f"Selected Persona for new post: {persona['name']}")
     
     title, body, topic = generate_text(persona, "post")
     
-    # 이미지 생성 URL
     image_prompt = f"{topic}, {persona['country']} vibe, cinematic lighting, 4k"
     image_url = f"https://image.pollinations.ai/prompt/{image_prompt.replace(' ', '%20')}?width=800&height=400&nologo=true"
     
     date_str = datetime.datetime.now().strftime("%Y-%m-%d")
     
-    # 마크다운 조립 (댓글 섹션 없음!)
     md_content = f"""---
 layout: ../../layouts/BlogPostLayout.astro
 title: "{title.replace('"', "'")}"
@@ -162,7 +177,6 @@ location: "{persona['country']}"
 {body}
 """
 
-    # 6. 파일 업로드
     file_name = f"src/pages/blog/{date_str}-{persona['id']}-{random.randint(1000,9999)}.md"
     try:
         repo.create_file(file_name, f"New post by {persona['name']}", md_content, branch="main")
