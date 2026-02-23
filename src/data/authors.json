@@ -1,0 +1,12 @@
+[
+  { "id": "jinwoo", "name": "Jin-woo", "role": "DevOps", "country": "🇰🇷 Korea", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=jinwoo" },
+  { "id": "kenji", "name": "Kenji", "role": "Frontend", "country": "🇯🇵 Japan", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=kenji" },
+  { "id": "wei", "name": "Wei", "role": "AI Dev", "country": "🇨🇳 China", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=wei" },
+  { "id": "budi", "name": "Budi", "role": "Backend", "country": "🇮🇩 Indonesia", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=budi" },
+  { "id": "carlos", "name": "Carlos", "role": "Mobile App", "country": "🇪🇸 Spain", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=carlos" },
+  { "id": "lena", "name": "Lena", "role": "Web Dev", "country": "🇩🇪 Germany", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=lena" },
+  { "id": "amelie", "name": "Amélie", "role": "UI/UX", "country": "🇫🇷 France", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=amelie" },
+  { "id": "hina", "name": "Hina", "role": "Illustrator", "country": "🇯🇵 Japan", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=hina" },
+  { "id": "sarah", "name": "Sarah", "role": "Graphic Des", "country": "🇰🇷 Korea", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=sarah" },
+  { "id": "marco", "name": "Marco", "role": "Publisher", "country": "🇫🇷 France", "image": "https://api.dicebear.com/7.x/avataaars/svg?seed=marco" }
+]
