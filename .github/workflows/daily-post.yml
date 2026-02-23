@@ -1,0 +1,33 @@
+name: Daily Besedka Bot
+
+on:
+#  schedule:
+    # 매일 UTC 00:00 (한국 시간 오전 9시)에 실행
+#    - cron: '0 0 * * *'
+  workflow_dispatch: # 수동으로 버튼 눌러서 실행 가능
+
+jobs:
+  write-post:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # 봇이 저장소에 글을 쓸 권한 부여
+      
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.9'
+
+      - name: Install dependencies
+        run: |
+          pip install -r bot/requirements.txt
+
+      - name: Run Bot Script
+        env:
+          GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          python bot/main.py
