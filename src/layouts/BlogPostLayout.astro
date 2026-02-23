@@ -2,38 +2,17 @@
 import BaseLayout from './BaseLayout.astro';
 const { frontmatter } = Astro.props;
 
-// 1. 안전장치: frontmatter가 없을 경우를 대비해 기본값 설정
-const post = frontmatter || {};
-const title = post.title || 'No Title';
-const author = post.author || 'Anonymous';
-const date = post.date || '2026-01-01';
-
-// 2. Lyket ID 생성 (제목이 없으면 'untitled'로 생성)
-const safeTitleId = title.replace(/\s+/g, '-').toLowerCase();
-const lyketId = `post-${safeTitleId}`;
+// 게시물 제목을 ID로 사용 (공백을 -로 치환)
+const postId = frontmatter.title.replace(/\s+/g, '-').toLowerCase();
 ---
 
-<BaseLayout title={title}>
-  <script is:inline src="https://unpkg.com/@lyket/widget@latest/dist/lyket.js?apiKey=pt_78d53346933065d706596376510343"></script>
+<BaseLayout title={frontmatter.title}>
 
   <article class="blog-post">
     <header class="post-header">
-      <div class="meta-top">
-        <span class="category">{post.category || 'Daily Log'}</span>
-        <span class="location">📍 {post.location || 'Earth'}</span>
-      </div>
-      
-      <h1>{title}</h1>
-      
-      <div class="author-info">
-        <span class="author-name">Written by <b>{author}</b></span>
-        <span class="post-date">on {date}</span>
-      </div>
-      
-      {post.image && (
-        <img src={post.image} alt={title} class="featured-image" />
-      )}
-      <hr />
+       <h1>{frontmatter.title}</h1>
+       <div class="author-info">Written by <b>{frontmatter.author}</b></div>
+       <hr />
     </header>
 
     <div class="content">
@@ -41,57 +20,91 @@ const lyketId = `post-${safeTitleId}`;
     </div>
 
     <div class="reaction-zone">
-      <h4>How was this signal? (Anonymous)</h4>
-      <div class="buttons-wrapper">
-        <div 
-          data-lyket-type="clap" 
-          data-lyket-id={lyketId}
-          data-lyket-namespace="blog-claps"
-          data-lyket-color-primary="#e74c3c"
-          data-lyket-color-text="#e74c3c"
-        ></div>
+      <h4>이 글에 반응 남기기 (익명)</h4>
+      
+      <div class="buttons-wrapper" id="reaction-buttons">
+        <button onclick={`updateReaction('${postId}', 'likes')`} class="react-btn">
+          👍 좋아요 <span id="count-likes">0</span>
+        </button>
         
-        <div 
-          style="margin-left: 20px;"
-          data-lyket-type="updown" 
-          data-lyket-id={lyketId}
-          data-lyket-namespace="blog-votes"
-          data-lyket-color-primary="#3498db"
-          data-lyket-color-background="#f0f2f5"
-        ></div>
+        <button onclick={`updateReaction('${postId}', 'heart')`} class="react-btn">
+          ❤️ 사랑해요 <span id="count-heart">0</span>
+        </button>
+
+        <button onclick={`updateReaction('${postId}', 'cheer')`} class="react-btn">
+          🔥 응원해 <span id="count-cheer">0</span>
+        </button>
+        
+        <button onclick={`updateReaction('${postId}', 'sad')`} class="react-btn">
+          😢 슬퍼요 <span id="count-sad">0</span>
+        </button>
       </div>
-      <p class="reaction-help">▲ Click to send a signal to {author}</p>
+      <p class="reaction-help">▲ 클릭하면 개발자들에게 큰 힘이 됩니다.</p>
     </div>
+
   </article>
 </BaseLayout>
 
+<script>
+  import { db } from "../lib/firebase";
+  import { doc, updateDoc, setDoc, getDoc, onSnapshot, increment } from "firebase/firestore";
+
+  // 전역 함수로 만들기 위해 window 객체에 할당
+  window.updateReaction = async (postId, type) => {
+    const postRef = doc(db, "posts", postId);
+
+    try {
+      // 1. 문서가 있는지 확인
+      const docSnap = await getDoc(postRef);
+
+      if (!docSnap.exists()) {
+        // 문서가 없으면 새로 만듦 (첫 투표!)
+        await setDoc(postRef, { [type]: 1 });
+      } else {
+        // 문서가 있으면 숫자만 +1 (Atomic Increment)
+        await updateDoc(postRef, {
+          [type]: increment(1)
+        });
+      }
+      
+      // 클릭 효과 (간단한 애니메이션)
+      const btn = document.querySelector(`button[onclick*="${type}"]`);
+      btn.style.transform = "scale(1.2)";
+      setTimeout(() => btn.style.transform = "scale(1)", 200);
+
+    } catch (e) {
+      console.error("Error updating reaction: ", e);
+      alert("오류가 발생했습니다. 잠시 후 다시 시도해주세요.");
+    }
+  };
+
+  // 실시간으로 숫자 업데이트 (남들이 누르는 것도 바로 보임!)
+  const postId = document.querySelector('.react-btn').getAttribute('onclick').split("'")[1];
+  const postRef = doc(db, "posts", postId);
+
+  onSnapshot(postRef, (doc) => {
+    if (doc.exists()) {
+      const data = doc.data();
+      // 각 버튼의 숫자(span)를 DB 값으로 변경
+      if(data.likes) document.getElementById('count-likes').innerText = data.likes;
+      if(data.heart) document.getElementById('count-heart').innerText = data.heart;
+      if(data.cheer) document.getElementById('count-cheer').innerText = data.cheer;
+      if(data.sad) document.getElementById('count-sad').innerText = data.sad;
+    }
+  });
+</script>
+
 <style>
-  .blog-post { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
-  .post-header { text-align: center; margin-bottom: 2rem; }
-  .meta-top { font-size: 0.85rem; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
-  .location { margin-left: 10px; color: #3498db; }
-  h1 { font-size: 2.2rem; margin: 0.5rem 0; color: #2c3e50; line-height: 1.2; }
-  .author-info { font-size: 0.95rem; color: #555; margin-bottom: 1.5rem; }
-  .featured-image { width: 100%; height: auto; border-radius: 8px; margin-top: 1rem; object-fit: cover; max-height: 400px; }
-  hr { border: 0; border-top: 1px solid #eee; margin: 2rem 0; }
-  .content { line-height: 1.8; color: #333; font-size: 1.05rem; }
-  .content h2, .content h3 { color: #2c3e50; margin-top: 2rem; }
-  .content p { margin-bottom: 1.5rem; }
-  .content blockquote { border-left: 4px solid #3498db; margin: 0; padding-left: 1rem; color: #555; font-style: italic; background: #f9f9f9; padding: 1rem; }
+  /* 스타일: 기존 스타일 유지 + 버튼 스타일 추가 */
   .reaction-zone { margin-top: 4rem; padding: 2rem; background: #f8f9fa; border-radius: 12px; text-align: center; border: 1px dashed #cbd5e0; }
-  .reaction-zone h4 { margin: 0 0 1.5rem 0; color: #555; }
-  .buttons-wrapper { display: flex; justify-content: center; align-items: center; gap: 15px; }
-  .reaction-help { font-size: 0.8rem; color: #999; margin-top: 1rem; }
-  :global(.comment-box) { margin-top: 3rem; background: #fff; padding: 0; border-top: 2px solid #f1f1f1; }
-  :global(.comment-box h3) { margin-bottom: 1.5rem; font-size: 1.2rem; color: #333; }
-  :global(.comment) { display: flex; gap: 15px; margin-bottom: 1.5rem; align-items: flex-start; }
-  :global(.comment .avatar) { width: 50px; height: 50px; border-radius: 50%; border: 2px solid #ecf0f1; background: white; object-fit: cover; }
-  :global(.comment .bubble) { background: #f1f3f5; padding: 12px 18px; border-radius: 0 15px 15px 15px; position: relative; max-width: 80%; }
-  :global(.comment .bubble strong) { display: block; font-size: 0.9rem; color: #2c3e50; margin-bottom: 4px; }
-  :global(.comment .bubble p) { margin: 0; font-size: 0.95rem; color: #495057; line-height: 1.5; }
-  @media (max-width: 600px) {
-    .blog-post { padding: 1.5rem; }
-    h1 { font-size: 1.8rem; }
-    :global(.comment .bubble) { max-width: 100%; }
+  .buttons-wrapper { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
+  
+  .react-btn {
+    background: white; border: 1px solid #ddd; padding: 10px 15px; 
+    border-radius: 20px; cursor: pointer; font-size: 1rem; 
+    transition: all 0.2s; display: flex; align-items: center; gap: 5px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
   }
+  .react-btn:hover { background: #eef2f3; transform: translateY(-2px); }
+  .react-btn span { font-weight: bold; color: #3498db; }
 </style>
