@@ -1,0 +1,34 @@
+---
+const { title } = Astro.props;
+---
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>{title} | The Besedka Loop</title>
+    <style>
+      body { font-family: system-ui, sans-serif; margin: 0; background: #f8f9fa; color: #333; }
+      header { background: #2c3e50; color: white; padding: 1rem; text-align: center; }
+      header h1 { margin: 0; font-size: 1.5rem; }
+      nav { margin-top: 10px; }
+      nav a { color: #ddd; margin: 0 10px; text-decoration: none; }
+      main { max-width: 800px; margin: 2rem auto; padding: 0 1rem; }
+      footer { text-align: center; padding: 2rem; color: #666; font-size: 0.8rem; margin-top: 3rem; border-top: 1px solid #eee; }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>⛺ The Besedka Loop</h1>
+      <nav>
+        <a href="/">Home</a>
+        <a href="#">About 10</a>
+      </nav>
+    </header>
+    <main>
+      <slot />
+    </main>
+    <footer>
+      <p>© 2026 The Besedka Loop. 10 Friends, 7 Countries, 1 Story.</p>
+    </footer>
+  </body>
+</html>
