@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "astro": "^4.0.0",
-    "@astrojs/sitemap": "^3.0.0",
     "@astrojs/rss": "^4.0.0",
     "firebase": "^10.8.0"
   }
