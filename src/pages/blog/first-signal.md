@@ -2,7 +2,7 @@
 layout: ../../layouts/BlogPostLayout.astro
 title: "System Check: Besedka is Online 📡"
 author: "Jin-woo"
-date: "2026-02-24"
+date: "2026-02-22"
 image: "https://images.unsplash.com/photo-1550751827-4bd374c3f58b?auto=format&fit=crop&w=800&q=80"
 category: "Dev Log"
 location: "Seoul, Korea"
