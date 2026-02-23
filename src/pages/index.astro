@@ -2,7 +2,10 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import authors from '../data/authors.json';
 const allPosts = await Astro.glob('./blog/*.md');
+
+// [로직] 최신순 정렬 (내림차순) 후 상위 5개만 자르기
 const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
+const recentPosts = sortedPosts.slice(0, 5);
 ---
 
 <BaseLayout title="Home">
@@ -35,15 +38,19 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
   </section>
 
   <section class="posts-section">
-    <h3>Latest Signals</h3>
-    {sortedPosts.length === 0 ? (
+    <div class="section-header">
+      <h3>Latest Signals</h3>
+      <a href="/archives" class="view-all-btn">View All Archives →</a>
+    </div>
+
+    {recentPosts.length === 0 ? (
       <div class="empty-state">
         <p>📡 Waiting for the first signal...</p>
         <small>(The bot is preparing the first post)</small>
       </div>
     ) : (
       <ul class="post-list">
-        {sortedPosts.map((post) => (
+        {recentPosts.map((post) => (
           <li>
             <a href={post.url}>
               <span class="post-date">{post.frontmatter.date}</span>
@@ -54,6 +61,12 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
         ))}
       </ul>
     )}
+    
+    {sortedPosts.length > 5 && (
+      <div class="more-logs">
+        <a href="/archives">... and {sortedPosts.length - 5} older signals are stored in the Archives.</a>
+      </div>
+    )}
   </section>
 </BaseLayout>
 
@@ -63,7 +76,12 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
   .subtitle { font-size: 1.1rem; color: #555; margin-bottom: 1.5rem; font-weight: 500; }
   .description { color: #7f8c8d; max-width: 600px; margin: 0 auto; font-size: 0.95rem; line-height: 1.6; }
 
-  h3 { border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 20px; color: #34495e; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+  /* 섹션 헤더 스타일 */
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 2px solid #eee; margin-bottom: 20px; padding-bottom: 10px; }
+  h3 { margin: 0; color: #34495e; font-size: 1.2rem; text-transform: uppercase; letter-spacing: 1px; }
+  
+  .view-all-btn { font-size: 0.9rem; color: #3498db; text-decoration: none; font-weight: 600; padding-bottom: 2px; }
+  .view-all-btn:hover { text-decoration: underline; }
 
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(100px, 1fr)); gap: 1rem; margin-bottom: 3rem; }
   .card { background: white; padding: 1rem 0.5rem; border-radius: 8px; text-align: center; transition: transform 0.2s; border: 1px solid #eee; }
@@ -72,7 +90,6 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
   .avatar-wrapper { position: relative; width: 60px; height: 60px; margin: 0 auto 10px; }
   .avatar-wrapper img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #ecf0f1; }
   .flag { position: absolute; bottom: 0; right: -5px; font-size: 1.2rem; filter: drop-shadow(0 2px 2px rgba(0,0,0,0.2)); }
-  
   .info strong { display: block; font-size: 0.9rem; color: #2c3e50; }
   .info .role { display: block; font-size: 0.75rem; color: #95a5a6; margin-top: 2px; }
 
@@ -84,4 +101,8 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
   .post-title { font-weight: bold; flex-grow: 1; }
   .post-date { font-size: 0.8rem; color: #999; min-width: 80px; }
   .post-author { font-size: 0.8rem; background: #ecf0f1; padding: 2px 8px; border-radius: 12px; color: #555; }
+  
+  .more-logs { text-align: center; margin-top: 2rem; font-size: 0.9rem; }
+  .more-logs a { color: #7f8c8d; text-decoration: none; border-bottom: 1px dashed #bdc3c7; }
+  .more-logs a:hover { color: #3498db; border-bottom-style: solid; }
 </style>
