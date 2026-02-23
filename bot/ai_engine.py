@@ -12,47 +12,46 @@ def generate_content(persona, type="post", context=""):
         prompt = ""
         
         if type == "post":
-            # [랜덤 결정] 오늘은 긴 글을 쓸까? (30% 확률)
-            is_long_post = random.random() < 0.3
+            # [랜덤] 30% 확률로 '사생활(Life)' 모드 발동
+            mode = "life" if random.random() < 0.3 else "dev"
             
-            if is_long_post:
-                # [긴 글 모드]
-                length_instruction = """
-                - LENGTH: Long and detailed (10-15 sentences).
-                - CONTENT: Tell a specific story about a coding problem, a tech philosophy, or a workspace incident.
-                - TONE: Thoughtful, storytelling, immersive.
+            if mode == "life":
+                # [사생활 모드] 코딩 이야기 금지!
+                topic_instruction = """
+                - TOPICS: Gaming (Steam, Console), Late night snacks (Ramen, Pizza), Gym/Workout, 
+                          Netflix/Movies, Cat/Dog, Traffic jam, Just tired, Weekend plans.
+                - STRICT RULE: Do NOT talk about coding, bugs, or servers. Just behave like a human.
+                - TONE: Casual, short, funny, or emotional.
                 """
-                topic_instruction = "TOPICS: Refactoring legacy code, Learning Rust/Go, Burnout & Recovery, Open Source contribution, Team conflict resolution."
-                print("   📝 Mode: Long Essay")
+                print("   🍺 Mode: Private Life (No Coding)")
+                
             else:
-                # [짧은 글 모드]
-                length_instruction = """
-                - LENGTH: Very short and quick (3-4 sentences).
-                - CONTENT: Just a quick status update or a fleeting thought.
-                - TONE: Casual, murmuring, minimalist.
+                # [개발 모드] 기존 유지
+                topic_instruction = """
+                - TOPICS: Coding bugs, Server crash, New framework, Coffee, Late night coding, Git issues.
+                - TONE: Professional but tired, geeky.
                 """
-                topic_instruction = "TOPICS: Coding bugs, Coffee, Late night work, Server crash, Simple Git issues."
-                print("   📝 Mode: Short Log")
+                print("   💻 Mode: Dev Log")
 
             prompt = f"""
-            You are {persona['name']}, a developer from {persona['country']}.
-            Write a blog post diary (Daily Log).
+            You are {persona['name']}, living in {persona['country']}.
+            Write a short blog post diary (Daily Log).
             
-            [STRICT RULES]
-            1. NEVER mention weather (No rain, sun, wind, snow).
+            [RULES]
+            1. NEVER mention weather (No rain, sun, snow).
             2. {topic_instruction}
-            3. {length_instruction}
-            4. FORMAT: 
+            3. FORMAT: 
                - First line: Creative Title (No quotes)
-               - Second line onwards: Content.
-            5. Do NOT start with symbols like ',' or '.'.
+               - Second line onwards: Content (3-4 sentences).
+            4. Do NOT start with symbols like ',' or '.'.
             """
         
         elif type == "comment":
+            # 댓글도 상황에 따라 사적인 반응 허용
             prompt = f"""
-            You are {persona['name']}, a developer.
+            You are {persona['name']}.
             Write a 1-sentence comment on the post: "{context}".
-            Casual tone, no weather talk. React like a colleague.
+            Tone: Casual, friendly, like a real friend.
             """
 
         # 2. Groq API 호출
@@ -66,7 +65,7 @@ def generate_content(persona, type="post", context=""):
 
         if type == "post":
             lines = full_text.split('\n')
-            topic = lines[0] if lines else "Dev Log"
+            topic = lines[0] if lines else "Daily Log"
             return full_text, topic
             
         return full_text, ""
