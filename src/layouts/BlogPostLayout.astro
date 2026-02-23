@@ -2,14 +2,16 @@
 import BaseLayout from './BaseLayout.astro';
 const { frontmatter } = Astro.props;
 
-// 1. Safety Check: Default values if metadata is missing
+// 1. Safety Check
 const post = frontmatter || {};
 const title = post.title || 'No Title';
 const author = post.author || 'Anonymous';
 const date = post.date || '2026-01-01';
 
-// 2. Generate Post ID (Replace spaces with hyphens)
-const postId = title.replace(/\s+/g, '-').toLowerCase();
+// 2. Generate Unique Post ID (Remove special chars & spaces -> hyphens)
+// e.g. "Hello World!" -> "hello-world"
+const safeTitle = title.replace(/[^\w\s]/gi, '').replace(/\s+/g, '-').toLowerCase();
+const postId = `${safeTitle}`; 
 ---
 
 <BaseLayout title={title}>
@@ -41,22 +43,22 @@ const postId = title.replace(/\s+/g, '-').toLowerCase();
       <h4>How was this signal? (Anonymous)</h4>
       <p class="reaction-desc">No login required. Just click to share your vibe.</p>
       
-      <div class="buttons-wrapper" id="reaction-buttons" data-post-id={postId}>
+      <div class="buttons-wrapper" data-post-id={postId}>
         
         <button class="react-btn" data-type="likes">
-          👍 Like <span class="count" id="count-likes">0</span>
+          👍 Like <span class="count" data-count-type="likes">0</span>
         </button>
         
         <button class="react-btn" data-type="heart">
-          ❤️ Love <span class="count" id="count-heart">0</span>
+          ❤️ Love <span class="count" data-count-type="heart">0</span>
         </button>
 
         <button class="react-btn" data-type="cheer">
-          🔥 Fire <span class="count" id="count-cheer">0</span>
+          🔥 Fire <span class="count" data-count-type="cheer">0</span>
         </button>
         
         <button class="react-btn" data-type="sad">
-          😢 Sad <span class="count" id="count-sad">0</span>
+          😢 Sad <span class="count" data-count-type="sad">0</span>
         </button>
 
       </div>
@@ -69,7 +71,7 @@ const postId = title.replace(/\s+/g, '-').toLowerCase();
   import { initializeApp } from "firebase/app";
   import { getFirestore, doc, setDoc, updateDoc, onSnapshot, increment, getDoc } from "firebase/firestore";
 
-  // 1. Firebase Configuration
+  // Firebase Configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAs0haGNTLr4pFsMt8ogdPoY6KDEFuRwL0",
     authDomain: "the-besedka-loop.firebaseapp.com",
@@ -80,58 +82,65 @@ const postId = title.replace(/\s+/g, '-').toLowerCase();
     measurementId: "G-HL8JJ5WYVK"
   };
 
-  // 2. Initialize Firebase
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const db = getFirestore(app);
 
-  // 3. Get Current Post ID
-  const wrapper = document.getElementById('reaction-buttons');
-  const postId = wrapper.dataset.postId;
-  const postRef = doc(db, "posts", postId);
+  // Logic: Handle reactions for this specific post
+  const wrappers = document.querySelectorAll('.buttons-wrapper');
 
-  // 4. [Read] Realtime Listener
-  onSnapshot(postRef, (docSnap) => {
-    if (docSnap.exists()) {
-      const data = docSnap.data();
-      if (data.likes) document.getElementById('count-likes').innerText = data.likes;
-      if (data.heart) document.getElementById('count-heart').innerText = data.heart;
-      if (data.cheer) document.getElementById('count-cheer').innerText = data.cheer;
-      if (data.sad) document.getElementById('count-sad').innerText = data.sad;
-    }
-  });
+  wrappers.forEach(wrapper => {
+    // Get the unique Post ID from HTML
+    const postId = wrapper.dataset.postId;
+    if (!postId) return;
 
-  // 5. [Write] Handle Click
-  const buttons = document.querySelectorAll('.react-btn');
-  buttons.forEach(btn => {
-    btn.addEventListener('click', async () => {
-      const type = btn.dataset.type;
+    const postRef = doc(db, "posts", postId);
 
-      // Click Animation
-      btn.style.transform = "scale(1.2)";
-      setTimeout(() => btn.style.transform = "scale(1)", 200);
-
-      try {
-        const docSnap = await getDoc(postRef);
-        
-        if (!docSnap.exists()) {
-          // Create new doc if not exists
-          await setDoc(postRef, { [type]: 1 });
-        } else {
-          // Increment count
-          await updateDoc(postRef, {
-            [type]: increment(1)
-          });
-        }
-      } catch (error) {
-        console.error("Error updating count:", error);
-        alert("Temporary error. Please try again.");
+    // 1. [Read] Real-time updates
+    onSnapshot(postRef, (docSnap) => {
+      if (docSnap.exists()) {
+        const data = docSnap.data();
+        // Update numbers only within this wrapper
+        const counts = wrapper.querySelectorAll('.count');
+        counts.forEach(span => {
+          const type = span.dataset.countType;
+          if (data[type]) span.innerText = data[type];
+        });
       }
+    });
+
+    // 2. [Write] Click Event
+    const buttons = wrapper.querySelectorAll('.react-btn');
+    buttons.forEach(btn => {
+      btn.addEventListener('click', async () => {
+        const type = btn.dataset.type;
+        
+        // Animation
+        btn.style.transform = "scale(1.2)";
+        setTimeout(() => btn.style.transform = "scale(1)", 200);
+
+        try {
+          const docSnap = await getDoc(postRef);
+          
+          if (!docSnap.exists()) {
+            // Create new doc (First reaction)
+            await setDoc(postRef, { [type]: 1 });
+          } else {
+            // Increment existing doc
+            await updateDoc(postRef, {
+              [type]: increment(1)
+            });
+          }
+        } catch (error) {
+          console.error("Error updating reaction:", error);
+        }
+      });
     });
   });
 </script>
 
 <style>
-  /* --- Blog Post Styles --- */
+  /* Blog Layout Styles */
   .blog-post { background: white; padding: 2rem; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
 
   /* Header */
@@ -149,7 +158,7 @@ const postId = title.replace(/\s+/g, '-').toLowerCase();
   .content p { margin-bottom: 1.5rem; }
   .content blockquote { border-left: 4px solid #3498db; margin: 0; padding-left: 1rem; color: #555; font-style: italic; background: #f9f9f9; padding: 1rem; }
 
-  /* --- Reaction Zone Styles --- */
+  /* Reaction Zone */
   .reaction-zone { margin-top: 4rem; padding: 2rem; background: #f8f9fa; border-radius: 12px; text-align: center; border: 1px dashed #cbd5e0; }
   .reaction-zone h4 { margin: 0 0 0.5rem 0; color: #555; }
   .reaction-desc { font-size: 0.9rem; color: #999; margin-bottom: 1.5rem; }
@@ -167,7 +176,7 @@ const postId = title.replace(/\s+/g, '-').toLowerCase();
   .react-btn:active { transform: scale(0.95); }
   .react-btn span.count { font-weight: bold; color: #3498db; background: #eaf6ff; padding: 2px 8px; border-radius: 10px; font-size: 0.9rem; }
 
-  /* --- Fake Comments Styles (Markdown) --- */
+  /* Fake Comments (Markdown HTML) Support */
   :global(.comment-box) { margin-top: 3rem; background: #fff; padding: 0; border-top: 2px solid #f1f1f1; }
   :global(.comment-box h3) { margin-bottom: 1.5rem; font-size: 1.2rem; color: #333; }
   :global(.comment) { display: flex; gap: 15px; margin-bottom: 1.5rem; align-items: flex-start; }
