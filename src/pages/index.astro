@@ -1,0 +1,36 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import authors from '../data/authors.json';
+---
+
+<BaseLayout title="Home">
+  <div class="intro">
+    <h2>Welcome to Global Besedka</h2>
+    <p>7개국 10명의 동료들이 보내오는 일상 신호 📡</p>
+  </div>
+
+  <h3>Meet The Alumni</h3>
+  <div class="grid">
+    {authors.map((author) => (
+      <div class="card">
+        <img src={author.image} alt={author.name} />
+        <div class="info">
+          <strong>{author.name}</strong>
+          <span>{author.country}</span>
+          <small>{author.role}</small>
+        </div>
+      </div>
+    ))}
+  </div>
+
+  <style>
+    .intro { text-align: center; margin-bottom: 3rem; }
+    .intro h2 { color: #2c3e50; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 1rem; }
+    .card { background: white; padding: 1rem; border-radius: 8px; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+    .card img { width: 60px; height: 60px; border-radius: 50%; margin-bottom: 10px; }
+    .info strong { display: block; }
+    .info span { display: block; font-size: 0.8rem; color: #666; }
+    .info small { display: block; font-size: 0.7rem; color: #888; margin-top: 5px; }
+  </style>
+</BaseLayout>
