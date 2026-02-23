@@ -18,26 +18,42 @@ class AIEngine:
         except:
             return "llama-3.3-70b-versatile"
 
-def generate_content(persona, prompt_type="post", context=""):
-    client = AIEngine.get_client()
-    model = AIEngine.select_model(client)
-    
-    ad_prompt = ""
-    if config.AD_MODE and prompt_type == "post" and random.random() < 0.2:
-        target = random.choice(config.PROMOTED_SITES)
-        ad_prompt = f"\n[Special Mission] Naturally mention: {target['url']} ({target['desc']})"
+def generate_content(persona, type="post", context=""):
+    try:
+        if type == "post":
+            # [수정] 날씨 금지(Forbidden) 및 개발 관련 주제만 선정
+            prompt = f"""
+            You are {persona['name']}, a developer from {persona['country']}.
+            Write a short blog post diary (Daily Log).
+            
+            [STRICT RULES]
+            1. NEVER mention weather (No rain, sun, wind, snow, temperature).
+            2. TOPICS: Coding bugs, Server crash, New framework, Coffee, Late night coding, Git issues.
+            3. STYLE: Casual, short sentences, like a developer's murmuring.
+            4. FORMAT: 
+               - First line: Title (No quotes)
+               - Second line onwards: Content (3-4 sentences).
+            5. Do NOT start with symbols like ',' or '.'.
+            """
+            
+            response = model.generate_content(prompt)
+            full_text = response.text.strip()
+            
+            # 제목 분리
+            lines = full_text.split('\n')
+            topic = lines[0] if lines else "Dev Log"
+            
+            return full_text, topic
 
-    if prompt_type == "post":
-        topic = random.choice(config.DAILY_TOPICS)
-        sys_prompt = f"""
-        You are {persona['name']}, a {persona['role']}. Style: {persona['style']}.
-        Write a 100-word blog post about: {topic}. {ad_prompt}
-        Language: Mixed {persona['lang']} (70%) and English (30%).
-        Format: First line is TITLE, then a blank line, then the BODY.
-        """
-        raw_text = client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model=model).choices[0].message.content.strip()
-        return raw_text, topic
-    else:
-        sys_prompt = f"You are {persona['name']}. Comment on '{context}' in one natural sentence. Style: {persona['style']}."
-        comment_text = client.chat.completions.create(messages=[{"role": "user", "content": sys_prompt}], model=model).choices[0].message.content.strip()
-        return comment_text, ""
+        elif type == "comment":
+            prompt = f"""
+            You are {persona['name']}, a developer.
+            Write a 1-sentence comment on the post: "{context}".
+            Casual tone, no weather talk.
+            """
+            response = model.generate_content(prompt)
+            return response.text.strip(), ""
+
+    except Exception as e:
+        print(f"AI Error: {e}")
+        return "System Error: AI needs sleep.", "Error"
