@@ -6,10 +6,21 @@ const { title } = Astro.props;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <meta name="google-site-verification" content="DH63NsFaoB_Vb_mnoq8fNircDFilQwQ5a_nnCYSEiL4" />
+    
     <title>{title || 'The Besedka Loop'}</title>
+    
     <style>
       /* Global Styles */
-      body { font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; background: #f8f9fa; color: #333; line-height: 1.6; }
+      body { 
+        font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; 
+        margin: 0; 
+        background: #f8f9fa; 
+        color: #333; 
+        line-height: 1.6; 
+        display: flex; 
+        flex-direction: column; 
+        min-height: 100vh; /* 푸터를 항상 바닥에 고정 */
+      }
       
       header { background: #2c3e50; color: white; padding: 1rem; text-align: center; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
       header h1 { margin: 0; font-size: 1.5rem; letter-spacing: 1px; }
@@ -19,10 +30,25 @@ const { title } = Astro.props;
       nav a { color: #bdc3c7; margin: 0 10px; text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
       nav a:hover { color: white; }
       
-      main { max-width: 850px; margin: 2rem auto; padding: 0 1.5rem; }
+      main { max-width: 850px; margin: 2rem auto; padding: 0 1.5rem; flex: 1; width: 100%; box-sizing: border-box; }
       
-      footer { text-align: center; padding: 3rem 1rem; color: #7f8c8d; font-size: 0.85rem; border-top: 1px solid #e0e0e0; margin-top: 4rem; }
-      footer b { color: #2c3e50; }
+      /* --- Footer Styles (Mystery Concept) --- */
+      footer { 
+        text-align: center; 
+        padding: 4rem 1rem; 
+        color: #95a5a6; 
+        font-size: 0.85rem; 
+        border-top: 1px solid #e0e0e0; 
+        margin-top: auto; 
+        background: #fff; 
+      }
+      footer b { color: #2c3e50; font-weight: 600; }
+      footer .tagline { 
+        margin-top: 8px; 
+        font-family: 'Georgia', serif; 
+        font-style: italic; 
+        color: #bdc3c7; 
+      }
     </style>
   </head>
   <body>
@@ -34,13 +60,17 @@ const { title } = Astro.props;
         <a href="/about">About</a>
       </nav>
     </header>
+    
     <main>
       <slot />
     </main>
+
     <footer>
       <p>
-        <b>The Besedka Loop</b> &copy; 2026<br>
-        10 Friends, 7 Countries, One Shared Story.
+        &copy; {new Date().getFullYear()} <b>The Besedka Loop</b>. All rights reserved.
+      </p>
+      <p class="tagline">
+        Recorded in 7 Time Zones. Shared in One.
       </p>
     </footer>
   </body>
