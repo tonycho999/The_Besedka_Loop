@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import authors from '../data/authors.json';
-// 나중에 실제 블로그 글이 생기면 이 부분이 작동합니다. 지금은 빈 배열로 둡니다.
 const allPosts = await Astro.glob('./blog/*.md');
 const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf() - new Date(a.frontmatter.date).valueOf());
 ---
@@ -17,7 +16,7 @@ const sortedPosts = allPosts.sort((a, b) => new Date(b.frontmatter.date).valueOf
     </p>
   </section>
 
-  <section class="alumni-section">
+  <section class="alumni-section" id="alumni">
     <h3>Meet The Alumni</h3>
     <div class="grid">
       {authors.map((author) => (
