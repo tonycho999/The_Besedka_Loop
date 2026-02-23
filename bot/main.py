@@ -21,7 +21,8 @@ def update_relay_comments(repo):
         comment_section = '\n\n<div class="comment-box"><h3>💬 Alumni Comments</h3>'
         for p in random.sample([p for p in config.PERSONAS if p['name'] != author], 2):
             msg, _ = generate_content(p, "comment", title)
-            comment_section += f'\n<div class="comment"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed={p["id"]}" class="avatar"><div class="bubble"><strong>{p["name"]}</strong><p>{msg.replace('"', "")}</p></div></div>'
+            # [수정됨] f-string 충돌 방지를 위해 삼중 따옴표(''' ''') 사용
+            comment_section += f'''\n<div class="comment"><img src="https://api.dicebear.com/7.x/avataaars/svg?seed={p["id"]}" class="avatar"><div class="bubble"><strong>{p["name"]}</strong><p>{msg.replace('"', "")}</p></div></div>'''
         
         repo.update_file(last_file.path, f"Relay comments", content + comment_section + '</div>', last_file.sha, branch="main")
     except Exception as e: print(f"Relay error: {e}")
