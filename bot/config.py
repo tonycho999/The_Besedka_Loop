@@ -1,38 +1,73 @@
 import os
 
-# 광고 및 홍보 설정
-AD_MODE = False  # 광고 활성화 여부
+# ==========================================
+# 1. 광고 및 홍보 설정 (Native Ad System)
+# ==========================================
+AD_MODE = False  # True로 변경 시, 게시글에 자연스러운 PPL이 포함됩니다.
+
 PROMOTED_SITES = [
     {
+        "name": "Matzip Finder", # 서비스 이름
         "url": "https://your-site-A.com", 
-        "desc": "가성비 최고의 맛집 검색 서비스"
+        "desc": "finding cheap and delicious local restaurants", # AI가 이해할 설명 (영어 권장)
+        "context": "when talking about lunch, dinner, or hungry moments" # 언제 언급할지 힌트
     },
     {
+        "name": "DevTool Pro",
         "url": "https://your-site-B.com", 
-        "desc": "개발자 생산성을 높여주는 유용한 도구"
+        "desc": "boosting developer productivity with AI",
+        "context": "when complaining about bugs or slow coding"
     }
 ]
 
-# GitHub 설정
+# ==========================================
+# 2. GitHub 설정
+# ==========================================
 REPO_NAME = "tonycho999/The_Besedka_Loop"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
-# Groq API 키 로테이션
-API_KEYS = [os.environ.get(f"GROQ_API_KEY_{i}") for i in range(1, 5)]
-VALID_KEYS = [k for k in API_KEYS if k]
-
-# 페르소나 데이터
+# ==========================================
+# 3. 페르소나 (10인)
+# ==========================================
 PERSONAS = [
-    {"id": "jinwoo", "name": "Jin-woo", "country": "Korea", "role": "DevOps", "style": "cynical but warm, loves soju", "lang": "Korean"},
-    {"id": "kenji", "name": "Kenji", "country": "Japan", "role": "Frontend", "style": "polite, nostalgic", "lang": "Japanese"},
-    {"id": "wei", "name": "Wei", "country": "China", "role": "AI Dev", "style": "ambitious, tech-focused", "lang": "Chinese"},
-    {"id": "budi", "name": "Budi", "country": "Indonesia", "role": "Backend", "style": "relaxed, loves coffee", "lang": "Indonesian"},
-    {"id": "carlos", "name": "Carlos", "country": "Spain", "role": "Mobile App", "style": "passionate, loud", "lang": "Spanish"},
-    {"id": "lena", "name": "Lena", "country": "Germany", "role": "Web Dev", "style": "logical, direct", "lang": "German"},
-    {"id": "amelie", "name": "Amélie", "country": "France", "role": "UI/UX", "style": "artistic, poetic", "lang": "French"},
-    {"id": "hina", "name": "Hina", "country": "Japan", "role": "Illustrator", "style": "cute, emotional", "lang": "Japanese"},
-    {"id": "sarah", "name": "Sarah", "country": "Korea", "role": "Graphic Des", "style": "trendy, hip", "lang": "Korean"},
-    {"id": "marco", "name": "Marco", "country": "France", "role": "Publisher", "style": "gourmet, perfectionist", "lang": "French"},
+    {"id": "jinwoo", "name": "Jin-woo", "role": "DevOps", "style": "cynical, loves soju, hates legacy", "lang": "Korean"},
+    {"id": "kenji", "name": "Kenji", "role": "Frontend", "style": "polite, nostalgic, detail-obsessed", "lang": "Japanese"},
+    {"id": "wei", "name": "Wei", "role": "AI Researcher", "style": "ambitious, tech-focused, dry humor", "lang": "Chinese"},
+    {"id": "budi", "name": "Budi", "role": "Backend", "style": "relaxed, coffee addict, peace-maker", "lang": "Indonesian"},
+    {"id": "carlos", "name": "Carlos", "role": "Mobile App", "style": "passionate, loud, chaotic", "lang": "Spanish"},
+    {"id": "lena", "name": "Lena", "role": "Security", "style": "logical, direct, paranoid", "lang": "German"},
+    {"id": "amelie", "name": "Amélie", "role": "UI/UX", "style": "artistic, sensitive, hates bad kerning", "lang": "French"},
+    {"id": "hina", "name": "Hina", "role": "Illustrator", "style": "cute, emotional, uses lots of emojis", "lang": "Japanese"},
+    {"id": "sarah", "name": "Sarah", "role": "Product Manager", "style": "trendy, hip, social butterfly", "lang": "Korean"},
+    {"id": "marco", "name": "Marco", "role": "CTO", "style": "gourmet, perfectionist, slightly arrogant", "lang": "French"},
 ]
 
-DAILY_TOPICS = ["debugging nightmare", "unexpected rain", "new framework", "team missing", "local food", "laptop died", "late night inspiration"]
+# ==========================================
+# 4. 콘텐츠 비율 (Hyper-Realism)
+# ==========================================
+CONTENT_CATEGORIES = {
+    "life": {"ratio": 0.3, "desc": "Netflix, snacks, gym, hobbies (No work talk, casual)"},
+    "relation": {"ratio": 0.4, "desc": "Teasing, joking, debating, or venting about colleagues"},
+    "work_rant": {"ratio": 0.1, "desc": "Legacy code, server crash, bugs, deadlines (Short & angry)"},
+    "info": {"ratio": 0.2, "desc": "New gadgets, tech news, useful tools, keyboard flex"}
+}
+
+# ==========================================
+# 5. 대화 주제 (Seed Topics)
+# ==========================================
+TOPICS = [
+    "Tabs vs Spaces", "Vim vs VSCode", "Mac vs Windows", "Dark mode vs Light mode", 
+    "expensive keyboard delivery", "drinking alone", "camping fail", "new cat tower", 
+    "internet down", "blue screen", "forgot semicolon", "deployment fail",
+    "Bitcoin crash", "Bitcoin to the moon", "Boss acting like Marco"
+]
+
+# ==========================================
+# 6. 시스템 상수
+# ==========================================
+AFFINITY_MIN = 50
+AFFINITY_MAX = 90
+DEFAULT_AFFINITY = 70
+HISTORY_LIMIT = 15
+VACATION_CHANCE = 0.01
+SICK_CHANCE = 0.02
