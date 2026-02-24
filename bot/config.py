@@ -1,16 +1,24 @@
 import os
 
 # ==========================================
-# 1. 광고 및 홍보 설정 (Native Ad System)
+# 1. API 키 설정 (model_selector.py용)
 # ==========================================
-AD_MODE = False  # True로 변경 시, 게시글에 자연스러운 PPL이 포함됩니다.
+# Groq API 키 로테이션 (1~4번)
+# model_selector.py에서 config.VALID_KEYS를 참조하므로 변수명 유지 필수
+_raw_keys = [os.environ.get(f"GROQ_API_KEY_{i}") for i in range(1, 5)]
+VALID_KEYS = [k for k in _raw_keys if k]  # None이나 빈 문자열 제거
+
+# ==========================================
+# 2. 광고 및 홍보 설정 (Native Ad System)
+# ==========================================
+AD_MODE = False  # True로 변경 시, 자연스러운 PPL 포함
 
 PROMOTED_SITES = [
     {
-        "name": "Matzip Finder", # 서비스 이름
+        "name": "Matzip Finder", 
         "url": "https://your-site-A.com", 
-        "desc": "finding cheap and delicious local restaurants", # AI가 이해할 설명 (영어 권장)
-        "context": "when talking about lunch, dinner, or hungry moments" # 언제 언급할지 힌트
+        "desc": "finding cheap and delicious local restaurants", 
+        "context": "when talking about lunch, dinner, or hungry moments"
     },
     {
         "name": "DevTool Pro",
@@ -21,13 +29,13 @@ PROMOTED_SITES = [
 ]
 
 # ==========================================
-# 2. GitHub 설정
+# 3. GitHub 설정
 # ==========================================
 REPO_NAME = "tonycho999/The_Besedka_Loop"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 # ==========================================
-# 3. 페르소나 (10인)
+# 4. 페르소나 (10인)
 # ==========================================
 PERSONAS = [
     {"id": "jinwoo", "name": "Jin-woo", "role": "DevOps", "style": "cynical, loves soju, hates legacy", "lang": "Korean"},
@@ -43,7 +51,7 @@ PERSONAS = [
 ]
 
 # ==========================================
-# 4. 콘텐츠 비율 (Hyper-Realism)
+# 5. 콘텐츠 비율
 # ==========================================
 CONTENT_CATEGORIES = {
     "life": {"ratio": 0.3, "desc": "Netflix, snacks, gym, hobbies (No work talk, casual)"},
@@ -53,17 +61,17 @@ CONTENT_CATEGORIES = {
 }
 
 # ==========================================
-# 5. 대화 주제 (Seed Topics)
+# 6. 대화 주제 (Seed Topics)
 # ==========================================
 TOPICS = [
     "Tabs vs Spaces", "Vim vs VSCode", "Mac vs Windows", "Dark mode vs Light mode", 
     "expensive keyboard delivery", "drinking alone", "camping fail", "new cat tower", 
     "internet down", "blue screen", "forgot semicolon", "deployment fail",
-    "Bitcoin crash", "Bitcoin to the moon", "Boss acting like Marco"
+    "Bitcoin crash", "Bitcoin to the moon", "Boss acting like Marco", "Anonymous post found"
 ]
 
 # ==========================================
-# 6. 시스템 상수
+# 7. 시스템 상수
 # ==========================================
 AFFINITY_MIN = 50
 AFFINITY_MAX = 90
