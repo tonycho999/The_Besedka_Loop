@@ -7,7 +7,6 @@ from github import Github, Auth
 
 import config
 from ai_engine import generate_post
-
 from model_selector import get_client, get_dynamic_model
 
 load_dotenv()
@@ -15,14 +14,14 @@ load_dotenv()
 # ==========================================
 # [설정] 파일 경로 및 저장소 설정
 # ==========================================
-# [수정됨] pages 안의 blog 폴더로 지정
-POST_DIR = "pages/blog" 
+# 사용자님 스크린샷 기반 정확한 경로
+POST_DIR = "src/pages/blog" 
 
 STATUS_FILE = "status.json"
 HISTORY_FILE = "history.json"
 
 # ==========================================
-# 1. GitHub 파일 입출력 함수 (영구 기억)
+# 1. GitHub 파일 입출력 함수
 # ==========================================
 def get_github_repo():
     """GitHub 저장소 객체 반환"""
@@ -40,7 +39,7 @@ def load_data_from_github(repo, filename, default_data):
         json_str = contents.decoded_content.decode("utf-8")
         return json.loads(json_str)
     except Exception as e:
-        print(f"⚠️ GitHub에서 {filename} 로드 실패 (새로 생성합니다): {e}")
+        print(f"⚠️ {filename} 로드 실패 (새로 시작): {e}")
         return default_data
 
 def save_data_to_github(repo, filename, data, message):
@@ -51,23 +50,11 @@ def save_data_to_github(repo, filename, data, message):
         
         try:
             contents = repo.get_contents(filename)
-            repo.update_file(
-                path=contents.path,
-                message=message,
-                content=json_str,
-                sha=contents.sha,
-                branch="main"
-            )
-            print(f"💾 {filename} 저장 완료 (Update)")
+            repo.update_file(contents.path, message, json_str, contents.sha, branch="main")
+            print(f"💾 {filename} 업데이트 완료")
         except:
-            repo.create_file(
-                path=filename,
-                message=message,
-                content=json_str,
-                branch="main"
-            )
-            print(f"💾 {filename} 저장 완료 (Create)")
-            
+            repo.create_file(filename, message, json_str, branch="main")
+            print(f"💾 {filename} 새로 생성 완료")
     except Exception as e:
         print(f"❌ {filename} 저장 실패: {e}")
 
@@ -94,7 +81,6 @@ def main():
         return
 
     # 기억 불러오기
-    print("📥 기억 데이터를 다운로드 중...")
     status_db = load_data_from_github(repo, STATUS_FILE, get_initial_status())
     history_db = load_data_from_github(repo, HISTORY_FILE, [])
     
@@ -110,7 +96,6 @@ def main():
     
     for pid, data in status_db.items():
         if data['return_date'] == today:
-            print(f"✨ {pid}님이 복귀했습니다!")
             data['state'] = "normal"
             data['return_date'] = None
             returner = pid
@@ -145,22 +130,12 @@ def main():
             mode = "reply"
             target_post = random.choice(history_db[-10:])
             candidates = [m for m in active_members if m != target_post['author_id']]
-            if candidates:
-                actor_id = random.choice(candidates)
-            else:
-                mode = "new"
+            if candidates: actor_id = random.choice(candidates)
+            else: mode = "new"
         
         if mode == "new":
             actor_id = random.choice(active_members)
-            r = random.random()
-            cumulative = 0
-            selected_cat_key = "life"
-            for key, val in config.CONTENT_CATEGORIES.items():
-                cumulative += val['ratio']
-                if r <= cumulative:
-                    selected_cat_key = key
-                    break
-            category = config.CONTENT_CATEGORIES[selected_cat_key]
+            category = config.CONTENT_CATEGORIES[random.choice(list(config.CONTENT_CATEGORIES.keys()))]
             topic = random.choice(config.TOPICS)
 
     actor = next(p for p in config.PERSONAS if p['id'] == actor_id)
@@ -196,7 +171,6 @@ def main():
         new_b = max(config.AFFINITY_MIN, min(curr_b + change, config.AFFINITY_MAX))
         status_db[actor_id]['relationships'][target_id] = new_a
         status_db[target_id]['relationships'][actor_id] = new_b
-        print(f"📊 호감도 변경: {change}")
 
     dice = random.random()
     if dice < config.VACATION_CHANCE:
@@ -204,13 +178,13 @@ def main():
         ret_date = datetime.datetime.now() + datetime.timedelta(days=days)
         status_db[actor_id]['state'] = "vacation"
         status_db[actor_id]['return_date'] = ret_date.strftime("%Y-%m-%d")
-        print(f"✈️ {actor['name']} -> 휴가 ({days}일)")
+        print(f"✈️ 휴가: {actor['name']}")
     elif dice < config.VACATION_CHANCE + config.SICK_CHANCE:
         days = random.randint(1, 2)
         ret_date = datetime.datetime.now() + datetime.timedelta(days=days)
         status_db[actor_id]['state'] = "sick"
         status_db[actor_id]['return_date'] = ret_date.strftime("%Y-%m-%d")
-        print(f"🤒 {actor['name']} -> 병가 ({days}일)")
+        print(f"🤒 병가: {actor['name']}")
 
     new_log = {
         "id": datetime.datetime.now().timestamp(),
@@ -232,15 +206,17 @@ def main():
         try:
             safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_")
             
-            # [수정] pages/blog/ 경로로 파일명 생성
+            # [중요] 경로: src/pages/blog
             filename = f"{POST_DIR}/{today}_{safe_title}.md"
             
+            # [중요] Front Matter 수정: image 필드 완전 삭제
             md_content = f"""---
-layout: post
+layout: ../../layouts/BlogPostLayout.astro
 title: "{result['title']}"
-date: {today}
 author: {actor['name']}
-categories: [{actor['role']}]
+date: {today}
+category: Daily Log
+location: {actor['country']}
 ---
 
 {result['content']}
