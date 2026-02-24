@@ -11,19 +11,13 @@ from model_selector import get_client, get_dynamic_model
 
 load_dotenv()
 
-# ==========================================
 # [설정]
-# ==========================================
 POST_DIR = "src/pages/blog" 
 STATUS_FILE = "status.json"
 HISTORY_FILE = "history.json"
-
-# [복구된 설정] 글 작성 확률 (58% -> 하루 약 14개)
 POST_PROBABILITY = 0.58
 
-# ==========================================
 # 1. GitHub 함수
-# ==========================================
 def get_github_repo():
     if not config.GITHUB_TOKEN: return None
     auth = Auth.Token(config.GITHUB_TOKEN)
@@ -36,8 +30,7 @@ def load_data_from_github(repo, filename, default_data):
         contents = repo.get_contents(filename)
         json_str = contents.decoded_content.decode("utf-8")
         return json.loads(json_str)
-    except:
-        return default_data
+    except: return default_data
 
 def save_data_to_github(repo, filename, data, message):
     if not repo: return
@@ -50,12 +43,9 @@ def save_data_to_github(repo, filename, data, message):
         except:
             repo.create_file(filename, message, json_str, branch="main")
             print(f"💾 {filename} 생성")
-    except Exception as e:
-        print(f"❌ {filename} 저장 실패: {e}")
+    except Exception as e: print(f"❌ {filename} 저장 실패: {e}")
 
-# ==========================================
 # 2. 초기 데이터
-# ==========================================
 def get_initial_status():
     data = {}
     for p in config.PERSONAS:
@@ -66,16 +56,13 @@ def get_initial_status():
         }
     return data
 
-# ==========================================
 # 3. 메인 로직
-# ==========================================
 def main():
     repo = get_github_repo()
     if not repo and config.GITHUB_TOKEN:
         print("❌ GitHub 연결 실패")
         return
 
-    # 데이터 로드
     status_db = load_data_from_github(repo, STATUS_FILE, get_initial_status())
     history_db = load_data_from_github(repo, HISTORY_FILE, [])
     
@@ -93,23 +80,19 @@ def main():
             data['state'] = "normal"
             data['return_date'] = None
             returner = pid
-        if data['state'] == "normal":
-            active_members.append(pid)
+        if data['state'] == "normal": active_members.append(pid)
 
     if not active_members:
         print("😱 전원 부재중")
         save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today}")
         return
 
-    # ---------------------------------------------------------
-    # [핵심 복구] 58% 확률 체크 (복귀자는 무조건 통과)
-    # ---------------------------------------------------------
+    # [확률 체크 58%]
     if not returner:
         dice = random.random()
         if dice > POST_PROBABILITY:
-            print(f"💤 휴식 (Dice: {dice:.2f} > {POST_PROBABILITY})")
+            print(f"💤 휴식 (Dice: {dice:.2f})")
             return
-    # ---------------------------------------------------------
 
     # 행동 결정
     mode = "new"
@@ -124,7 +107,6 @@ def main():
         category = {"desc": "Returning."}
         topic = "I'm back"
     else:
-        # 답글 확률 40%
         if history_db and random.random() < 0.4:
             mode = "reply"
             target_post = random.choice(history_db[-10:])
@@ -134,7 +116,14 @@ def main():
         
         if mode == "new":
             actor_id = random.choice(active_members)
-            category = config.CONTENT_CATEGORIES[random.choice(list(config.CONTENT_CATEGORIES.keys()))]
+            # 잡담(chit_chat) 비중 증가된 카테고리 선택
+            r = random.random()
+            cumulative = 0
+            for key, val in config.CONTENT_CATEGORIES.items():
+                cumulative += val['ratio']
+                if r <= cumulative:
+                    category = val
+                    break
             topic = random.choice(config.TOPICS)
 
     actor = next(p for p in config.PERSONAS if p['id'] == actor_id)
@@ -155,7 +144,9 @@ def main():
         ad_data=random.choice(config.PROMOTED_SITES) if config.AD_MODE else None
     )
 
-    print(f"📝 Title: {result['title']}")
+    # 이모지 제목에 추가 (예: 🐛 Bug Found)
+    final_title = f"{result['mood']} {result['title']}"
+    print(f"📝 Title: {final_title}")
 
     # 데이터 업데이트
     if mode == "reply" and result['affinity_change'] != 0:
@@ -168,6 +159,7 @@ def main():
         status_db[actor_id]['relationships'][target_id] = new_a
         status_db[target_id]['relationships'][actor_id] = new_b
 
+    # 휴가/병가
     dice = random.random()
     if dice < config.VACATION_CHANCE:
         days = random.randint(3, 7)
@@ -187,7 +179,7 @@ def main():
         "date": today,
         "author": actor['name'],
         "author_id": actor['id'],
-        "title": result['title'],
+        "title": result['title'], # DB에는 원본 제목 저장 (이모지 제외 가능하지만 포함도 무방)
         "content": result['content']
     }
     history_db.insert(0, new_log)
@@ -198,21 +190,24 @@ def main():
     
     if repo:
         try:
-            safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_")
+            safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_").replace("'", "")
             filename = f"{POST_DIR}/{today}_{safe_title}.md"
             
+            # [수정] Tags 추가, Category는 Daily Log 고정(또는 tags 첫번째 것 사용)
+            # 여기서는 스크린샷 양식 준수: category: Daily Log, tags: [리스트]
             md_content = f"""---
 layout: ../../layouts/BlogPostLayout.astro
-title: "{result['title']}"
+title: "{final_title}"
 author: {actor['name']}
 date: "{today}"
 category: Daily Log
+tags: {json.dumps(result['tags'], ensure_ascii=False)}
 location: {actor['country']}
 ---
 
 {result['content']}
 """
-            repo.create_file(filename, f"Add post: {result['title']}", md_content, branch="main")
+            repo.create_file(filename, f"Add post: {final_title}", md_content, branch="main")
             print(f"✅ 업로드 성공: {filename}")
         except Exception as e:
             print(f"❌ 업로드 실패: {e}")
