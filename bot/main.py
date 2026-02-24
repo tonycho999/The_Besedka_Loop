@@ -18,6 +18,9 @@ POST_DIR = "src/pages/blog"
 STATUS_FILE = "status.json"
 HISTORY_FILE = "history.json"
 
+# [복구된 설정] 글 작성 확률 (58% -> 하루 약 14개)
+POST_PROBABILITY = 0.58
+
 # ==========================================
 # 1. GitHub 함수
 # ==========================================
@@ -97,6 +100,16 @@ def main():
         print("😱 전원 부재중")
         save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today}")
         return
+
+    # ---------------------------------------------------------
+    # [핵심 복구] 58% 확률 체크 (복귀자는 무조건 통과)
+    # ---------------------------------------------------------
+    if not returner:
+        dice = random.random()
+        if dice > POST_PROBABILITY:
+            print(f"💤 휴식 (Dice: {dice:.2f} > {POST_PROBABILITY})")
+            return
+    # ---------------------------------------------------------
 
     # 행동 결정
     mode = "new"
@@ -185,11 +198,9 @@ def main():
     
     if repo:
         try:
-            # 파일명에 특수문자 제거 (Re: 등)
             safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_")
             filename = f"{POST_DIR}/{today}_{safe_title}.md"
             
-            # [수정] date 필드에 따옴표 추가 ("{today}") -> 포맷 고정
             md_content = f"""---
 layout: ../../layouts/BlogPostLayout.astro
 title: "{result['title']}"
