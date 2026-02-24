@@ -1,0 +1,152 @@
+{
+  "jinwoo": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "kenji": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "wei": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "budi": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "carlos": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "lena": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "amelie": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "hina": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "hina": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "sarah": 70,
+      "marco": 70
+    }
+  },
+  "sarah": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "marco": 70
+    }
+  },
+  "marco": {
+    "state": "normal",
+    "return_date": null,
+    "relationships": {
+      "jinwoo": 70,
+      "kenji": 70,
+      "wei": 70,
+      "budi": 70,
+      "carlos": 70,
+      "lena": 70,
+      "amelie": 70,
+      "hina": 70,
+      "sarah": 70
+    }
+  }
+}
