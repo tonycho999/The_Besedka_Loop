@@ -8,19 +8,18 @@ from github import Github
 import config
 from ai_engine import generate_post
 
-# model_selector 임포트 가정
-try:
-    from model_selector import get_groq_client, get_dynamic_model
-except ImportError:
-    print("⚠️ model_selector.py를 찾을 수 없습니다.")
-    exit()
+# [핵심 수정] 함수 이름을 model_selector.py에 있는 그대로(get_client) 가져옵니다.
+from model_selector import get_client, get_dynamic_model
 
 load_dotenv()
 
+# 파일 경로 정의
 STATUS_FILE = "status.json"
 HISTORY_FILE = "history.json"
 
-# ... (load_json, save_json, get_initial_status, push_to_github 함수는 기존과 동일) ...
+# ==========================================
+# 1. 데이터 관리 함수
+# ==========================================
 def load_json(filename, default):
     if not os.path.exists(filename): return default
     with open(filename, 'r', encoding='utf-8') as f: return json.load(f)
@@ -33,7 +32,7 @@ def get_initial_status():
     data = {}
     for p in config.PERSONAS:
         data[p['id']] = {
-            "state": "normal",
+            "state": "normal", 
             "return_date": None,
             "relationships": {t['id']: config.DEFAULT_AFFINITY for t in config.PERSONAS if t['id'] != p['id']}
         }
@@ -41,8 +40,8 @@ def get_initial_status():
 
 def push_to_github(filename, content):
     if not config.GITHUB_TOKEN:
-        print("⚠️ GitHub Token 없음 - 로컬 출력")
-        print(f"[{filename}]\n{content}") # 로컬 테스트용 출력 강화
+        print("⚠️ GitHub Token 없음 - 로컬 출력으로 대체")
+        print(f"\n[{filename}]\n{content}\n")
         return
     try:
         g = Github(config.GITHUB_TOKEN)
@@ -54,19 +53,21 @@ def push_to_github(filename, content):
         print(f"❌ Upload Failed: {e}")
 
 # ==========================================
-# 메인 실행 로직
+# 2. 메인 실행 로직
 # ==========================================
 def main():
-    client = get_groq_client()
+    # 1. API 및 데이터 준비
+    # [수정] get_groq_client() -> get_client() 호출
+    client = get_client()
     model_id = get_dynamic_model(client)
     
     status_db = load_json(STATUS_FILE, get_initial_status())
-    history_db = load_json(HISTORY_FILE, [])
+    history_db = load_json(HISTORY_FILE, []) 
     today = datetime.datetime.now().strftime("%Y-%m-%d")
 
     print(f"📅 Date: {today} | Model: {model_id}")
 
-    # 복귀자 및 활동 멤버 체크
+    # 2. 상태 체크 (복귀자 확인)
     returner = None
     active_members = []
     
@@ -83,30 +84,29 @@ def main():
         print("😱 모든 멤버가 부재중입니다!")
         return
 
-    # ----------------------------------------
-    # [NEW] 광고 데이터 준비 (PPL Logic)
-    # ----------------------------------------
+    # 3. 광고 데이터 준비 (AD_MODE)
     selected_ad = None
     if config.AD_MODE:
-        # 광고를 항상 넣을지, 50% 확률로 넣을지 결정 가능 (여기선 100%)
         selected_ad = random.choice(config.PROMOTED_SITES)
         print(f"💰 AD_MODE Active: Including PPL for '{selected_ad['name']}'")
 
-    # 행동 결정 (New vs Reply)
+    # 4. 행동 결정 (New Post vs Reply)
     mode = "new"
     actor_id = None
     target_post = None
     topic = None
     category = None
     
+    # [Case A] 복귀 신고식
     if returner:
         mode = "new"
         actor_id = returner
         category = {"desc": "Returning from vacation/sick leave."}
         topic = "I'm back"
     
+    # [Case B] 일반 상황
     else:
-        # 답글 확률 40%
+        # 답글 확률 40% (역사가 있어야 함)
         if history_db and random.random() < 0.4:
             mode = "reply"
             target_post = random.choice(history_db[-10:])
@@ -114,8 +114,9 @@ def main():
             if candidates:
                 actor_id = random.choice(candidates)
             else:
-                mode = "new"
+                mode = "new" 
         
+        # 새 글 (60%)
         if mode == "new":
             actor_id = random.choice(active_members)
             r = random.random()
@@ -129,36 +130,34 @@ def main():
             category = config.CONTENT_CATEGORIES[selected_cat_key]
             topic = random.choice(config.TOPICS)
 
-    # Actor 로드
+    # 5. 페르소나 및 호감도 조회
     actor = next(p for p in config.PERSONAS if p['id'] == actor_id)
-    
-    # 호감도 체크
     affinity_score = 70
     if mode == "reply":
         target_id = target_post['author_id']
         affinity_score = status_db[actor_id]['relationships'].get(target_id, 70)
 
-    print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']} | Topic: {topic if topic else 'Reply'}")
+    print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']}")
 
-    # ----------------------------------------
-    # AI 생성 요청 (광고 데이터 전달)
-    # ----------------------------------------
+    # ----------------------------------------------
+    # 6. AI 생성 요청
+    # ----------------------------------------------
     result = generate_post(
         client, model_id, mode, actor, 
         target_post=target_post, 
         category=category,
         topic=topic,
         affinity_score=affinity_score,
-        ad_data=selected_ad  # <--- 광고 데이터 전달
+        ad_data=selected_ad
     )
 
-    # 결과 출력
+    # 7. 결과 출력
     print(f"\nTitle: {result['title']}")
     print("-" * 30)
     print(result['content'])
     print("-" * 30)
 
-    # 데이터 업데이트 (호감도, 상태, 역사)
+    # 8. 데이터 업데이트
     if mode == "reply" and result['affinity_change'] != 0:
         target_id = target_post['author_id']
         change = result['affinity_change']
@@ -170,7 +169,6 @@ def main():
         status_db[target_id]['relationships'][actor_id] = new_b
         print(f"📊 Affinity Updated: {change} points")
 
-    # 랜덤 휴가/병가
     dice = random.random()
     if dice < config.VACATION_CHANCE:
         days = random.randint(3, 7)
@@ -185,7 +183,6 @@ def main():
         status_db[actor_id]['return_date'] = ret_date.strftime("%Y-%m-%d")
         print(f"🤒 {actor['name']} -> Sick ({days} days)")
 
-    # 역사 저장
     new_log = {
         "id": datetime.datetime.now().timestamp(),
         "date": today,
@@ -195,13 +192,13 @@ def main():
         "content": result['content']
     }
     history_db.insert(0, new_log)
-    if len(history_db) > config.HISTORY_LIMIT: history_db.pop()
+    if len(history_db) > config.HISTORY_LIMIT:
+        history_db.pop()
 
     save_json(STATUS_FILE, status_db)
     save_json(HISTORY_FILE, history_db)
     
-    # 파일명 생성 및 업로드
-    safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_").replace("?", "")
+    safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_")
     filename = f"{today}_{safe_title}.md"
     
     md_content = f"""# {result['title']}
