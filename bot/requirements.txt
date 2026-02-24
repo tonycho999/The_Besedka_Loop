@@ -2,3 +2,4 @@ groq
 PyGithub
 python-frontmatter
 requests
+python-dotenv
