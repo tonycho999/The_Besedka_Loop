@@ -2,88 +2,84 @@ import json
 import re
 
 def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70, ad_data=None):
-    # 1. 페르소나 기본 설정
+    # 1. 페르소나 설정 (인사 금지, 반말 모드)
     base_prompt = f"""
     You are {actor['name']} ({actor['role']}, {actor['country']}).
     Personality: {actor['style']}.
     Native Language: {actor['lang']}.
     
-    [Rules]
-    1. Write a short, casual developer community post.
-    2. Mix English with a few native words naturally.
-    3. NO weather talk. NO time in title.
-    4. Keep it realistic.
+    [CRITICAL Rules]
+    1. NO formal greetings (e.g., "Hello everyone"). Start directly with the main point.
+    2. Keep it short, cynical, and casual (Developer vibe).
+    3. Use code blocks (```) if talking about tech/bugs.
+    4. Use @mentions if replying to someone.
+    5. If the post is long, add "TL;DR" at the end.
     """
 
     ad_instruction = ""
     if ad_data:
         ad_instruction = f"""
-        [PPL Mission] Mention "{ad_data['name']}" ({ad_data['url']}) naturally.
-        Context: {ad_data['context']}. Do NOT sound like a bot.
+        [PPL] Mention "{ad_data['name']}" naturally. Context: {ad_data['context']}
         """
 
     # 2. 모드별 프롬프트
     if mode == "new":
         task_prompt = f"""
-        [Task: Create a New Post]
+        [Task: New Post]
         Category: {category['desc']}
         Topic: {topic}
         {ad_instruction}
         
         Format:
         Title: [Title]
-        Content: [Body]
+        Content: [Body with code blocks if needed]
+        JSON: ```json {{ "tags": ["tag1", "tag2"], "mood": "emoji" }} ```
         """
     
     elif mode == "reply":
-        # 호감도에 따른 말투
-        vibe = "Friendly" if affinity_score > 80 else "Cold" if affinity_score < 55 else "Normal"
+        vibe = "Friendly" if affinity_score > 80 else "Cynical" if affinity_score < 55 else "Normal"
         
         task_prompt = f"""
-        [Task: Reply to a Post]
-        You are replying to {target_post['author']}.
-        Original Post: "{target_post['title']}"
-        Original Content: "{target_post['content']}"
-        
-        Your Affinity: {affinity_score}/100 ({vibe})
+        [Task: Reply]
+        To: {target_post['author']}
+        Original: "{target_post['title']}"
+        Affinity: {affinity_score}/100 ({vibe})
         {ad_instruction}
         
-        [IMPORTANT Rules for Reply]
-        1. Start the content with a blockquote (>) summarizing the part you are replying to.
-        2. Do NOT invent a new title. The system will handle the title. Only output the Content.
+        [Rules]
+        1. Start with > Blockquote summary of original post.
+        2. Mention the author with @{target_post['author']}.
         
         Format:
-        Content: [ > Quote original text here... \n\n Your reply body here...]
-        At the very end, output JSON: ```json {{ "change": -2 to +2 }} ```
+        Content: [Body]
+        JSON: ```json {{ "change": -2 to +2, "tags": ["tag1", "tag2"], "mood": "emoji" }} ```
         """
 
     # 3. AI 호출
     try:
         completion = client.chat.completions.create(
-            messages=[
-                {"role": "system", "content": base_prompt},
-                {"role": "user", "content": task_prompt}
-            ],
-            model=model_id,
-            temperature=0.8, 
+            messages=[{"role": "system", "content": base_prompt}, {"role": "user", "content": task_prompt}],
+            model=model_id, temperature=0.9 # 창의성 약간 높임
         )
         full_text = completion.choices[0].message.content
     except:
-        return {"title": "Error", "content": "Server Error", "affinity_change": 0}
+        return {"title": "Error", "content": "Server Error", "affinity_change": 0, "tags": [], "mood": "🤖"}
 
-    # 4. 결과 파싱
-    result = {"title": "", "content": "", "affinity_change": 0}
+    # 4. 결과 파싱 (JSON 분리)
+    result = {"title": "", "content": "", "affinity_change": 0, "tags": ["Daily Log"], "mood": "😐"}
     
-    # JSON 파싱 (호감도 변화)
-    if mode == "reply":
-        json_match = re.search(r"```json\s*({.*?})\s*```", full_text, re.DOTALL)
-        if json_match:
-            try:
-                result["affinity_change"] = json.loads(json_match.group(1)).get("change", 0)
-                full_text = full_text.replace(json_match.group(0), "") 
-            except: pass
+    # JSON 추출
+    json_match = re.search(r"```json\s*({.*?})\s*```", full_text, re.DOTALL)
+    if json_match:
+        try:
+            data = json.loads(json_match.group(1))
+            result["affinity_change"] = data.get("change", 0)
+            result["tags"] = data.get("tags", ["Daily Log"])
+            result["mood"] = data.get("mood", "😐")
+            full_text = full_text.replace(json_match.group(0), "") 
+        except: pass
 
-    # 텍스트 파싱
+    # 텍스트 추출
     lines = full_text.strip().split('\n')
     content_buffer = []
     
@@ -93,18 +89,14 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
         elif line.lower().startswith("content:"):
             pass 
         else:
-            if line.strip():
-                content_buffer.append(line)
+            if line.strip(): content_buffer.append(line)
     
     result["content"] = "\n".join(content_buffer).strip()
     
-    # [수정됨] 답글일 경우, 제목을 AI가 짓지 않고 코드로 강제함 (Re: Logic)
+    # 제목 강제 (답글)
     if mode == "reply":
-        # 이미 Re:가 있으면 그대로 두고, 없으면 붙임 (Re: Re: 지원)
-        original_title = target_post['title']
-        result["title"] = f"Re: {original_title}"
+        result["title"] = f"Re: {target_post['title']}"
         
-    # 새 글인데 제목이 없으면 기본값
     if not result["title"] and mode == "new": 
         result["title"] = f"Update from {actor['name']}"
 
