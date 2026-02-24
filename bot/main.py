@@ -68,15 +68,19 @@ def main():
     
     client = get_client()
     model_id = get_dynamic_model(client)
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    
+    # 시간 설정
+    now = datetime.datetime.now()
+    today_date = now.strftime("%Y-%m-%d")         # 파일명용
+    full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S") # 정렬용
 
-    print(f"📅 Date: {today} | Model: {model_id}")
+    print(f"📅 Now: {full_timestamp} | Model: {model_id}")
 
     # 상태 체크
     returner = None
     active_members = []
     for pid, data in status_db.items():
-        if data['return_date'] == today:
+        if data['return_date'] == today_date:
             data['state'] = "normal"
             data['return_date'] = None
             returner = pid
@@ -84,7 +88,7 @@ def main():
 
     if not active_members:
         print("😱 전원 부재중")
-        save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today}")
+        save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today_date}")
         return
 
     # [확률 체크 58%]
@@ -116,7 +120,6 @@ def main():
         
         if mode == "new":
             actor_id = random.choice(active_members)
-            # 잡담(chit_chat) 비중 증가된 카테고리 선택
             r = random.random()
             cumulative = 0
             for key, val in config.CONTENT_CATEGORIES.items():
@@ -144,7 +147,6 @@ def main():
         ad_data=random.choice(config.PROMOTED_SITES) if config.AD_MODE else None
     )
 
-    # 이모지 제목에 추가 (예: 🐛 Bug Found)
     final_title = f"{result['mood']} {result['title']}"
     print(f"📝 Title: {final_title}")
 
@@ -176,30 +178,33 @@ def main():
 
     new_log = {
         "id": datetime.datetime.now().timestamp(),
-        "date": today,
+        "date": full_timestamp, 
         "author": actor['name'],
         "author_id": actor['id'],
-        "title": result['title'], # DB에는 원본 제목 저장 (이모지 제외 가능하지만 포함도 무방)
+        "title": result['title'],
         "content": result['content']
     }
     history_db.insert(0, new_log)
     if len(history_db) > config.HISTORY_LIMIT: history_db.pop()
 
-    save_data_to_github(repo, STATUS_FILE, status_db, f"Update Status: {today}")
-    save_data_to_github(repo, HISTORY_FILE, history_db, f"Update History: {today}")
+    save_data_to_github(repo, STATUS_FILE, status_db, f"Update Status: {today_date}")
+    save_data_to_github(repo, HISTORY_FILE, history_db, f"Update History: {today_date}")
     
     if repo:
         try:
-            safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_").replace("'", "")
-            filename = f"{POST_DIR}/{today}_{safe_title}.md"
+            # [수정된 부분] 파일명 포맷 복구 (YYYY-MM-DD-name-RANDOM.md)
+            # 이름은 소문자로 변환, 공백 제거
+            safe_name = actor['name'].lower().replace(" ", "")
+            # 1000~9999 사이 랜덤 숫자 생성
+            random_id = random.randint(1000, 9999)
             
-            # [수정] Tags 추가, Category는 Daily Log 고정(또는 tags 첫번째 것 사용)
-            # 여기서는 스크린샷 양식 준수: category: Daily Log, tags: [리스트]
+            filename = f"{POST_DIR}/{today_date}-{safe_name}-{random_id}.md"
+            
             md_content = f"""---
 layout: ../../layouts/BlogPostLayout.astro
 title: "{final_title}"
 author: {actor['name']}
-date: "{today}"
+date: "{full_timestamp}"
 category: Daily Log
 tags: {json.dumps(result['tags'], ensure_ascii=False)}
 location: {actor['country']}
