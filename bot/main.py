@@ -1,159 +1,238 @@
 import os
+import json
 import random
 import datetime
-from groq import Groq
-from github import Github
 from dotenv import load_dotenv
-import config
+from github import Github
 
-# .env 파일 로드 (로컬 테스트용)
+# 로컬 모듈 임포트
+import config
+from ai_engine import generate_post
+
+# [사용자 요청] model_selector는 제외했으므로, 
+# 같은 폴더에 model_selector.py가 있다고 가정하고 임포트
+try:
+    from model_selector import get_groq_client, get_dynamic_model
+except ImportError:
+    print("⚠️ model_selector.py를 찾을 수 없습니다.")
+    exit()
+
 load_dotenv()
 
-def get_groq_client():
-    """유효한 API 키 중 하나를 랜덤 선택하여 클라이언트 생성"""
-    if not config.VALID_KEYS:
-        raise ValueError("❌ 유효한 GROQ_API_KEY가 없습니다. 환경변수를 확인하세요.")
-    
-    selected_key = random.choice(config.VALID_KEYS)
-    return Groq(api_key=selected_key)
+# 파일 경로 정의
+STATUS_FILE = "status.json"
+HISTORY_FILE = "history.json"
 
-def get_dynamic_model(client):
-    """
-    [중요] 모델명을 하드코딩하지 않습니다.
-    API를 통해 사용 가능한 모델 리스트를 조회하고, 그 중 하나를 선택합니다.
-    """
-    try:
-        models = client.models.list()
-        # 사용 가능한 모델 ID 추출
-        available_models = [m.id for m in models.data if 'whisper' not in m.id] # Whisper(음성) 모델 제외
-        
-        if not available_models:
-            raise Exception("사용 가능한 텍스트 모델을 찾을 수 없습니다.")
+# ==========================================
+# 1. 데이터 관리 함수 (Load/Save)
+# ==========================================
+def load_json(filename, default):
+    if not os.path.exists(filename): return default
+    with open(filename, 'r', encoding='utf-8') as f: return json.load(f)
 
-        # 리스트 중 첫 번째 혹은 랜덤 선택 (여기서는 안정성을 위해 리스트의 첫 번째 모델 선택)
-        # 필요하다면 random.choice(available_models)로 변경 가능
-        selected_model = available_models[0]
-        
-        print(f"✅ 조회된 모델 리스트: {available_models}")
-        print(f"🚀 선택된 모델: {selected_model}")
-        
-        return selected_model
-    except Exception as e:
-        print(f"⚠️ 모델 조회 중 오류 발생: {e}")
-        # 만약 API 조회가 실패할 경우를 대비한 최후의 보루 (이 부분은 실행되지 않기를 기대합니다)
-        return "llama3-70b-8192"
+def save_json(filename, data):
+    with open(filename, 'w', encoding='utf-8') as f:
+        json.dump(data, f, indent=2, ensure_ascii=False)
 
-def generate_conversation():
-    client = get_groq_client()
-    model_id = get_dynamic_model(client) # 동적 모델 할당
+def get_initial_status():
+    """초기 상태 생성 (최초 실행 시)"""
+    data = {}
+    for p in config.PERSONAS:
+        data[p['id']] = {
+            "state": "normal", # normal, vacation, sick
+            "return_date": None,
+            # 다른 멤버들과의 관계 초기화
+            "relationships": {t['id']: config.DEFAULT_AFFINITY for t in config.PERSONAS if t['id'] != p['id']}
+        }
+    return data
 
-    # 1. 랜덤 요소 선택
-    topic = random.choice(config.DAILY_TOPICS)
-    participants = random.sample(config.PERSONAS, 2)
-    p1, p2 = participants[0], participants[1]
-
-    print(f"🎨 주제: {topic}")
-    print(f"🗣️ 참여자: {p1['name']} ({p1['country']}) vs {p2['name']} ({p2['country']})")
-
-    # 2. 프롬프트 작성
-    system_prompt = f"""
-    You are a scriptwriter for a developer community log.
-    Write a short, casual conversation (about 6-8 lines) between two characters.
-    
-    Topic: {topic}
-    
-    Character 1: {p1['name']} ({p1['role']}). Personality: {p1['style']}. Native Language: {p1['lang']}.
-    Character 2: {p2['name']} ({p2['role']}). Personality: {p2['style']}. Native Language: {p2['lang']}.
-    
-    Format:
-    - {p1['name']}: [Line]
-    - {p2['name']}: [Line]
-    ...
-    
-    Keep it short, engaging, and reflect their personalities. 
-    They can mix English with a little bit of their native language greetings or exclamations.
-    """
-
-    # 3. Groq API 호출
-    completion = client.chat.completions.create(
-        messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": f"Create a conversation about '{topic}'."}
-        ],
-        model=model_id,
-        temperature=0.7,
-    )
-
-    content = completion.choices[0].message.content
-    return topic, p1, p2, content
-
-def format_markdown(topic, p1, p2, content):
-    """결과물을 마크다운 형식으로 변환"""
-    date_str = datetime.datetime.now().strftime("%Y-%m-%d")
-    
-    md_output = f"""# 📅 {date_str} - Daily Chat Log
-
-## 💡 Topic: {topic}
-**Participants:**
-* **{p1['name']}** ({p1['role']}, {p1['country']})
-* **{p2['name']}** ({p2['role']}, {p2['country']})
-
----
-
-### 💬 Conversation
-{content}
-
----
-"""
-    # [광고 로직] config.AD_MODE가 True일 때만 광고 추가
-    if config.AD_MODE:
-        ad = random.choice(config.PROMOTED_SITES)
-        ad_block = f"""
-> **Sponsored**: [{ad['desc']}]({ad['url']})
-"""
-        md_output += ad_block
-
-    return md_output, date_str
-
-def push_to_github(file_name, content):
-    """GitHub 리포지토리에 파일 업로드"""
+def push_to_github(filename, content):
+    """GitHub 업로드 함수"""
     if not config.GITHUB_TOKEN:
-        print("⚠️ GITHUB_TOKEN이 없습니다. 로컬에만 출력합니다.")
-        print("="*20 + "\n" + content + "\n" + "="*20)
+        print("⚠️ GitHub Token 없음 - 로컬 출력으로 대체")
         return
-
     try:
         g = Github(config.GITHUB_TOKEN)
         repo = g.get_repo(config.REPO_NAME)
-        
-        # logs 폴더 안에 저장 (없으면 생성됨)
-        path = f"logs/{file_name}"
-        
-        repo.create_file(
-            path=path,
-            message=f"Add chat log: {file_name}",
-            content=content,
-            branch="main" 
-        )
-        print(f"✅ GitHub 업로드 완료: https://github.com/{config.REPO_NAME}/blob/main/{path}")
-        
+        path = f"logs/{filename}"
+        repo.create_file(path, f"Add post: {filename}", content, branch="main")
+        print(f"✅ GitHub Uploaded: {path}")
     except Exception as e:
-        print(f"❌ GitHub 업로드 실패: {e}")
+        print(f"❌ Upload Failed: {e}")
+
+# ==========================================
+# 2. 메인 실행 로직
+# ==========================================
+def main():
+    # 1. API 클라이언트 및 모델 준비
+    client = get_groq_client()
+    model_id = get_dynamic_model(client)
+    
+    # 2. 데이터 로드
+    status_db = load_json(STATUS_FILE, get_initial_status())
+    history_db = load_json(HISTORY_FILE, []) # 최근 게시글 리스트
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+
+    print(f"📅 Date: {today} | Model: {model_id}")
+
+    # 3. 멤버 상태 체크 (복귀자 확인)
+    returner = None
+    active_members = []
+    
+    for pid, data in status_db.items():
+        # 복귀 날짜 체크
+        if data['return_date'] == today:
+            print(f"✨ {pid}님이 복귀했습니다!")
+            data['state'] = "normal"
+            data['return_date'] = None
+            returner = pid
+        
+        # 활동 가능한 멤버(정상 상태)만 추림
+        if data['state'] == "normal":
+            active_members.append(pid)
+
+    if not active_members:
+        print("😱 모든 멤버가 휴가/병가 중입니다! (활동 불가)")
+        return
+
+    # 4. 행동 결정 (New Post vs Reply)
+    mode = "new"
+    actor_id = None
+    target_post = None
+    topic = None
+    category = None
+    
+    # [Case A] 복귀자가 있으면 무조건 복귀 신고식
+    if returner:
+        mode = "new"
+        actor_id = returner
+        category = {"desc": "Returning from vacation/sick leave. Feeling fresh or tired."}
+        topic = "I'm back"
+    
+    # [Case B] 일반 상황: 40% 확률로 답글 작성 (단, 역사가 있어야 함)
+    else:
+        if history_db and random.random() < 0.4:
+            mode = "reply"
+            # 최근 10개 글 중 하나 선택 (떡밥 물기)
+            target_post = random.choice(history_db[-10:])
+            
+            # 원글 작성자가 아닌 사람 중에서 선택
+            candidates = [m for m in active_members if m != target_post['author_id']]
+            if candidates:
+                actor_id = random.choice(candidates)
+            else:
+                mode = "new" # 후보가 없으면 새 글로 전환
+        
+        # [Case C] 새 글 작성 (60% 또는 답글 실패 시)
+        if mode == "new":
+            actor_id = random.choice(active_members)
+            # 카테고리 가중치 뽑기
+            r = random.random()
+            cumulative = 0
+            selected_cat_key = "life"
+            for key, val in config.CONTENT_CATEGORIES.items():
+                cumulative += val['ratio']
+                if r <= cumulative:
+                    selected_cat_key = key
+                    break
+            
+            category = config.CONTENT_CATEGORIES[selected_cat_key]
+            topic = random.choice(config.TOPICS)
+
+    # 5. 페르소나 객체 가져오기
+    actor = next(p for p in config.PERSONAS if p['id'] == actor_id)
+    
+    print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']}")
+    
+    # 호감도 조회 (답글인 경우)
+    affinity_score = 70
+    if mode == "reply":
+        target_id = target_post['author_id']
+        affinity_score = status_db[actor_id]['relationships'].get(target_id, 70)
+        print(f"   Target: {target_post['author']} (Current Affinity: {affinity_score})")
+
+    # ----------------------------------------------
+    # 6. AI 생성 요청 (AI Engine)
+    # ----------------------------------------------
+    result = generate_post(
+        client, model_id, mode, actor, 
+        target_post=target_post, 
+        category=category,
+        topic=topic,
+        affinity_score=affinity_score
+    )
+
+    # 7. 결과 출력
+    print(f"\nTitle: {result['title']}")
+    print("-" * 30)
+    print(result['content'])
+    print("-" * 30)
+
+    # 8. 후처리 및 데이터 업데이트
+    
+    # A. 호감도 업데이트 (답글인 경우)
+    if mode == "reply" and result['affinity_change'] != 0:
+        target_id = target_post['author_id']
+        change = result['affinity_change']
+        
+        # 양방향 업데이트 (서로에 대한 인상 변화)
+        curr_a = status_db[actor_id]['relationships'].get(target_id, 70)
+        curr_b = status_db[target_id]['relationships'].get(actor_id, 70)
+        
+        # Clamp (Min~Max 제한)
+        new_a = max(config.AFFINITY_MIN, min(curr_a + change, config.AFFINITY_MAX))
+        new_b = max(config.AFFINITY_MIN, min(curr_b + change, config.AFFINITY_MAX))
+        
+        status_db[actor_id]['relationships'][target_id] = new_a
+        status_db[target_id]['relationships'][actor_id] = new_b
+        print(f"📊 Affinity Updated: {change} point(s) applied.")
+
+    # B. 랜덤 이벤트 (휴가/병가) - 글 쓴 사람에게만 발생
+    dice = random.random()
+    if dice < config.VACATION_CHANCE:
+        days = random.randint(3, 7)
+        ret_date = datetime.datetime.now() + datetime.timedelta(days=days)
+        status_db[actor_id]['state'] = "vacation"
+        status_db[actor_id]['return_date'] = ret_date.strftime("%Y-%m-%d")
+        print(f"✈️ {actor['name']} is going on VACATION for {days} days!")
+        
+    elif dice < config.VACATION_CHANCE + config.SICK_CHANCE:
+        days = random.randint(1, 2)
+        ret_date = datetime.datetime.now() + datetime.timedelta(days=days)
+        status_db[actor_id]['state'] = "sick"
+        status_db[actor_id]['return_date'] = ret_date.strftime("%Y-%m-%d")
+        print(f"🤒 {actor['name']} is SICK for {days} days.")
+
+    # C. 역사 기록 (History)
+    new_log = {
+        "id": datetime.datetime.now().timestamp(),
+        "date": today,
+        "author": actor['name'],
+        "author_id": actor['id'],
+        "title": result['title'],
+        "content": result['content']
+    }
+    history_db.insert(0, new_log) # 최신 글을 맨 앞에 추가
+    if len(history_db) > config.HISTORY_LIMIT:
+        history_db.pop() # 오래된 글 삭제
+
+    # D. 파일 저장
+    save_json(STATUS_FILE, status_db)
+    save_json(HISTORY_FILE, history_db)
+    
+    # E. GitHub 업로드
+    safe_title = result['title'].replace(" ", "_").replace(":", "").replace("/", "_")
+    filename = f"{today}_{safe_title}.md"
+    
+    md_content = f"""# {result['title']}
+**Date:** {today}
+**Author:** {actor['name']} ({actor['role']})
+
+---
+{result['content']}
+---
+"""
+    push_to_github(filename, md_content)
 
 if __name__ == "__main__":
-    try:
-        # 1. 대화 생성
-        topic, p1, p2, chat_content = generate_conversation()
-        
-        # 2. 포맷팅
-        final_md, date_str = format_markdown(topic, p1, p2, chat_content)
-        
-        # 3. 파일명 생성 (예: 2024-05-20_debugging_nightmare.md)
-        safe_topic = topic.replace(" ", "_")
-        file_name = f"{date_str}_{safe_topic}.md"
-        
-        # 4. GitHub 푸시 (또는 로컬 출력)
-        push_to_github(file_name, final_md)
-        
-    except Exception as e:
-        print(f"🔥 치명적인 오류 발생: {e}")
+    main()
