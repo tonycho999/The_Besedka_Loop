@@ -3,15 +3,13 @@ import os
 # ==========================================
 # 1. API 키 설정 (model_selector.py용)
 # ==========================================
-# Groq API 키 로테이션 (1~4번)
-# model_selector.py에서 config.VALID_KEYS를 참조하므로 변수명 유지 필수
 _raw_keys = [os.environ.get(f"GROQ_API_KEY_{i}") for i in range(1, 5)]
-VALID_KEYS = [k for k in _raw_keys if k]  # None이나 빈 문자열 제거
+VALID_KEYS = [k for k in _raw_keys if k]
 
 # ==========================================
 # 2. 광고 및 홍보 설정 (Native Ad System)
 # ==========================================
-AD_MODE = False  # True로 변경 시, 자연스러운 PPL 포함
+AD_MODE = False
 
 PROMOTED_SITES = [
     {
@@ -35,19 +33,19 @@ REPO_NAME = "tonycho999/The_Besedka_Loop"
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 
 # ==========================================
-# 4. 페르소나 (10인)
+# 4. 페르소나 (10인) - [수정] country 항목 추가 완료
 # ==========================================
 PERSONAS = [
-    {"id": "jinwoo", "name": "Jin-woo", "role": "DevOps", "style": "cynical, loves soju, hates legacy", "lang": "Korean"},
-    {"id": "kenji", "name": "Kenji", "role": "Frontend", "style": "polite, nostalgic, detail-obsessed", "lang": "Japanese"},
-    {"id": "wei", "name": "Wei", "role": "AI Researcher", "style": "ambitious, tech-focused, dry humor", "lang": "Chinese"},
-    {"id": "budi", "name": "Budi", "role": "Backend", "style": "relaxed, coffee addict, peace-maker", "lang": "Indonesian"},
-    {"id": "carlos", "name": "Carlos", "role": "Mobile App", "style": "passionate, loud, chaotic", "lang": "Spanish"},
-    {"id": "lena", "name": "Lena", "role": "Security", "style": "logical, direct, paranoid", "lang": "German"},
-    {"id": "amelie", "name": "Amélie", "role": "UI/UX", "style": "artistic, sensitive, hates bad kerning", "lang": "French"},
-    {"id": "hina", "name": "Hina", "role": "Illustrator", "style": "cute, emotional, uses lots of emojis", "lang": "Japanese"},
-    {"id": "sarah", "name": "Sarah", "role": "Product Manager", "style": "trendy, hip, social butterfly", "lang": "Korean"},
-    {"id": "marco", "name": "Marco", "role": "CTO", "style": "gourmet, perfectionist, slightly arrogant", "lang": "French"},
+    {"id": "jinwoo", "name": "Jin-woo", "country": "Korea", "role": "DevOps", "style": "cynical, loves soju, hates legacy", "lang": "Korean"},
+    {"id": "kenji", "name": "Kenji", "country": "Japan", "role": "Frontend", "style": "polite, nostalgic, detail-obsessed", "lang": "Japanese"},
+    {"id": "wei", "name": "Wei", "country": "China", "role": "AI Researcher", "style": "ambitious, tech-focused, dry humor", "lang": "Chinese"},
+    {"id": "budi", "name": "Budi", "country": "Indonesia", "role": "Backend", "style": "relaxed, coffee addict, peace-maker", "lang": "Indonesian"},
+    {"id": "carlos", "name": "Carlos", "country": "Spain", "role": "Mobile App", "style": "passionate, loud, chaotic", "lang": "Spanish"},
+    {"id": "lena", "name": "Lena", "country": "Germany", "role": "Security", "style": "logical, direct, paranoid", "lang": "German"},
+    {"id": "amelie", "name": "Amélie", "country": "France", "role": "UI/UX", "style": "artistic, sensitive, hates bad kerning", "lang": "French"},
+    {"id": "hina", "name": "Hina", "country": "Japan", "role": "Illustrator", "style": "cute, emotional, uses lots of emojis", "lang": "Japanese"},
+    {"id": "sarah", "name": "Sarah", "country": "Korea", "role": "Product Manager", "style": "trendy, hip, social butterfly", "lang": "Korean"},
+    {"id": "marco", "name": "Marco", "country": "France", "role": "CTO", "style": "gourmet, perfectionist, slightly arrogant", "lang": "French"},
 ]
 
 # ==========================================
