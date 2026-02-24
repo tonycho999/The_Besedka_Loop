@@ -1,104 +1,107 @@
-import model_selector
-import random
+import json
+import re
 
-def generate_content(persona, mode="life", context_title="", context_body="", context_author="", current_affinity=50, affinity_label="Colleague"):
+def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70):
+    """
+    AI를 사용하여 게시글 또는 답글을 생성하는 핵심 함수
+    mode: 'new' (새 글) / 'reply' (답글)
+    """
+
+    # 1. 페르소나 기본 설정
+    base_prompt = f"""
+    You are {actor['name']} ({actor['role']}, {actor['country']}).
+    Personality: {actor['style']}.
+    Native Language: {actor['lang']}.
+    
+    [Rules]
+    1. Write a short, casual developer community post.
+    2. Mix English with a few native words naturally (Greetings, exclamations).
+    3. NO weather talk. NO time in title (e.g., [10:00]).
+    4. Keep it realistic and human-like.
+    """
+
+    # 2. 모드별 프롬프트 분기
+    if mode == "new":
+        task_prompt = f"""
+        [Task: Create a New Post]
+        Category: {category['desc']}
+        Topic Seed: {topic}
+        
+        Format:
+        Title: [Short & Catchy Title]
+        Content: [1-4 lines of body text]
+        """
+    
+    elif mode == "reply":
+        # 호감도에 따른 말투 가이드
+        vibe = "Professional"
+        if affinity_score >= 85: vibe = "Super friendly, joking, bro-like"
+        elif affinity_score <= 55: vibe = "Cold, sarcastic, short"
+        
+        task_prompt = f"""
+        [Task: Reply to a Post]
+        You are replying to '{target_post['author']}'.
+        Original Title: "{target_post['title']}"
+        Original Content: "{target_post['content']}"
+        
+        Current Affinity: {affinity_score}/100 ({vibe})
+        
+        Format:
+        Title: Re: {target_post['title']}
+        Content: [1-5 lines reply. React based on affinity.]
+        
+        [IMPORTANT]
+        At the end, output JSON for affinity change (-3 to +3).
+        Example: ```json {{ "change": 2 }} ```
+        """
+
+    # 3. API 호출
     try:
-        client = model_selector.get_client()
-        model_id = model_selector.get_dynamic_model(client)
-        print(f"🤖 Selected Model: {model_id}")
-
-        prompt = ""
-        sentiment_delta = 0 # 기본 변화량 0
-
-        # --- [모드 1] 답글 (호감도 시스템 적용) ---
-        if mode == "reply":
-            # 점수에 따른 연기 지침
-            behavior_guide = ""
-            if current_affinity >= 80:
-                behavior_guide = "You LOVE this person. Be very affectionate, supportive, or playful."
-            elif current_affinity >= 60:
-                behavior_guide = "You are close friends. Casual, joking, warm."
-            elif current_affinity >= 40:
-                behavior_guide = "Professional colleague. Polite but not too deep."
-            elif current_affinity >= 20:
-                behavior_guide = "Awkward relationship. Short answers, slightly cold or sarcastic."
-            else:
-                behavior_guide = "You DISLIKE this person. Be cold, critical, or ignore their point."
-
-            prompt = f"""
-            You are {persona['name']} from {persona['country']}.
-            You are replying to {context_author}.
-            
-            [RELATIONSHIP STATUS]
-            - Affinity Score: {current_affinity}/100 ({affinity_label})
-            - BEHAVIOR GUIDE: {behavior_guide}
-            
-            [CONTEXT]
-            Title: {context_title}
-            Content: "{context_body}"
-            
-            [TASK]
-            1. Write a reply based on the relationship score.
-            2. Decide how this interaction changes the affinity score (Range: -5 to +5).
-               - Good conversation/Support: +1 to +5
-               - Argument/Insult/Coldness: -1 to -5
-               - Neutral: 0
-            
-            [FORMAT]
-            - First line: Title
-            - Second line: [DELTA: number] (e.g., [DELTA: +3] or [DELTA: -2])
-            - Third line onwards: Content
-            """
-            print(f"   🗣️ Mode: Reply (Score: {current_affinity} - {affinity_label})")
-
-        # --- [모드 2, 3] 일반 글 (변화 없음) ---
-        else:
-            prompt = f"""
-            You are {persona['name']}.
-            Write a short blog post about {mode} (Life/Dev).
-            Tone: Casual. Length: 3-5 sentences.
-            [FORMAT]
-            - First line: Title
-            - Second line: [DELTA: 0]
-            - Third line onwards: Content
-            """
-
-        # API 호출
-        chat_completion = client.chat.completions.create(
-            messages=[{"role": "user", "content": prompt}],
+        completion = client.chat.completions.create(
+            messages=[
+                {"role": "system", "content": base_prompt},
+                {"role": "user", "content": task_prompt}
+            ],
             model=model_id,
-            temperature=0.8,
+            temperature=0.8, # 창의성 확보
         )
-
-        full_text = chat_completion.choices[0].message.content.strip()
-        lines = full_text.split('\n')
-        
-        title = "Daily Log"
-        body = ""
-        
-        # 파싱 로직 ([DELTA: +3] 추출)
-        if lines:
-            title = lines[0].strip().replace('"', '').replace("Title: ", "")
-            
-            # 델타 값 찾기
-            for line in lines:
-                if "[DELTA:" in line:
-                    try:
-                        delta_str = line.split("[DELTA:")[1].split("]")[0].strip()
-                        sentiment_delta = int(delta_str)
-                    except:
-                        sentiment_delta = 0 if mode != "reply" else random.randint(-1, 2)
-                    break
-            
-            # 본문 추출 (DELTA 라인과 빈 줄 제거)
-            body_lines = [l for l in lines[1:] if "[DELTA:" not in l and l.strip() != ""]
-            body = "\n".join(body_lines).strip()
-            
-            if mode == "reply":
-                return "REPLY_PLACEHOLDER", body, sentiment_delta
-            
-            return title, body, 0
-
+        full_text = completion.choices[0].message.content
     except Exception as e:
-        print(f"❌ AI Logic Error: {e}")
-        return "Error", "System Error", 0
+        return {"title": "Error", "content": "AI Server Error...", "affinity_change": 0}
+
+    # 4. 결과 파싱 (Title, Content, JSON)
+    result = {"title": "", "content": "", "affinity_change": 0}
+    
+    # 답글일 경우 JSON(호감도 변화) 추출
+    if mode == "reply":
+        json_match = re.search(r"```json\s*({.*?})\s*```", full_text, re.DOTALL)
+        if json_match:
+            try:
+                data = json.loads(json_match.group(1))
+                result["affinity_change"] = data.get("change", 0)
+                full_text = full_text.replace(json_match.group(0), "") # 본문에서 JSON 제거
+            except: pass
+
+    # 제목/내용 분리
+    lines = full_text.strip().split('\n')
+    content_buffer = []
+    
+    for line in lines:
+        if line.lower().startswith("title:"):
+            result["title"] = line.split(":", 1)[1].strip()
+        elif line.lower().startswith("content:"):
+            pass # "Content:" 라인은 건너뜀
+        else:
+            if line.strip():
+                content_buffer.append(line)
+    
+    result["content"] = "\n".join(content_buffer).strip()
+    
+    # 파싱 실패 시 기본값 처리
+    if not result["title"]: 
+        if mode == "reply": result["title"] = f"Re: {target_post['title']}"
+        else: result["title"] = f"Update from {actor['name']}"
+        
+    if not result["content"]: result["content"] = full_text
+
+    return result
