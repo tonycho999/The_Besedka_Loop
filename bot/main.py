@@ -69,10 +69,9 @@ def main():
     client = get_client()
     model_id = get_dynamic_model(client)
     
-    # 시간 설정
     now = datetime.datetime.now()
-    today_date = now.strftime("%Y-%m-%d")         # 파일명용
-    full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S") # 정렬용
+    today_date = now.strftime("%Y-%m-%d")
+    full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
 
     print(f"📅 Now: {full_timestamp} | Model: {model_id}")
 
@@ -91,7 +90,7 @@ def main():
         save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today_date}")
         return
 
-    # [확률 체크 58%]
+    # 확률 체크
     if not returner:
         dice = random.random()
         if dice > POST_PROBABILITY:
@@ -147,10 +146,15 @@ def main():
         ad_data=random.choice(config.PROMOTED_SITES) if config.AD_MODE else None
     )
 
+    # [핵심 수정] Error 발생 시 저장하지 않고 종료
+    if result['title'] == "Error" or "Error" in result['title']:
+        print("❌ AI 생성 실패로 인해 이번 턴은 건너뜁니다.")
+        return
+
     final_title = f"{result['mood']} {result['title']}"
     print(f"📝 Title: {final_title}")
 
-    # 데이터 업데이트
+    # 데이터 업데이트 (호감도)
     if mode == "reply" and result['affinity_change'] != 0:
         target_id = target_post['author_id']
         change = result['affinity_change']
@@ -192,12 +196,8 @@ def main():
     
     if repo:
         try:
-            # [수정된 부분] 파일명 포맷 복구 (YYYY-MM-DD-name-RANDOM.md)
-            # 이름은 소문자로 변환, 공백 제거
             safe_name = actor['name'].lower().replace(" ", "")
-            # 1000~9999 사이 랜덤 숫자 생성
             random_id = random.randint(1000, 9999)
-            
             filename = f"{POST_DIR}/{today_date}-{safe_name}-{random_id}.md"
             
             md_content = f"""---
