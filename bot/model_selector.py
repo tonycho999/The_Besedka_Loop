@@ -8,34 +8,32 @@ def get_client():
 
 def get_dynamic_model(client):
     """
-    [수정됨] 리스트 반환 원천 봉쇄.
-    무조건 문자열(String) 하나만 반환합니다.
+    [Claude Code 솔루션]
+    리스트를 생성하지 않고, 조건에 맞는 모델을 발견하는 즉시 반환(Early Return)합니다.
+    이 방식은 리스트가 섞여 들어갈 가능성을 0%로 만듭니다.
     """
     try:
         models = client.models.list()
         
-        # 제외할 모델
-        BANNED_MODELS = [
-            "meta-llama/llama-4-maverick-17b-128e-instruct"
-        ]
+        # 제외할 키워드들
+        BANNED_KEYWORDS = ['whisper', 'vision', 'llava', 'guard', 'maverick']
 
-        # 텍스트 모델 필터링
-        text_models = [
-            m.id for m in models.data 
-            if 'whisper' not in m.id 
-            and 'vision' not in m.id 
-            and 'llava' not in m.id
-            and 'guard' not in m.id
-            and m.id not in BANNED_MODELS
-        ]
-        
-        # 모델이 없으면 기본값
-        if not text_models:
-            return "llama-3.1-8b-instant"
-
-        # [핵심] 절대 리스트를 리턴하지 않음. 0번째 요소(문자열)만 리턴.
-        selected_model = text_models
-        return str(selected_model)
+        # 모델 리스트를 순회하면서 조건 검사
+        for m in models.data:
+            mid = m.id
+            
+            # 1. 금지 키워드가 하나라도 있으면 패스
+            if any(banned in mid for banned in BANNED_KEYWORDS):
+                continue
+            
+            # 2. 조건에 맞으면 변수에 담거나 할 것 없이, 그 자리에서 즉시 리턴!
+            # (이러면 리스트가 생성될 틈이 없습니다)
+            print(f"✅ Selected Model: {mid}")
+            return str(mid)
+            
+        # 반복문을 다 돌았는데도 없으면 기본값
+        print("⚠️ No matching model found, using default.")
+        return "llama-3.1-8b-instant"
 
     except Exception as e:
         print(f"⚠️ Model Selection Error: {e}")
