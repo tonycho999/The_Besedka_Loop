@@ -1,54 +1,19 @@
 import json
 import re
 import time
-import ast 
-
-def force_extract_model_string(raw_data):
-    """
-    [안전 장치] 재귀(Recursion)를 사용하지 않고, 
-    반복문(Loop)을 통해 안전하게 문자열 알맹이만 꺼냅니다.
-    절대로 RecursionError가 발생하지 않습니다.
-    """
-    current = raw_data
-    
-    # 1. 리스트나 튜플 껍질이 있으면 계속 벗겨냄 (최대 10번만 시도하여 무한루프 방지)
-    for _ in range(10):
-        if isinstance(current, (list, tuple)):
-            if not current: 
-                return "llama-3.1-8b-instant" # 비어있으면 기본값 리턴
-            current = current # 첫 번째 요소 선택
-        else:
-            break # 리스트가 아니면 탈출
-            
-    # 2. 문자열인데 리스트 모양("[...]")인 경우 처리
-    s = str(current).strip()
-    if s.startswith("[") and s.endswith("]"):
-        try:
-            parsed = ast.literal_eval(s)
-            # 파싱 결과가 또 리스트라면 첫 번째 것 선택
-            if isinstance(parsed, (list, tuple)) and parsed:
-                return str(parsed).strip()
-            return str(parsed).strip()
-        except:
-            # 파싱 실패 시 강제 문자열 정리
-            s = s.replace("[", "").replace("]", "").replace("'", "").replace('"', "")
-            return s.split(",").strip()
-
-    return s
 
 def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70, ad_data=None):
     
-    # ==============================================================================
-    # [입력값 세탁] 
-    # ==============================================================================
-    original_input = str(model_id)
-    # 재귀 함수 대신 안전한 반복문 함수 사용
-    model_id = force_extract_model_string(model_id)
+    # 1. 안전하게 문자열로 변환 (리스트가 혹시 오면 첫번째 선택)
+    if isinstance(model_id, list):
+        model_id = model_id
     
-    print(f"🧹 [Model Cleaner] 입력: {original_input[:30]}... -> 최종: '{model_id}'")
-    # ==============================================================================
+    model_id = str(model_id).strip()
+    
+    # 로그 확인용
+    # print(f"👉 AI Engine Model: {model_id}")
 
-    # 1. 페르소나 설정
+    # 2. 페르소나 및 프롬프트 설정
     base_prompt = f"""
     You are {actor['name']} ({actor['role']}, {actor['country']}).
     Personality: {actor['style']}.
@@ -69,7 +34,6 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
         [PPL] Mention "{ad_data['name']}" naturally. Context: {ad_data['context']}
         """
 
-    # 2. 모드별 프롬프트
     if mode == "new":
         task_prompt = f"""
         [Task: New Post]
