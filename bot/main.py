@@ -69,22 +69,24 @@ def main():
     client = get_client()
     
     # ===============================================================
-    # [긴급 수정] 모델 선택 안전장치 추가
-    # model_selector가 리스트(['a', 'b'])를 반환하더라도
-    # 여기서 강제로 첫 번째 요소('a')만 꺼내서 문자열로 만듭니다.
+    # [절대 에러 방지 구역]
+    # 모델 변수가 리스트로 오든 뭐로 오든, 무조건 문자열 하나로 만듭니다.
     # ===============================================================
-    raw_model = get_dynamic_model(client)
+    raw_model_data = get_dynamic_model(client)
     
-    if isinstance(raw_model, list):
-        model_id = raw_model  # 리스트면 첫 번째 것 선택
+    if isinstance(raw_model_data, list):
+        # 리스트라면 첫 번째 요소 선택 ('model_a', 'model_b' -> 'model_a')
+        model_id = raw_model_data
     else:
-        model_id = raw_model     # 문자열이면 그대로 사용
-        
+        # 이미 문자열이라면 그대로 사용
+        model_id = raw_model_data
+
+    # 시간 설정
     now = datetime.datetime.now()
     today_date = now.strftime("%Y-%m-%d")
     full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    # [디버깅] 이제 대괄호 [] 없이 모델명 하나만 깔끔하게 찍혀야 정상입니다.
+    # [확인] 이 로그에서 더 이상 대괄호 []가 보이면 안 됩니다.
     print(f"📅 Now: {full_timestamp} | Model: {model_id}")
 
     # 상태 체크
@@ -148,7 +150,7 @@ def main():
 
     print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']}")
 
-    # AI 생성 (model_id는 이제 무조건 문자열입니다)
+    # AI 생성 (이제 model_id는 확실히 문자열입니다)
     result = generate_post(
         client, model_id, mode, actor, 
         target_post=target_post, 
@@ -165,7 +167,7 @@ def main():
     final_title = f"{result['mood']} {result['title']}"
     print(f"📝 Title: {final_title}")
 
-    # 데이터 업데이트 (호감도)
+    # 데이터 업데이트
     if mode == "reply" and result['affinity_change'] != 0:
         target_id = target_post['author_id']
         change = result['affinity_change']
