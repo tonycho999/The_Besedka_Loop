@@ -5,37 +5,37 @@ import time
 def extract_content(completion):
     """
     [안전 파싱 함수]
-    AI 응답(completion)이 객체든, 딕셔너리든, 리스트든 
-    어떻게든 '내용(content)'만 끄집어냅니다.
+    AI 응답이 객체, 딕셔너리, 리스트 등 어떤 형태로 오든 내용만 문자열로 추출
     """
     try:
-        # 1. 표준 객체 접근 (completion.choices.message.content)
+        # 1. 표준 객체 접근
         if hasattr(completion, 'choices'):
             choices = completion.choices
             if isinstance(choices, list) and len(choices) > 0:
                 first_choice = choices
                 
-                # choices이 객체인 경우 (표준)
+                # choices이 객체인 경우
                 if hasattr(first_choice, 'message'):
-                    return first_choice.message.content
+                    return str(first_choice.message.content)
                 
-                # choices이 딕셔너리인 경우 (일부 라이브러리)
+                # choices이 딕셔너리인 경우
                 if isinstance(first_choice, dict):
                     message = first_choice.get('message', {})
                     if isinstance(message, dict):
-                        return message.get('content', '')
-                    return str(message) # 혹시 message가 문자열이면 그대로 반환
+                        return str(message.get('content', ''))
+                    return str(message)
 
-                # choices이 리스트인 경우 (이번 에러 케이스 대비)
+                # choices이 리스트인 경우
                 if isinstance(first_choice, list):
-                    # 리스트 안에 또 메시지가 있는지 확인
-                    return str(first_choice) 
+                    if len(first_choice) > 0:
+                        return str(first_choice)
+                    return ""
 
-        # 2. 딕셔너리 접근 (completion['choices']...)
+        # 2. 딕셔너리 접근
         if isinstance(completion, dict):
             choices = completion.get('choices', [])
             if choices:
-                return choices.get('message', {}).get('content', '')
+                return str(choices.get('message', {}).get('content', ''))
 
     except Exception as e:
         print(f"⚠️ 파싱 중 에러 발생: {e}")
@@ -112,7 +112,6 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
                 temperature=0.9
             )
             
-            # [수정됨] 안전 파싱 함수 사용
             content = extract_content(completion)
             
             if content:
@@ -157,11 +156,26 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
     if mode == "reply":
         result["title"] = f"Re: {target_post['title']}"
     else:
+        # [핵심 수정 구간] 제목이 없으면 내용에서 추출 (에러 방지 로직 적용)
         if not result["title"] or "Update from" in result["title"]:
             if result["content"]:
-                first_sentence = result["content"].split('.')
-                words = first_sentence.split()[:6]
-                result["title"] = " ".join(words) + "..."
+                try:
+                    # 1. 내용을 문자열로 확실히 변환
+                    content_str = str(result["content"])
+                    # 2. 마침표로 문장 분리
+                    sentences = content_str.split('.')
+                    # 3. 첫 번째 문장 선택 (리스트가 비어있지 않은지 확인)
+                    if sentences:
+                        first_sentence = sentences.strip()
+                        # 4. 단어로 분리해서 6단어만 추출
+                        words = first_sentence.split()
+                        short_title = " ".join(words[:6])
+                        result["title"] = short_title + "..."
+                    else:
+                        result["title"] = topic
+                except Exception as e:
+                    print(f"⚠️ 제목 생성 중 오류 (기본값 사용): {e}")
+                    result["title"] = topic
             else:
                 result["title"] = topic
 
