@@ -3,6 +3,21 @@ import re
 import time
 
 def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70, ad_data=None):
+    # ==============================================================================
+    # [최후의 안전장치] 형님, 여기가 핵심입니다.
+    # 외부에서 리스트를 주든, 이상한 걸 주든 여기서 무조건 '문자열 하나'로 만듭니다.
+    # ==============================================================================
+    if isinstance(model_id, list):
+        print(f"⚠️ [System Fix] 리스트로 들어온 모델명을 자동으로 변환합니다: {model_id} -> {model_id}")
+        model_id = model_id  # 리스트의 첫 번째 요소 선택
+    
+    # 혹시 모를 공백 제거 및 문자열 확실화
+    model_id = str(model_id).strip()
+    
+    # [디버깅] 실제 API로 날아가는 모델명이 무엇인지 눈으로 확인
+    print(f"👉 API Request Model: '{model_id}' (Type: {type(model_id).__name__})")
+    # ==============================================================================
+
     # 1. 페르소나 설정
     base_prompt = f"""
     You are {actor['name']} ({actor['role']}, {actor['country']}).
@@ -15,7 +30,7 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
     3. Use code blocks (```) for tech.
     4. Use @mentions for reply.
     5. Add "TL;DR" if long.
-    6. **NEVER use titles like "Update from {actor['name']}". Create a real, catchy title.**
+    6. NEVER use titles like "Update from {actor['name']}". Create a real, catchy title.
     """
 
     ad_instruction = ""
@@ -24,7 +39,7 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
         [PPL] Mention "{ad_data['name']}" naturally. Context: {ad_data['context']}
         """
 
-    # 2. 모드별 프롬프트
+    # 2. 모드별 프롬프트 구성
     if mode == "new":
         task_prompt = f"""
         [Task: New Post]
@@ -55,15 +70,17 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
         JSON: ```json {{ "change": -2 to +2, "tags": ["tag1", "tag2"], "mood": "emoji" }} ```
         """
 
-    # 3. AI 호출 (3회 재시도)
+    # 3. AI 호출 (3회 재시도 로직)
     full_text = ""
     success = False
     
     for attempt in range(3):
         try:
+            # 형님, 여기서 model=model_id 부분이 핵심입니다. 위에서 정제한 model_id가 들어갑니다.
             completion = client.chat.completions.create(
                 messages=[{"role": "system", "content": base_prompt}, {"role": "user", "content": task_prompt}],
-                model=model_id, temperature=0.9
+                model=model_id, 
+                temperature=0.9
             )
             full_text = completion.choices.message.content
             success = True
@@ -99,20 +116,17 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
     
     result["content"] = "\n".join(content_buffer).strip()
     
-    # [핵심 수정] 제목 처리 로직 강화
     if mode == "reply":
-        # 답글은 무조건 Re: 원본제목
         result["title"] = f"Re: {target_post['title']}"
     else:
-        # 새 글인데 제목이 없거나 'Update from'이면 내용에서 추출 시도
+        # 제목 누락 시 본문 내용이나 주제로 대체
         if not result["title"] or "Update from" in result["title"]:
-            # 본문의 첫 5단어를 제목으로 사용하거나 주제(Topic)를 그대로 씀
             if result["content"]:
                 first_sentence = result["content"].split('.')
                 words = first_sentence.split()[:6]
                 result["title"] = " ".join(words) + "..."
             else:
-                result["title"] = topic # 최후의 수단: 주제를 제목으로
+                result["title"] = topic
 
     if not result["content"]: result["content"] = full_text
 
