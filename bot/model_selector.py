@@ -14,7 +14,7 @@ def get_dynamic_model(client):
     [완전 동적 방식]
     API가 반환하는 모델 리스트 중:
     1. 오디오(whisper), 비전(vision, llava) 모델 제외
-    2. 중단 예정인 특정 모델(Llama 4 Maverick) 제외
+    2. 보안용(guard) 및 중단 예정(maverick) 모델 제외
     3. 남은 것 중 '첫 번째 텍스트 모델(문자열)'만 반환
     """
     try:
@@ -26,29 +26,28 @@ def get_dynamic_model(client):
             "meta-llama/llama-4-maverick-17b-128e-instruct"  # 중단 예정
         ]
 
-        # 2. 텍스트 모델만 남기기 (필터링)
+        # 2. 텍스트 모델만 남기기 (필터링 강화)
         text_models = [
             m.id for m in models.data 
             if 'whisper' not in m.id 
             and 'vision' not in m.id 
             and 'llava' not in m.id
+            and 'guard' not in m.id      # [추가] 보안 검사용 모델 제외 (채팅 불가)
             and m.id not in BANNED_MODELS
         ]
         
         if not text_models:
             raise Exception("Groq API에서 텍스트 모델을 찾을 수 없습니다.")
 
-        # 3. 디버깅용: 필터링 후 남은 모델들 출력
-        # print(f"📋 API Loaded Models (Filtered): {text_models}")
-
         # [핵심 수정] 리스트 전체가 아니라, 0번째 요소(String) 하나만 선택!
         selected_model = text_models
         
-        # 선택된 모델이 진짜 문자열인지 확인 (디버깅용)
+        # 디버깅용 출력 (이제 리스트가 아니라 모델명 하나만 찍힐 것임)
         # print(f"👉 Final Selected Model: {selected_model}")
         
         return selected_model
 
     except Exception as e:
         print(f"⚠️ Model Selection Error: {e}")
+        # 여기서 에러가 나면 봇이 멈추도록 예외를 던짐
         raise e
