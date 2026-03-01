@@ -3,44 +3,49 @@ import re
 import time
 import ast 
 
-def clean_model_id_recursive(raw_data):
+def force_extract_model_string(raw_data):
     """
-    어떤 형태의 데이터가 들어와도 무조건 순수한 모델명 문자열 하나만 추출하는 강력한 세탁 함수
+    [안전 장치] 재귀(Recursion)를 사용하지 않고, 
+    반복문(Loop)을 통해 안전하게 문자열 알맹이만 꺼냅니다.
+    절대로 RecursionError가 발생하지 않습니다.
     """
-    # 1. 리스트나 튜플이면 첫 번째 요소로 재진입
-    if isinstance(raw_data, (list, tuple)):
-        if not raw_data: return "llama-3.1-8b-instant" # 비어있으면 기본값
-        
-        # [형님! 여기가 핵심 수정입니다]
-        # raw_data를 그대로 넣으면 무한루프입니다. 반드시을 붙여야 합니다.
-        return clean_model_id_recursive(raw_data)
+    current = raw_data
     
-    # 2. 문자열인데 리스트처럼 생겼으면 ("[...]") 파싱 시도
-    s = str(raw_data).strip()
+    # 1. 리스트나 튜플 껍질이 있으면 계속 벗겨냄 (최대 10번만 시도하여 무한루프 방지)
+    for _ in range(10):
+        if isinstance(current, (list, tuple)):
+            if not current: 
+                return "llama-3.1-8b-instant" # 비어있으면 기본값 리턴
+            current = current # 첫 번째 요소 선택
+        else:
+            break # 리스트가 아니면 탈출
+            
+    # 2. 문자열인데 리스트 모양("[...]")인 경우 처리
+    s = str(current).strip()
     if s.startswith("[") and s.endswith("]"):
         try:
-            # 문자열을 실제 리스트로 변환 ("['a', 'b']" -> ['a', 'b'])
             parsed = ast.literal_eval(s)
-            return clean_model_id_recursive(parsed)
+            # 파싱 결과가 또 리스트라면 첫 번째 것 선택
+            if isinstance(parsed, (list, tuple)) and parsed:
+                return str(parsed).strip()
+            return str(parsed).strip()
         except:
-            # 파싱 실패 시 무식하게 괄호와 따옴표 제거 후 첫 단어 가져오기
+            # 파싱 실패 시 강제 문자열 정리
             s = s.replace("[", "").replace("]", "").replace("'", "").replace('"', "")
             return s.split(",").strip()
 
-    # 3. 여기까지 왔으면 순수 문자열임
     return s
 
 def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70, ad_data=None):
     
     # ==============================================================================
-    # [최종 방어] 모델명 강제 세탁 (Vacuum Cleaner Logic)
+    # [입력값 세탁] 
     # ==============================================================================
     original_input = str(model_id)
-    # 이제 무한루프 없이 깔끔하게 문자열 하나만 가져옵니다.
-    model_id = clean_model_id_recursive(model_id)
+    # 재귀 함수 대신 안전한 반복문 함수 사용
+    model_id = force_extract_model_string(model_id)
     
-    # 로그로 확인: 리스트가 들어와도 문자열로 바뀌는지 눈으로 확인하세요.
-    print(f"🧹 [Model Cleaner] 입력값: {original_input[:30]}... -> 최종값: '{model_id}'")
+    print(f"🧹 [Model Cleaner] 입력: {original_input[:30]}... -> 최종: '{model_id}'")
     # ==============================================================================
 
     # 1. 페르소나 설정
