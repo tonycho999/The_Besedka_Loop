@@ -65,30 +65,24 @@ def main():
     
     client = get_client()
     
-    # ==========================================================
-    # [GPT-4 처방] 이중 안전장치
-    # model_selector에서 무엇을 가져오든, 여기서 최종적으로 문자열임을 보장합니다.
-    # ==========================================================
+    # [Claude Code 핵심 처방] 모델명 무결성 검사 (Sanity Check)
     raw_model = get_dynamic_model(client)
-    
-    if isinstance(raw_model, list):
-        model_id = str(raw_model).strip() # 리스트면 첫번째 꺼냄
-    else:
-        model_id = str(raw_model).strip()    # 아니면 문자열 변환
-        
-    # 대괄호 [] 문자열 제거 (혹시 문자열 자체가 "['abc']"로 되어있을 경우 대비)
-    if model_id.startswith("['") and model_id.endswith("']"):
-        model_id = model_id.replace("['", "").replace("']", "")
-    # ==========================================================
+    model_id = str(raw_model).strip()
+
+    # 1. 리스트 찌꺼기(쉼표, 대괄호)가 포함되어 있거나
+    # 2. 모델명 길이가 비정상적으로 길면 (50자 이상)
+    # -> 오염된 데이터로 간주하고 강제로 기본값 사용
+    if "," in model_id or "[" in model_id or len(model_id) > 60:
+        print(f"⚠️ 오염된 모델명 감지됨 ('{model_id[:20]}...'). 기본값으로 강제 변경합니다.")
+        model_id = "llama-3.1-8b-instant"
 
     now = datetime.datetime.now()
     today_date = now.strftime("%Y-%m-%d")
     full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    # [검증] 이제 여기 로그에는 절대 대괄호 []가 보이면 안 됩니다.
     print(f"📅 Now: {full_timestamp} | Model: {model_id}")
 
-    # 상태 체크
+    # 상태 체크 및 로직 수행 (기존과 동일)
     returner = None
     active_members = []
     for pid, data in status_db.items():
@@ -103,14 +97,12 @@ def main():
         save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today_date}")
         return
 
-    # 확률 체크
     if not returner:
         dice = random.random()
         if dice > POST_PROBABILITY:
             print(f"💤 휴식 (Dice: {dice:.2f})")
             return
 
-    # 행동 결정
     mode = "new"
     actor_id = None
     target_post = None
@@ -149,7 +141,6 @@ def main():
 
     print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']}")
 
-    # AI 생성
     result = generate_post(
         client, model_id, mode, actor, 
         target_post=target_post, 
@@ -166,7 +157,6 @@ def main():
     final_title = f"{result['mood']} {result['title']}"
     print(f"📝 Title: {final_title}")
 
-    # 데이터 업데이트 (호감도)
     if mode == "reply" and result['affinity_change'] != 0:
         target_id = target_post['author_id']
         change = result['affinity_change']
@@ -177,7 +167,6 @@ def main():
         status_db[actor_id]['relationships'][target_id] = new_a
         status_db[target_id]['relationships'][actor_id] = new_b
 
-    # 휴가/병가
     dice = random.random()
     if dice < config.VACATION_CHANCE:
         days = random.randint(3, 7)
