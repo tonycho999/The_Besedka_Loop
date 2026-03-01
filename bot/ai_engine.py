@@ -1,21 +1,43 @@
 import json
 import re
 import time
+import ast # [추가] 문자열로 된 리스트 파싱용
+
+def clean_model_id_recursive(raw_data):
+    """
+    어떤 형태의 데이터가 들어와도 무조건 순수한 모델명 문자열 하나만 추출하는 강력한 세탁 함수
+    예: ['model_a'] -> 'model_a'
+    예: "[['model_a', 'model_b']]" -> 'model_a'
+    """
+    # 1. 리스트나 튜플이면 첫 번째 요소로 재진입
+    if isinstance(raw_data, (list, tuple)):
+        if not raw_data: return "llama-3.1-8b-instant" # 비어있으면 기본값
+        return clean_model_id_recursive(raw_data)
+    
+    # 2. 문자열인데 리스트처럼 생겼으면 ("[...]") 파싱 시도
+    s = str(raw_data).strip()
+    if s.startswith("[") and s.endswith("]"):
+        try:
+            # 문자열을 실제 리스트로 변환 ("['a', 'b']" -> ['a', 'b'])
+            parsed = ast.literal_eval(s)
+            return clean_model_id_recursive(parsed)
+        except:
+            # 파싱 실패 시 무식하게 괄호와 따옴표 제거 후 첫 단어 가져오기
+            s = s.replace("[", "").replace("]", "").replace("'", "").replace('"', "")
+            return s.split(",").strip()
+
+    # 3. 여기까지 왔으면 순수 문자열임
+    return s
 
 def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70, ad_data=None):
-    # ==============================================================================
-    # [최후의 안전장치] 형님, 여기가 핵심입니다.
-    # 외부에서 리스트를 주든, 이상한 걸 주든 여기서 무조건 '문자열 하나'로 만듭니다.
-    # ==============================================================================
-    if isinstance(model_id, list):
-        print(f"⚠️ [System Fix] 리스트로 들어온 모델명을 자동으로 변환합니다: {model_id} -> {model_id}")
-        model_id = model_id  # 리스트의 첫 번째 요소 선택
     
-    # 혹시 모를 공백 제거 및 문자열 확실화
-    model_id = str(model_id).strip()
+    # ==============================================================================
+    # [최종 방어] 모델명 강제 세탁 (Vacuum Cleaner Logic)
+    # ==============================================================================
+    original_input = str(model_id)
+    model_id = clean_model_id_recursive(model_id)
     
-    # [디버깅] 실제 API로 날아가는 모델명이 무엇인지 눈으로 확인
-    print(f"👉 API Request Model: '{model_id}' (Type: {type(model_id).__name__})")
+    print(f"🧹 [Model Cleaner] 입력값: {original_input[:30]}... -> 최종값: '{model_id}'")
     # ==============================================================================
 
     # 1. 페르소나 설정
@@ -39,7 +61,7 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
         [PPL] Mention "{ad_data['name']}" naturally. Context: {ad_data['context']}
         """
 
-    # 2. 모드별 프롬프트 구성
+    # 2. 모드별 프롬프트
     if mode == "new":
         task_prompt = f"""
         [Task: New Post]
@@ -70,13 +92,12 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
         JSON: ```json {{ "change": -2 to +2, "tags": ["tag1", "tag2"], "mood": "emoji" }} ```
         """
 
-    # 3. AI 호출 (3회 재시도 로직)
+    # 3. AI 호출 (3회 재시도)
     full_text = ""
     success = False
     
     for attempt in range(3):
         try:
-            # 형님, 여기서 model=model_id 부분이 핵심입니다. 위에서 정제한 model_id가 들어갑니다.
             completion = client.chat.completions.create(
                 messages=[{"role": "system", "content": base_prompt}, {"role": "user", "content": task_prompt}],
                 model=model_id, 
@@ -119,7 +140,6 @@ def generate_post(client, model_id, mode, actor, target_post=None, category=None
     if mode == "reply":
         result["title"] = f"Re: {target_post['title']}"
     else:
-        # 제목 누락 시 본문 내용이나 주제로 대체
         if not result["title"] or "Update from" in result["title"]:
             if result["content"]:
                 first_sentence = result["content"].split('.')
