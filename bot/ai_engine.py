@@ -1,17 +1,17 @@
 import json
 import re
 import time
-import ast # [추가] 문자열로 된 리스트 파싱용
+import ast 
 
 def clean_model_id_recursive(raw_data):
     """
     어떤 형태의 데이터가 들어와도 무조건 순수한 모델명 문자열 하나만 추출하는 강력한 세탁 함수
-    예: ['model_a'] -> 'model_a'
-    예: "[['model_a', 'model_b']]" -> 'model_a'
     """
-    # 1. 리스트나 튜플이면 첫 번째 요소로 재진입
+    # 1. 리스트나 튜플이면 첫 번째 요소로 재진입 (여기가 문제였음)
     if isinstance(raw_data, (list, tuple)):
         if not raw_data: return "llama-3.1-8b-instant" # 비어있으면 기본값
+        
+        # [핵심 수정] raw_data를 그대로 넘기지 않고,번째만 꺼내서 넘깁니다!
         return clean_model_id_recursive(raw_data)
     
     # 2. 문자열인데 리스트처럼 생겼으면 ("[...]") 파싱 시도
@@ -32,9 +32,10 @@ def clean_model_id_recursive(raw_data):
 def generate_post(client, model_id, mode, actor, target_post=None, category=None, topic=None, affinity_score=70, ad_data=None):
     
     # ==============================================================================
-    # [최종 방어] 모델명 강제 세탁 (Vacuum Cleaner Logic)
+    # [최종 방어] 모델명 강제 세탁
     # ==============================================================================
     original_input = str(model_id)
+    # 이제 무한루프 없이 깔끔하게 문자열 하나만 가져옵니다.
     model_id = clean_model_id_recursive(model_id)
     
     print(f"🧹 [Model Cleaner] 입력값: {original_input[:30]}... -> 최종값: '{model_id}'")
