@@ -17,7 +17,6 @@ STATUS_FILE = "status.json"
 HISTORY_FILE = "history.json"
 POST_PROBABILITY = 0.58
 
-# 1. GitHub 함수
 def get_github_repo():
     if not config.GITHUB_TOKEN: return None
     auth = Auth.Token(config.GITHUB_TOKEN)
@@ -45,7 +44,6 @@ def save_data_to_github(repo, filename, data, message):
             print(f"💾 {filename} 생성")
     except Exception as e: print(f"❌ {filename} 저장 실패: {e}")
 
-# 2. 초기 데이터
 def get_initial_status():
     data = {}
     for p in config.PERSONAS:
@@ -56,7 +54,6 @@ def get_initial_status():
         }
     return data
 
-# 3. 메인 로직
 def main():
     repo = get_github_repo()
     if not repo and config.GITHUB_TOKEN:
@@ -68,28 +65,20 @@ def main():
     
     client = get_client()
     
-    # ===============================================================
-    # [절대 에러 방지 구역]
-    # 모델 변수가 리스트로 오든 뭐로 오든, 무조건 문자열 하나로 만듭니다.
-    # ===============================================================
-    raw_model_data = get_dynamic_model(client)
-    
-    if isinstance(raw_model_data, list):
-        # 리스트라면 첫 번째 요소 선택 ('model_a', 'model_b' -> 'model_a')
-        model_id = raw_model_data
+    # [강력한 안전장치] 리스트가 넘어오면 무조건 첫번째 것 선택
+    raw_model = get_dynamic_model(client)
+    if isinstance(raw_model, list):
+        model_id = raw_model
     else:
-        # 이미 문자열이라면 그대로 사용
-        model_id = raw_model_data
+        model_id = str(raw_model).strip()
 
-    # 시간 설정
     now = datetime.datetime.now()
     today_date = now.strftime("%Y-%m-%d")
     full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
 
-    # [확인] 이 로그에서 더 이상 대괄호 []가 보이면 안 됩니다.
+    # [확인] 여기에 대괄호 []가 없어야 정상입니다.
     print(f"📅 Now: {full_timestamp} | Model: {model_id}")
 
-    # 상태 체크
     returner = None
     active_members = []
     for pid, data in status_db.items():
@@ -104,14 +93,12 @@ def main():
         save_data_to_github(repo, STATUS_FILE, status_db, f"Update status: All away {today_date}")
         return
 
-    # 확률 체크
     if not returner:
         dice = random.random()
         if dice > POST_PROBABILITY:
             print(f"💤 휴식 (Dice: {dice:.2f})")
             return
 
-    # 행동 결정
     mode = "new"
     actor_id = None
     target_post = None
@@ -150,7 +137,6 @@ def main():
 
     print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']}")
 
-    # AI 생성 (이제 model_id는 확실히 문자열입니다)
     result = generate_post(
         client, model_id, mode, actor, 
         target_post=target_post, 
@@ -167,7 +153,6 @@ def main():
     final_title = f"{result['mood']} {result['title']}"
     print(f"📝 Title: {final_title}")
 
-    # 데이터 업데이트
     if mode == "reply" and result['affinity_change'] != 0:
         target_id = target_post['author_id']
         change = result['affinity_change']
@@ -178,7 +163,6 @@ def main():
         status_db[actor_id]['relationships'][target_id] = new_a
         status_db[target_id]['relationships'][actor_id] = new_b
 
-    # 휴가/병가
     dice = random.random()
     if dice < config.VACATION_CHANCE:
         days = random.randint(3, 7)
