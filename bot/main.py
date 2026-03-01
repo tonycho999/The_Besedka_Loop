@@ -67,12 +67,24 @@ def main():
     history_db = load_data_from_github(repo, HISTORY_FILE, [])
     
     client = get_client()
-    model_id = get_dynamic_model(client)
     
+    # ===============================================================
+    # [긴급 수정] 모델 선택 안전장치 추가
+    # model_selector가 리스트(['a', 'b'])를 반환하더라도
+    # 여기서 강제로 첫 번째 요소('a')만 꺼내서 문자열로 만듭니다.
+    # ===============================================================
+    raw_model = get_dynamic_model(client)
+    
+    if isinstance(raw_model, list):
+        model_id = raw_model  # 리스트면 첫 번째 것 선택
+    else:
+        model_id = raw_model     # 문자열이면 그대로 사용
+        
     now = datetime.datetime.now()
     today_date = now.strftime("%Y-%m-%d")
     full_timestamp = now.strftime("%Y-%m-%d %H:%M:%S")
 
+    # [디버깅] 이제 대괄호 [] 없이 모델명 하나만 깔끔하게 찍혀야 정상입니다.
     print(f"📅 Now: {full_timestamp} | Model: {model_id}")
 
     # 상태 체크
@@ -136,7 +148,7 @@ def main():
 
     print(f"🚀 Mode: {mode.upper()} | Actor: {actor['name']}")
 
-    # AI 생성
+    # AI 생성 (model_id는 이제 무조건 문자열입니다)
     result = generate_post(
         client, model_id, mode, actor, 
         target_post=target_post, 
@@ -146,7 +158,6 @@ def main():
         ad_data=random.choice(config.PROMOTED_SITES) if config.AD_MODE else None
     )
 
-    # [핵심 수정] Error 발생 시 저장하지 않고 종료
     if result['title'] == "Error" or "Error" in result['title']:
         print("❌ AI 생성 실패로 인해 이번 턴은 건너뜁니다.")
         return
