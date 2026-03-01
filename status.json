@@ -135,8 +135,8 @@
     }
   },
   "marco": {
-    "state": "normal",
-    "return_date": null,
+    "state": "sick",
+    "return_date": "2026-03-03",
     "relationships": {
       "jinwoo": 70,
       "kenji": 70,
