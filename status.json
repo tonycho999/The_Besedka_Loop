@@ -30,8 +30,8 @@
     }
   },
   "wei": {
-    "state": "sick",
-    "return_date": "2026-04-09",
+    "state": "normal",
+    "return_date": null,
     "relationships": {
       "jinwoo": 69,
       "kenji": 70,
