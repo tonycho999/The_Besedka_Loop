@@ -60,8 +60,8 @@
     }
   },
   "carlos": {
-    "state": "vacation",
-    "return_date": "2026-04-10",
+    "state": "normal",
+    "return_date": null,
     "relationships": {
       "jinwoo": 70,
       "kenji": 70,
