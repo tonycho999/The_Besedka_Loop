@@ -15,8 +15,8 @@
     }
   },
   "kenji": {
-    "state": "normal",
-    "return_date": null,
+    "state": "sick",
+    "return_date": "2026-04-20",
     "relationships": {
       "jinwoo": 70,
       "wei": 70,
@@ -24,7 +24,7 @@
       "carlos": 70,
       "lena": 70,
       "amelie": 69,
-      "hina": 70,
+      "hina": 71,
       "sarah": 70,
       "marco": 70
     }
@@ -109,7 +109,7 @@
     "return_date": null,
     "relationships": {
       "jinwoo": 70,
-      "kenji": 70,
+      "kenji": 71,
       "wei": 70,
       "budi": 70,
       "carlos": 70,
