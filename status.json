@@ -15,8 +15,8 @@
     }
   },
   "kenji": {
-    "state": "sick",
-    "return_date": "2026-04-20",
+    "state": "normal",
+    "return_date": null,
     "relationships": {
       "jinwoo": 70,
       "wei": 70,
