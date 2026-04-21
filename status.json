@@ -60,8 +60,8 @@
     }
   },
   "carlos": {
-    "state": "sick",
-    "return_date": "2026-04-21",
+    "state": "normal",
+    "return_date": null,
     "relationships": {
       "jinwoo": 70,
       "kenji": 70,
