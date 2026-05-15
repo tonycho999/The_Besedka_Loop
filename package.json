@@ -1,16 +1,20 @@
 {
-  "name": "the-besedka-loop",
+  "name": "ultimate-ph-hub",
+  "version": "1.0.0",
+  "private": true,
   "type": "module",
-  "version": "0.0.1",
   "scripts": {
     "dev": "astro dev",
     "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview"
+    "build": "astro check && astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "astro": "^4.0.0",
-    "@astrojs/rss": "^4.0.0",
-    "firebase": "^10.8.0"
+    "@astrojs/check": "^0.7.0",
+    "@astrojs/tailwind": "^5.1.0",
+    "astro": "^4.10.0",
+    "tailwindcss": "^3.4.4",
+    "typescript": "^5.4.5"
   }
 }
