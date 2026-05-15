@@ -2,36 +2,59 @@
 import Layout from '../layouts/Layout.astro';
 import { getCollection } from 'astro:content';
 
-// 'blog' 컬렉션의 모든 마크다운 파일을 가져와서 날짜순으로 정렬
-const posts = await getCollection('blog');
-posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+const posts = (await getCollection('blog')).sort(
+  (a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()
+);
+
+const recentPosts = posts.slice(0, 3); // 최신 글 3개만 선택
+
+// 최종 카테고리 목록 (파이썬 스크립트가 사용할 목록)
+const mainCategories = [
+    { name: "Destinations", desc: "City guides, islands, and hidden gems." },
+    { name: "Golf & Leisure", desc: "Course reviews and fun activities." },
+    { name: "Travel Planning", desc: "Visa, transport, and essential tips." },
+    { name: "Food & Culture", desc: "Local cuisine, history, and festivals." },
+    { name: "Living in PH", desc: "Expat life and cost of living." },
+];
 ---
-
 <Layout title="Welcome" description="Your ultimate guide to travel, golf, and lifestyle in the Philippines.">
-	<section class="mb-12 text-center">
-		<h1 class="text-4xl font-extrabold mb-4">Discover the Philippines</h1>
-		<p class="text-lg text-gray-600">Explore travel guides, golf courses, culture, and lifestyle tips.</p>
+	<section class="mb-16 text-center">
+		<h1 class="text-5xl font-extrabold mb-4">Discover the Real Philippines</h1>
+		<p class="text-xl text-gray-600">Your ultimate hub for travel, golf, culture, and lifestyle.</p>
 	</section>
 
-	<section class="grid grid-cols-1 md:grid-cols-2 gap-8">
-		{posts.map((post) => (
-			<article class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:-translate-y-1">
-				{post.data.image && (
-					<img src={post.data.image} alt={post.data.title} class="w-full h-48 object-cover" />
-				)}
-				<div class="p-6">
-					<span class="text-sm font-semibold text-blue-600 uppercase tracking-wide">{post.data.category}</span>
-					<h2 class="text-2xl font-bold mt-2 mb-3">
-						<a href={`/blog/${post.slug}`} class="hover:text-blue-600 transition-colors">
-							{post.data.title}
-						</a>
-					</h2>
-					<p class="text-gray-600 mb-4">{post.data.description}</p>
-					<div class="text-sm text-gray-500">
-						{post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-					</div>
-				</div>
-			</article>
-		))}
-	</section>
+    {/* 주요 카테고리 소개 */}
+    <section class="mb-16">
+        <h2 class="text-3xl font-bold text-center mb-8">Explore by Category</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {mainCategories.slice(0, 3).map(cat => (
+                <a href={`/category/${cat.name.toLowerCase()}`} class="block p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow text-center">
+                    <h3 class="text-xl font-bold mb-2 text-blue-600">{cat.name}</h3>
+                    <p class="text-gray-600">{cat.desc}</p>
+                </a>
+            ))}
+        </div>
+    </section>
+
+	<section>
+        <h2 class="text-3xl font-bold text-center mb-8">Recent Posts</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {recentPosts.map((post) => (
+                <article class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:-translate-y-1">
+                    {post.data.image && <img src={post.data.image} alt={post.data.title} class="w-full h-40 object-cover" />}
+                    <div class="p-5">
+                        <span class="text-sm font-semibold text-blue-600 uppercase">{post.data.category}</span>
+                        <h3 class="text-xl font-bold mt-1 mb-2">
+                            <a href={`/blog/${post.slug}`} class="hover:text-blue-700">{post.data.title}</a>
+                        </h3>
+                    </div>
+                </article>
+            ))}
+        </div>
+        <div class="text-center mt-12">
+            <a href="/blog" class="bg-blue-600 text-white font-bold py-3 px-8 rounded-lg hover:bg-blue-700 transition-colors">
+                View All Posts
+            </a>
+        </div>
+    </section>
 </Layout>
