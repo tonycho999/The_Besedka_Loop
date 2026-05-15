@@ -12,8 +12,6 @@ const posts = (await getCollection('blog')).sort(
 >
   <h1 class="text-4xl font-extrabold mb-8">All Posts</h1>
 
-  {/* 향후 이 곳에 검색, 태그 필터 기능이 추가될 예정 */}
-
   <section class="grid grid-cols-1 md:grid-cols-2 gap-8">
     {posts.map((post) => (
       <article class="bg-white rounded-lg shadow overflow-hidden transition-transform hover:-translate-y-1">
@@ -30,12 +28,9 @@ const posts = (await getCollection('blog')).sort(
           <p class="text-gray-600 mb-4">{post.data.description}</p>
           <div class="text-sm text-gray-500">
             {post.data.pubDate.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
-          .
           </div>
         </div>
-      </a
+      </article>
     ))}
   </section>
-
-  {/* 향후 이 곳에 페이지네이션(1, 2, 3...) 기능이 추가될 예정 */}
 </Layout>
