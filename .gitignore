@@ -1,0 +1,22 @@
+# .gitignore
+
+# Node.js 패키지
+node_modules/
+
+# 빌드 결과물 및 임시 폴더
+dist/
+.astro/
+
+# 환경 변수 (매우 중요!)
+.env
+.env.*
+!.env.example # 예시 파일은 올려도 됨
+
+# Mac OS 시스템 파일
+.DS_Store
+
+# Python 가상 환경 및 캐시 (스크립트 실행용)
+__pycache__/
+*.py[cod]
+.venv/
+venv/
